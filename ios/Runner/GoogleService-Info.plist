@@ -2,18 +2,24 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>CLIENT_ID</key>
+	<string>305626867316-opm417dt2t5fe8lmac3vg7tp4s72204s.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.305626867316-opm417dt2t5fe8lmac3vg7tp4s72204s</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>305626867316-c4fm2t2q5dvur011o1d2pehlemeivm1c.apps.googleusercontent.com</string>
 	<key>API_KEY</key>
-	<string>AIzaSyBUAWVWJjEnmOu9K-v1uimK8UL7bybc_3Y</string>
+	<string>AIzaSyDiRMFVHTsfmtmahNke89SZjdPOMYzYrk4</string>
 	<key>GCM_SENDER_ID</key>
-	<string>1005492825344</string>
+	<string>305626867316</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.wempro.helpAbodeWorkerApp</string>
+	<string>com.mecstudygroup.mecstudygroup</string>
 	<key>PROJECT_ID</key>
-	<string>team-abode</string>
+	<string>mecstudygroup-72e4d</string>
 	<key>STORAGE_BUCKET</key>
-	<string>team-abode.appspot.com</string>
+	<string>mecstudygroup-72e4d.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -25,6 +31,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:1005492825344:ios:9391fa077acb38a36557e5</string>
+	<string>1:305626867316:ios:328515eaabc32e733e5321</string>
 </dict>
 </plist>
