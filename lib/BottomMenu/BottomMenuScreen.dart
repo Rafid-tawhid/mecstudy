@@ -29,7 +29,7 @@ class _BottomMenuScreenState extends State<BottomMenuScreen> {
 
   // Define your pages here
   final List<Widget> _pages = [
-    ExploreScreen(),
+     ExploreScreen(),
    // ChatScreen(),
     BookASections(),
     StartApplication(title: 'Start Application',),

@@ -220,18 +220,21 @@ class GridItemWidget extends StatelessWidget {
         ),  
         SizedBox(height: 4,),
         Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Spacer(),
-            Image.asset(
-              'images/UniversityofSheffiedIcon.png',
-              width: 29,
-              height: 25,
-              fit: BoxFit.contain,
+
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Image.asset(
+                'images/UniversityofSheffiedIcon.png',
+                width: 36,
+                height: 36,
+                fit: BoxFit.contain,
+              ),
             ),
-            SizedBox(width: 5,),
             SizedBox(
-              width: Responsive.width(40, context),
-              child:  Text("${itemName}",
+              width: 150,
+              child: Text(itemName,
                   style: GoogleFonts.roboto(
                       textStyle: TextStyle(
                         fontWeight: FontWeight.w600,
@@ -242,8 +245,7 @@ class GridItemWidget extends StatelessWidget {
                         // fontFamily: 'SORA-BOLD'
                       ))),
             ),
-
-            Spacer(),
+            SizedBox(width: 30,)
           ],
         )
 

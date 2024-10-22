@@ -865,583 +865,574 @@ class _ExploreScreenState extends State<ExploreScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Color(0xFFF5F5F5),
-      // appBar: AppBar(
-      //   title: Text('Image AppBar Example'),
-      //   flexibleSpace: Image(
-      //       image: AssetImage('images/AppBarBG.jpg'), // Replace with your image asset
-      //     fit: BoxFit.cover,
-      //   ),
-      // ),
-      body: SingleChildScrollView(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Container(
-              height: Responsive.height(30, context),
-              width: Responsive.width(100, context),
-              decoration: BoxDecoration(
-                // color: Colors.green,
-                image: DecorationImage(
-                  image: AssetImage('images/DashboardTopBarBG.png'),
-                  fit: BoxFit.contain,
-                ),
-              ),
-              child: Column(
-                children: [
-                  SizedBox(
-                    height: 40,
-                  ),
-                  Container(
-                    child: Row(
-                      children: [
-                        SizedBox(
-                          width: 18,
-                        ),
-                        Container(
-                          height: Responsive.height(9, context),
-                          width: Responsive.width(57, context),
-                          decoration: BoxDecoration(
-                            image: DecorationImage(
-                              image: AssetImage('images/DashboardTopLogo.png'),
-                              fit: BoxFit.contain,
-                            ),
-                          ),
-                        ),
-                        Spacer(),
-                        InkWell(
-                          child: Container(
-                              width: Responsive.width(21, context),
-                              height: Responsive.height(4, context),
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(
-                                    32.0), // Set your desired border radius
-                              ),
-                              child: Center(
-                                child: Text("${AppConstant.userLgged ? AppConstant.userName: "Sign up"}",
-                                    maxLines: 1,
-                                    overflow: TextOverflow.ellipsis,
-                                    textAlign: TextAlign.center,
-                                    style: GoogleFonts.roboto(
-                                      textStyle: TextStyle(
-                                        fontWeight: FontWeight.w700,
-                                        fontSize: AdaptiveTextSize()
-                                            .getadaptiveTextSize(context, 13),
-                                        color: AppColors.themeMaincolor,
-                                        // color: Color(0xFF151C18),
-                                        // fo
-                                      ),
-                                    )),
-                              )),
-                          onTap: () async {
-                            bool loggedIn = await isLoggedIn();
-                          if(loggedIn){
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(content: Text('${AppConstant.userName} is Already logged in')),);
-                          }else{
-                            showModalBottomSheet(
-                              context: context,
-                              isScrollControlled: true,
-                              backgroundColor: Colors.transparent,
-                              builder: (BuildContext context) {
-                                return SignUpScreenBottomSheet();
-                                // Your custom bottom sheet widget
-                              },
-                            );
-                          }
+    return SingleChildScrollView(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
 
-                          },
-                        ),
-                        SizedBox(
-                          width: 30,
-                        ),
-                      ],
-                    ),
-                  ),
-                  Container(
-                    width: Responsive.width(86, context),
-                    height: Responsive.height(6.5, context),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(
-                          32.0), // Set your desired border radius
-                    ),
-                    child: Center(
-                        child: Row(
-                      children: [
-                        SizedBox(
-                          width: 12,
-                        ),
-                        Icon(
-                          Icons.search,
-                          color: AppColors.themeMaincolor,
-                          size: 30,
-                        ),
-                        Container(
-                            width: Responsive.width(65, context),
-                            height: Responsive.width(10, context),
-                            margin: EdgeInsets.only(left: 8),
-                            decoration: BoxDecoration(
-                              border: Border.all(
-                                color: Colors.transparent,
-                                width: 0, // Border width
-                              ),
-                              borderRadius:
-                                  BorderRadius.circular(10), // Border radius
-                            ),
-                            child: Padding(
-                              padding: EdgeInsets.only(
-                                  top: 0.0, bottom: 0, left: 2, right: 2),
-                              child: Center(
-                                child: TextField(
-                                  decoration: InputDecoration(
-                                    hintText: 'Find Courses and Institutions',
-                                    hintStyle: TextStyle(
-                                        color: Color(0xFF36404B), fontSize: 16),
-                                    border: InputBorder.none, // No border
-                                    focusedBorder: InputBorder
-                                        .none, // No border when focused
-                                  ),
-                                ),
-                              ),
-                            )),
-                        Spacer(),
-                      ],
-                    )),
-                  ),
-                  SizedBox(
-                    height: 18,
-                  ),
-                ],
+          Container(
+            height: Responsive.height(30, context),
+            width: MediaQuery.sizeOf(context).width,
+            decoration: BoxDecoration(
+              // color: Colors.green,
+              image: DecorationImage(
+                image: AssetImage('images/DashboardTopBarBG.png',),
+                fit: BoxFit.cover,
               ),
             ),
-            Container(
-              transform: Matrix4.translationValues(0.0, -16.0, 0.0),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Container(
-                    // transform: Matrix4.translationValues(0.0, -24.0, 0.0),
-                    child: Row(
-                      children: [
-                        SizedBox(
-                          width: 26,
+            child: Column(
+              children: [
+                SizedBox(
+                  height: 40,
+                ),
+                Row(
+                  children: [
+                    SizedBox(
+                      width: 18,
+                    ),
+                    Container(
+                      height: Responsive.height(9, context),
+                      width: Responsive.width(57, context),
+                      decoration: BoxDecoration(
+                        image: DecorationImage(
+                          image: AssetImage('images/DashboardTopLogo.png'),
+                          fit: BoxFit.contain,
                         ),
-                        // SizedBox(
-                        //   width: Responsive.width(48.9, context),
-                        //
-                        //   child:
+                      ),
+                    ),
+                    Spacer(),
+                    InkWell(
+                      child: Container(
+                          width: Responsive.width(21, context),
+                          height: Responsive.height(4, context),
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(
+                                32.0), // Set your desired border radius
+                          ),
+                          child: Center(
+                            child: Text("${AppConstant.userLgged ? AppConstant.userName: "Sign up"}",
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                                textAlign: TextAlign.center,
+                                style: GoogleFonts.roboto(
+                                  textStyle: TextStyle(
+                                    fontWeight: FontWeight.w700,
+                                    fontSize: AdaptiveTextSize()
+                                        .getadaptiveTextSize(context, 13),
+                                    color: AppColors.themeMaincolor,
+                                    // color: Color(0xFF151C18),
+                                    // fo
+                                  ),
+                                )),
+                          )),
+                      onTap: () async {
+                        bool loggedIn = await isLoggedIn();
+                        if(loggedIn){
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(content: Text('${AppConstant.userName} is Already logged in')),);
+                        }else{
+                          showModalBottomSheet(
+                            context: context,
+                            isScrollControlled: true,
+                            backgroundColor: Colors.transparent,
+                            builder: (BuildContext context) {
+                              return SignUpScreenBottomSheet();
+                              // Your custom bottom sheet widget
+                            },
+                          );
+                        }
 
-                        Text("Discover Top",
-                            style: GoogleFonts.roboto(
-                                textStyle: TextStyle(
+                      },
+                    ),
+                    SizedBox(
+                      width: 30,
+                    ),
+                  ],
+                ),
+                Container(
+                  width: Responsive.width(86, context),
+                  height: Responsive.height(6.5, context),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(
+                        32.0), // Set your desired border radius
+                  ),
+                  child: Center(
+                      child: Row(
+                        children: [
+                          SizedBox(
+                            width: 12,
+                          ),
+                          Icon(
+                            Icons.search,
+                            color: AppColors.themeMaincolor,
+                            size: 30,
+                          ),
+                          Container(
+                              width: Responsive.width(65, context),
+                              height: Responsive.width(10, context),
+                              margin: EdgeInsets.only(left: 8),
+                              decoration: BoxDecoration(
+                                border: Border.all(
+                                  color: Colors.transparent,
+                                  width: 0, // Border width
+                                ),
+                                borderRadius:
+                                BorderRadius.circular(10), // Border radius
+                              ),
+                              child: Padding(
+                                padding: EdgeInsets.only(
+                                    top: 0.0, bottom: 0, left: 2, right: 2),
+                                child: Center(
+                                  child: TextField(
+                                    decoration: InputDecoration(
+                                      hintText: 'Find Courses and Institutions',
+                                      hintStyle: TextStyle(
+                                          color: Color(0xFF36404B), fontSize: 16),
+                                      border: InputBorder.none, // No border
+                                      focusedBorder: InputBorder
+                                          .none, // No border when focused
+                                    ),
+                                  ),
+                                ),
+                              )),
+                          Spacer(),
+                        ],
+                      )),
+                ),
+                SizedBox(
+                  height: 18,
+                ),
+              ],
+            ),
+          ),
+          Container(
+            transform: Matrix4.translationValues(0.0, -46.0, 0.0),
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.only(topLeft: Radius.circular(40),topRight: Radius.circular(40)),
+                color: Colors.white
+            ),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(height: 40,),
+                Row(
+                  children: [
+                    SizedBox(
+                      width: 26,
+                    ),
+
+                    Text("Discover Top",
+                        style: GoogleFonts.roboto(
+                            textStyle: TextStyle(
                               fontWeight: FontWeight.w800,
                               fontSize: AdaptiveTextSize()
                                   .getadaptiveTextSize(context, 20),
                               color: AppColors.headingColor,
                               // fontFamily: 'SORA-BOLD'
-                            ))),
-                        //  ),
-
-                        SizedBox(
-                          width: 8,
-                        ),
-                        // Image.asset(
-                        //   'images/TopInsitudeIcon.png',
-                        //   width: 17,
-                        //   height: 15,
-                        //   fit: BoxFit.contain,
-                        // ),
-                        Spacer(),
-                        InkWell(
-                          child: Image.asset(
-                            'images/SeeAll.png',
-                            width: 64,
-                            height: 17,
-                            fit: BoxFit.contain,
-                          ),
-                          onTap: () async {
-
-                            // Navigator.of(context).push(
-                            //   MaterialPageRoute(
-                            //     builder: (context) => UniversityListPage(universities: universities,),
-                            //   ),
-                            // );
-                            // showDialog(
-                            //   context: context,
-                            //   builder: (BuildContext context) {
-                            //     return AlertDialog(
-                            //       title: Text('Message'),
-                            //       content: Text('This screen will be available soon'),
-                            //       actions: [
-                            //         TextButton(
-                            //           onPressed: () {
-                            //             // Close the dialog
-                            //             Navigator.of(context).pop();
-                            //           },
-                            //           child: Text(
-                            //             'OK',
-                            //             style: TextStyle(
-                            //                 color: AppColors.themeMaincolor),
-                            //           ),
-                            //         ),
-                            //       ],
-                            //     );
-                            //   },
-                            //);
-
-                            //getUniversities();
-                            //  await Navigator.of(context).push(
-                            //   MaterialPageRoute(
-                            //     builder: (context) => FilterListPage(universities: universities,),
-                            //   ),
-                            // );
-                            Navigator.of(context).push(
-                              MaterialPageRoute(
-                                builder: (context) => UniversityListPage(universities: universities,),
-                              ),
-                            );
-                            // redFileFromDirectory();
-                            // getAllUniversities();
-                            print("go to FilterListPage");
-                          },
-                        ),
-                        SizedBox(
-                          width: 24,
-                        ),
-                      ],
+                            ))
                     ),
-                  ),
-                  Container(
-                    margin: EdgeInsets.only(left: 24),
-                    child: Text("Universities",
-                        style: GoogleFonts.roboto(
-                            textStyle: TextStyle(
-                          fontWeight: FontWeight.w800,
-                          fontSize: AdaptiveTextSize()
-                              .getadaptiveTextSize(context, 20),
-                          color: Color(0xff38332F),
-                          // color: Color(0xFF151C18),
-                          // fontFamily: 'SORA-BOLD'
-                        ))),
-                  ),
+                    //  ),
 
-                  SizedBox(
-                    height: 6,
-                  ),
-                  Container(
-                    // transform: Matrix4.translationValues(0.0, -20.0, 0.0),
-                    margin: EdgeInsets.only(left: 26),
-                    child: SizedBox(
-                      width: Responsive.width(80, context),
-                      child: Text(
-                        "We’re partnered with over 120 world class education providers.",
-                        textAlign: TextAlign.left,
-                        style: GoogleFonts.roboto(
-                          textStyle: TextStyle(
-                            fontWeight: FontWeight.normal,
-                            fontSize: AdaptiveTextSize()
-                                .getadaptiveTextSize(context, 13),
-                            color: AppColors.headingColor,
+                    SizedBox(
+                      width: 8,
+                    ),
+
+                    Spacer(),
+                    InkWell(
+                      onTap: () async {
+
+                        // Navigator.of(context).push(
+                        //   MaterialPageRoute(
+                        //     builder: (context) => UniversityListPage(universities: universities,),
+                        //   ),
+                        // );
+                        // showDialog(
+                        //   context: context,
+                        //   builder: (BuildContext context) {
+                        //     return AlertDialog(
+                        //       title: Text('Message'),
+                        //       content: Text('This screen will be available soon'),
+                        //       actions: [
+                        //         TextButton(
+                        //           onPressed: () {
+                        //             // Close the dialog
+                        //             Navigator.of(context).pop();
+                        //           },
+                        //           child: Text(
+                        //             'OK',
+                        //             style: TextStyle(
+                        //                 color: AppColors.themeMaincolor),
+                        //           ),
+                        //         ),
+                        //       ],
+                        //     );
+                        //   },
+                        //);
+
+                        //getUniversities();
+                        //  await Navigator.of(context).push(
+                        //   MaterialPageRoute(
+                        //     builder: (context) => FilterListPage(universities: universities,),
+                        //   ),
+                        // );
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => UniversityListPage(universities: universities,),
                           ),
+                        );
+                        // redFileFromDirectory();
+                        // getAllUniversities();
+                        print("go to FilterListPage");
+                      },
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Text('See all',style: GoogleFonts.roboto(
+                              textStyle: TextStyle(
+                                fontWeight: FontWeight.w800,
+                                fontSize: AdaptiveTextSize()
+                                    .getadaptiveTextSize(context, 14),
+                                color: Colors.orange,
+                                // fontFamily: 'SORA-BOLD'
+                              ))),
+                          Icon(Icons.arrow_forward_rounded, color: Colors.orange,size: 30,)
+                        ],
+                      ),
+                    ),
+
+                    SizedBox(
+                      width: 24,
+                    ),
+                  ],
+                ),
+                Container(
+                  margin: EdgeInsets.only(left: 24),
+                  child: Text("Universities",
+                      style: GoogleFonts.roboto(
+                          textStyle: TextStyle(
+                            fontWeight: FontWeight.w800,
+                            fontSize: AdaptiveTextSize()
+                                .getadaptiveTextSize(context, 20),
+                            color: Color(0xff38332F),
+                            // color: Color(0xFF151C18),
+                            // fontFamily: 'SORA-BOLD'
+                          ))),
+                ),
+
+                SizedBox(
+                  height: 6,
+                ),
+                Container(
+                  // transform: Matrix4.translationValues(0.0, -20.0, 0.0),
+                  margin: EdgeInsets.only(left: 26),
+                  child: SizedBox(
+                    width: Responsive.width(80, context),
+                    child: Text(
+                      "We’re partnered with over 120 world class education providers.",
+                      textAlign: TextAlign.left,
+                      style: GoogleFonts.roboto(
+                        textStyle: TextStyle(
+                          fontWeight: FontWeight.normal,
+                          fontSize: AdaptiveTextSize()
+                              .getadaptiveTextSize(context, 13),
+                          color: AppColors.headingColor,
                         ),
                       ),
                     ),
                   ),
-                  SizedBox(
-                    height: 20,
-                  ),
+                ),
+                SizedBox(
+                  height: 20,
+                ),
 
 
 
-                  isUniversitryLoading?  Center(
-                      child: new CircularProgressIndicator( valueColor: AlwaysStoppedAnimation<Color>(AppColors.themeMaincolor)))
-                      :  Container(
-                    height: Responsive.height(30, context),
-                    width: Responsive.width(100, context),
-                    margin: EdgeInsets.only(left: 12, right: 12),
-                    // transform: Matrix4.translationValues(0.0, -0, 0.0),
-                    child: GridView.count(
-                        scrollDirection: Axis.horizontal,
-                        // Set the s
-                        padding: EdgeInsets.zero,
-                        crossAxisCount: 1,
-                        childAspectRatio:
-                            MediaQuery.of(context).size.height / 680,
-                        mainAxisSpacing: 0,
-                        crossAxisSpacing: 0,
-                        children: List.generate(universities.length, (index) {
-                          return InkWell(
-                            child: Container(
-                              child:   GridItemWidget(universities[index].universityName,universities[index].name),
-                            ),
-                            onTap: () {
-                              print(index);
-                          //    getLogin();
-                              print(universities[index].universityName);
-                              print(universities[index].name);
+                isUniversitryLoading?  Center(
+                    child: new CircularProgressIndicator( valueColor: AlwaysStoppedAnimation<Color>(AppColors.themeMaincolor)))
+                    :  Container(
+                  height: Responsive.height(60, context),
+                  width: Responsive.width(100, context),
+                  margin: EdgeInsets.only(left: 12, right: 12),
+                  // transform: Matrix4.translationValues(0.0, -0, 0.0),
+                  child: GridView.count(
+                      scrollDirection: Axis.horizontal,
+                      // Set the s
+                      padding: EdgeInsets.zero,
+                      crossAxisCount: 1,
+                      childAspectRatio:
+                      MediaQuery.of(context).size.height / 680,
+                      mainAxisSpacing: 0,
+                      crossAxisSpacing: 0,
+                      children: List.generate(universities.length, (index) {
+                        return InkWell(
+                          child: GridItemWidget(universities[index].universityName,universities[index].name),
+                          onTap: () {
+                            print(index);
+                            //    getLogin();
+                            print(universities[index].universityName);
+                            print(universities[index].name);
 
-                              Navigator.of(context).push(
-                                MaterialPageRoute(
-                                  builder: (context) => UniversityDetailScreen(
-                                    universityDetialModel: universities[index],
-                                    rankings: AppConstant.listedRanking[index],
-                                    facilties: AppConstant.listedFacilities[index],
-                                    alumus: AppConstant.listedAlumnus[index],
-                                    faqs: AppConstant.listedFaq[index],
-                                  ),
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (context) => UniversityDetailScreen(
+                                  universityDetialModel: universities[index],
+                                  rankings: AppConstant.listedRanking[index],
+                                  facilties: AppConstant.listedFacilities[index],
+                                  alumus: AppConstant.listedAlumnus[index],
+                                  faqs: AppConstant.listedFaq[index],
                                 ),
-                              );
-                            },
-                          );
-                        })),
-                  ),
+                              ),
+                            );
+                          },
+                        );
+                      })),
+                ),
 
 
 
-                  SizedBox(
-                    height: 1,
-                  ),
+                SizedBox(
+                  height: 1,
+                ),
 
-                  //comint course work
-                  // Container(
-                  //   //transform: Matrix4.translationValues(0.0, -6.0, 0.0),
-                  //   child: Row(
-                  //     children: [
-                  //       SizedBox(
-                  //         width: 26,
-                  //       ),
-                  //       //  SizedBox(
-                  //       //  width: Responsive.width(44, context),
-                  //       //  child:
-                  //       Text("We'll help you find",
-                  //           textAlign: TextAlign.left,
-                  //           style: GoogleFonts.roboto(
-                  //               textStyle: TextStyle(
-                  //             fontWeight: FontWeight.w800,
-                  //             fontSize: AdaptiveTextSize()
-                  //                 .getadaptiveTextSize(context, 20),
-                  //             color: Color(0xff36404B),
-                  //           ))),
-                  //       //  ),
-                  //       SizedBox(
-                  //         width: 8,
-                  //       ),
-                  //       // Container(
-                  //       //   // transform: Matrix4.translationValues(0.0, 0.0, 0.0),
-                  //       //   child: Image.asset(
-                  //       //     'images/CapIcon.png',
-                  //       //     width: 17,
-                  //       //     height: 15,
-                  //       //     fit: BoxFit.contain,
-                  //       //   ),
-                  //       // ),
-                  //       Spacer(),
-                  //       InkWell(
-                  //         child: Image.asset(
-                  //           'images/SeeAll.png',
-                  //           width: 64,
-                  //           height: 17,
-                  //           fit: BoxFit.contain,
-                  //         ),
-                  //         // Icon(
-                  //         //   Icons.arroarrow_forward_ios_outlined,
-                  //         //   color: Color(0xff36404B),
-                  //         //   size: 20,
-                  //         // ),
-                  //         onTap: () {
-                  //           showDialog(
-                  //             context: context,
-                  //             builder: (BuildContext context) {
-                  //               return AlertDialog(
-                  //                 title: Text('Message'),
-                  //                 content: Text(
-                  //                     'This screen will be available soon'),
-                  //                 actions: [
-                  //                   TextButton(
-                  //                     onPressed: () {
-                  //                       Navigator.of(context).pop();
-                  //                     },
-                  //                     child: Text(
-                  //                       'OK',
-                  //                       style: TextStyle(
-                  //                           color: AppColors.themeMaincolor),
-                  //                     ),
-                  //                   ),
-                  //                 ],
-                  //               );
-                  //             },
-                  //           );
-                  //           print("go to next page");
-                  //         },
-                  //       ),
-                  //       SizedBox(
-                  //         width: 24,
-                  //       ),
-                  //     ],
-                  //   ),
-                  // ),
-                  // Container(
-                  //   margin: EdgeInsets.only(left: 26),
-                  //   // transform: Matrix4.translationValues(0.0, -8.0, 0.0),
-                  //   child: Text("the right courses",
-                  //       textAlign: TextAlign.left,
-                  //       style: GoogleFonts.roboto(
-                  //           textStyle: TextStyle(
-                  //         fontWeight: FontWeight.w800,
-                  //         fontSize: AdaptiveTextSize()
-                  //             .getadaptiveTextSize(context, 20),
-                  //         color: AppColors.headingColor,
-                  //       ))),
-                  // ),
-                  // SizedBox(
-                  //   height: 6,
-                  // ),
-                  // Container(
-                  //   // transform: Matrix4.translationValues(0.0, -8.0, 0.0),
-                  //   margin: EdgeInsets.only(left: 26),
-                  //   child: SizedBox(
-                  //     width: Responsive.width(65, context),
-                  //     child: Text(
-                  //         "Search from over 63950 courses by subject or university.",
-                  //         textAlign: TextAlign.left,
-                  //         style: GoogleFonts.roboto(
-                  //             textStyle: TextStyle(
-                  //           fontWeight: FontWeight.normal,
-                  //           fontSize: AdaptiveTextSize()
-                  //               .getadaptiveTextSize(context, 13),
-                  //           color: AppColors.headingColor,
-                  //         ))),
-                  //   ),
-                  // ),
-                  // SizedBox(
-                  //   height: 10,
-                  // ),
-                  // Container(
-                  //     height: Responsive.height(20, context),
-                  //     width: Responsive.width(100, context),
-                  //     margin: EdgeInsets.only(left: 12, right: 12),
-                  //     child: GridView.builder(
-                  //         gridDelegate:
-                  //             SliverGridDelegateWithFixedCrossAxisCount(
-                  //           crossAxisCount: 2,
-                  //           childAspectRatio:
-                  //               0.30, // width / height ratio (400 / 100)
-                  //         ),
-                  //         scrollDirection: Axis.horizontal,
-                  //         // Set the s
-                  //         padding: EdgeInsets.zero,
-                  //         itemCount: items.length,
-                  //         itemBuilder: (context, index) {
-                  //           return InkWell(
-                  //             child: Container(
-                  //               //height: 5,
-                  //               decoration: BoxDecoration(
-                  //                 color: Colors.white,
-                  //                 boxShadow: [
-                  //                   BoxShadow(
-                  //                     color: Colors.grey.withOpacity(0.12),
-                  //                     spreadRadius: 2,
-                  //                     blurRadius: 5,
-                  //                     offset: Offset(
-                  //                         0, 0), // changes position of shadow
-                  //                   ),
-                  //                 ],
-                  //                 borderRadius: BorderRadius.circular(
-                  //                     7.0), // Set your desired border radius
-                  //               ),
-                  //               //),
-                  //               margin: EdgeInsets.all(8.0),
-                  //               padding: EdgeInsets.all(8.0),
-                  //               child: Center(
-                  //                   child: Row(
-                  //                 children: [
-                  //                   ClipRRect(
-                  //                     borderRadius: BorderRadius.circular(8.0),
-                  //                     child: Image.asset(
-                  //                       'images/ComputerScience.png',
-                  //                       width: 39,
-                  //                       height: 40,
-                  //                       fit: BoxFit.contain,
-                  //                     ),
-                  //                   ),
-                  //                   SizedBox(
-                  //                     width: 12,
-                  //                   ),
-                  //                   Column(
-                  //                     mainAxisAlignment:
-                  //                         MainAxisAlignment.center,
-                  //                     crossAxisAlignment:
-                  //                         CrossAxisAlignment.start,
-                  //                     children: [
-                  //                       Text('${items[index].name}',
-                  //                           style: GoogleFonts.roboto(
-                  //                               textStyle: TextStyle(
-                  //                             fontWeight: FontWeight.w600,
-                  //                             fontSize: AdaptiveTextSize()
-                  //                                 .getadaptiveTextSize(
-                  //                                     context, 12),
-                  //                             color: Color(0xff484D54),
-                  //                           ))),
-                  //                       SizedBox(height: 8),
-                  //                       Row(
-                  //                         children: [
-                  //                           Text(
-                  //                               '${items[index].noOfCourse} Course',
-                  //                               style: GoogleFonts.roboto(
-                  //                                   textStyle: TextStyle(
-                  //                                 fontWeight: FontWeight.w400,
-                  //                                 fontSize: AdaptiveTextSize()
-                  //                                     .getadaptiveTextSize(
-                  //                                         context, 10),
-                  //                                 color: Color(0xff36404B),
-                  //                               ))),
-                  //                           SizedBox(
-                  //                             width:
-                  //                                 Responsive.width(2, context),
-                  //                           ),
-                  //                           Text(
-                  //                               '${items[index].noOfUniversity} Universities',
-                  //                               style: GoogleFonts.roboto(
-                  //                                   textStyle: TextStyle(
-                  //                                 fontWeight: FontWeight.w400,
-                  //                                 fontSize: AdaptiveTextSize()
-                  //                                     .getadaptiveTextSize(
-                  //                                         context, 10),
-                  //                                 color: Color(0xff36404B),
-                  //                               ))),
-                  //                         ],
-                  //                       ),
-                  //                       SizedBox(
-                  //                         width: 12,
-                  //                       ),
-                  //                     ],
-                  //                   ),
-                  //                   Spacer(),
-                  //                   Icon(
-                  //                     Icons.arrow_forward_ios_outlined,
-                  //                     color: Color(0xff28282A),
-                  //                     size: 10,
-                  //                   ),
-                  //                 ],
-                  //               )),
-                  //             ),
-                  //             onTap: () {
-                  //               print(index);
-                  //             },
-                  //           );
-                  //         })),
-                  //),
-                  SizedBox(
-                    height: 28,
-                  ),
+                //comint course work
+                // Container(
+                //   //transform: Matrix4.translationValues(0.0, -6.0, 0.0),
+                //   child: Row(
+                //     children: [
+                //       SizedBox(
+                //         width: 26,
+                //       ),
+                //       //  SizedBox(
+                //       //  width: Responsive.width(44, context),
+                //       //  child:
+                //       Text("We'll help you find",
+                //           textAlign: TextAlign.left,
+                //           style: GoogleFonts.roboto(
+                //               textStyle: TextStyle(
+                //             fontWeight: FontWeight.w800,
+                //             fontSize: AdaptiveTextSize()
+                //                 .getadaptiveTextSize(context, 20),
+                //             color: Color(0xff36404B),
+                //           ))),
+                //       //  ),
+                //       SizedBox(
+                //         width: 8,
+                //       ),
+                //       // Container(
+                //       //   // transform: Matrix4.translationValues(0.0, 0.0, 0.0),
+                //       //   child: Image.asset(
+                //       //     'images/CapIcon.png',
+                //       //     width: 17,
+                //       //     height: 15,
+                //       //     fit: BoxFit.contain,
+                //       //   ),
+                //       // ),
+                //       Spacer(),
+                //       InkWell(
+                //         child: Image.asset(
+                //           'images/SeeAll.png',
+                //           width: 64,
+                //           height: 17,
+                //           fit: BoxFit.contain,
+                //         ),
+                //         // Icon(
+                //         //   Icons.arroarrow_forward_ios_outlined,
+                //         //   color: Color(0xff36404B),
+                //         //   size: 20,
+                //         // ),
+                //         onTap: () {
+                //           showDialog(
+                //             context: context,
+                //             builder: (BuildContext context) {
+                //               return AlertDialog(
+                //                 title: Text('Message'),
+                //                 content: Text(
+                //                     'This screen will be available soon'),
+                //                 actions: [
+                //                   TextButton(
+                //                     onPressed: () {
+                //                       Navigator.of(context).pop();
+                //                     },
+                //                     child: Text(
+                //                       'OK',
+                //                       style: TextStyle(
+                //                           color: AppColors.themeMaincolor),
+                //                     ),
+                //                   ),
+                //                 ],
+                //               );
+                //             },
+                //           );
+                //           print("go to next page");
+                //         },
+                //       ),
+                //       SizedBox(
+                //         width: 24,
+                //       ),
+                //     ],
+                //   ),
+                // ),
+                // Container(
+                //   margin: EdgeInsets.only(left: 26),
+                //   // transform: Matrix4.translationValues(0.0, -8.0, 0.0),
+                //   child: Text("the right courses",
+                //       textAlign: TextAlign.left,
+                //       style: GoogleFonts.roboto(
+                //           textStyle: TextStyle(
+                //         fontWeight: FontWeight.w800,
+                //         fontSize: AdaptiveTextSize()
+                //             .getadaptiveTextSize(context, 20),
+                //         color: AppColors.headingColor,
+                //       ))),
+                // ),
+                // SizedBox(
+                //   height: 6,
+                // ),
+                // Container(
+                //   // transform: Matrix4.translationValues(0.0, -8.0, 0.0),
+                //   margin: EdgeInsets.only(left: 26),
+                //   child: SizedBox(
+                //     width: Responsive.width(65, context),
+                //     child: Text(
+                //         "Search from over 63950 courses by subject or university.",
+                //         textAlign: TextAlign.left,
+                //         style: GoogleFonts.roboto(
+                //             textStyle: TextStyle(
+                //           fontWeight: FontWeight.normal,
+                //           fontSize: AdaptiveTextSize()
+                //               .getadaptiveTextSize(context, 13),
+                //           color: AppColors.headingColor,
+                //         ))),
+                //   ),
+                // ),
+                // SizedBox(
+                //   height: 10,
+                // ),
+                // Container(
+                //     height: Responsive.height(20, context),
+                //     width: Responsive.width(100, context),
+                //     margin: EdgeInsets.only(left: 12, right: 12),
+                //     child: GridView.builder(
+                //         gridDelegate:
+                //             SliverGridDelegateWithFixedCrossAxisCount(
+                //           crossAxisCount: 2,
+                //           childAspectRatio:
+                //               0.30, // width / height ratio (400 / 100)
+                //         ),
+                //         scrollDirection: Axis.horizontal,
+                //         // Set the s
+                //         padding: EdgeInsets.zero,
+                //         itemCount: items.length,
+                //         itemBuilder: (context, index) {
+                //           return InkWell(
+                //             child: Container(
+                //               //height: 5,
+                //               decoration: BoxDecoration(
+                //                 color: Colors.white,
+                //                 boxShadow: [
+                //                   BoxShadow(
+                //                     color: Colors.grey.withOpacity(0.12),
+                //                     spreadRadius: 2,
+                //                     blurRadius: 5,
+                //                     offset: Offset(
+                //                         0, 0), // changes position of shadow
+                //                   ),
+                //                 ],
+                //                 borderRadius: BorderRadius.circular(
+                //                     7.0), // Set your desired border radius
+                //               ),
+                //               //),
+                //               margin: EdgeInsets.all(8.0),
+                //               padding: EdgeInsets.all(8.0),
+                //               child: Center(
+                //                   child: Row(
+                //                 children: [
+                //                   ClipRRect(
+                //                     borderRadius: BorderRadius.circular(8.0),
+                //                     child: Image.asset(
+                //                       'images/ComputerScience.png',
+                //                       width: 39,
+                //                       height: 40,
+                //                       fit: BoxFit.contain,
+                //                     ),
+                //                   ),
+                //                   SizedBox(
+                //                     width: 12,
+                //                   ),
+                //                   Column(
+                //                     mainAxisAlignment:
+                //                         MainAxisAlignment.center,
+                //                     crossAxisAlignment:
+                //                         CrossAxisAlignment.start,
+                //                     children: [
+                //                       Text('${items[index].name}',
+                //                           style: GoogleFonts.roboto(
+                //                               textStyle: TextStyle(
+                //                             fontWeight: FontWeight.w600,
+                //                             fontSize: AdaptiveTextSize()
+                //                                 .getadaptiveTextSize(
+                //                                     context, 12),
+                //                             color: Color(0xff484D54),
+                //                           ))),
+                //                       SizedBox(height: 8),
+                //                       Row(
+                //                         children: [
+                //                           Text(
+                //                               '${items[index].noOfCourse} Course',
+                //                               style: GoogleFonts.roboto(
+                //                                   textStyle: TextStyle(
+                //                                 fontWeight: FontWeight.w400,
+                //                                 fontSize: AdaptiveTextSize()
+                //                                     .getadaptiveTextSize(
+                //                                         context, 10),
+                //                                 color: Color(0xff36404B),
+                //                               ))),
+                //                           SizedBox(
+                //                             width:
+                //                                 Responsive.width(2, context),
+                //                           ),
+                //                           Text(
+                //                               '${items[index].noOfUniversity} Universities',
+                //                               style: GoogleFonts.roboto(
+                //                                   textStyle: TextStyle(
+                //                                 fontWeight: FontWeight.w400,
+                //                                 fontSize: AdaptiveTextSize()
+                //                                     .getadaptiveTextSize(
+                //                                         context, 10),
+                //                                 color: Color(0xff36404B),
+                //                               ))),
+                //                         ],
+                //                       ),
+                //                       SizedBox(
+                //                         width: 12,
+                //                       ),
+                //                     ],
+                //                   ),
+                //                   Spacer(),
+                //                   Icon(
+                //                     Icons.arrow_forward_ios_outlined,
+                //                     color: Color(0xff28282A),
+                //                     size: 10,
+                //                   ),
+                //                 ],
+                //               )),
+                //             ),
+                //             onTap: () {
+                //               print(index);
+                //             },
+                //           );
+                //         })),
+                //),
+                SizedBox(
+                  height: 28,
+                ),
 
-                  //commit work start
-               /*   Container(
+                //commit work start
+                /*   Container(
                     //   transform: Matrix4.translationValues(0.0, -10.0, 0.0),
                     child: Row(
                       children: [
@@ -1633,18 +1624,15 @@ class _ExploreScreenState extends State<ExploreScreen> {
                               )),
                     ),
                   ),*/
-                  //commit work start
-                  SizedBox(
-                    height: 65,
-                  ),
-                ],
-              ),
-            )
-          ],
-        ),
+                //commit work start
+                SizedBox(
+                  height: 65,
+                ),
+              ],
+            ),
+          )
+        ],
       ),
-
-      //),
     );
   }
 }

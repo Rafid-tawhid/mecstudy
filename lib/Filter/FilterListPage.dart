@@ -78,8 +78,8 @@ class _FilterListPageState extends State<FilterListPage> {
         decoration: BoxDecoration(
           // color: Colors.green,
           image: DecorationImage(
-            image: AssetImage('images/DashboardTopBarBG.png'),
-            fit: BoxFit.fill,
+            image: AssetImage('images/DashboardTopBarBG.png',),
+            fit: BoxFit.cover,
           ),
         ),
         child: Column(
@@ -99,7 +99,7 @@ class _FilterListPageState extends State<FilterListPage> {
                     decoration: BoxDecoration(
                       image: DecorationImage(
                         image: AssetImage('images/DashboardTopLogo.png'),
-                        fit: BoxFit.contain,
+                        fit: BoxFit.cover,
                       ),
                     ),
                   ),
