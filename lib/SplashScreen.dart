@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mecstudygroup/BottomMenu/BottomMenuScreen.dart';
 import 'package:mecstudygroup/main.dart';
 import 'Utilities/Constant.dart';
@@ -13,6 +14,9 @@ class MySplashScreen extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+
+    ScreenUtil.init(context, designSize: Size(375, 812), minTextAdapt: true);
+
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
       statusBarColor: Colors.black, // Set your desired color here
       statusBarBrightness: Brightness.light, // You can also adjust the brightness

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import 'dart:developer';
 import 'package:oauth2_client/google_oauth2_client.dart';
@@ -46,6 +47,16 @@ class AdaptiveTextSize {
     return (value / 720) * MediaQuery.of(context).size.height;
   }
 }
+
+customText(double size,Color color,FontWeight fonts)=>GoogleFonts.roboto(
+    textStyle: TextStyle(
+      fontWeight: fonts,
+      fontSize: size,
+      color: color,
+// fontFamily: 'SORA-BOLD'
+    ));
+
+
 
 
 

@@ -1,20 +1,14 @@
 import 'dart:core';
 import 'dart:io';
-import 'package:path/path.dart' as path;
-import 'dart:io';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:http/http.dart' as https;
 import 'dart:convert';
-import 'dart:convert' as convert;
-
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mecstudygroup/Utilities/Colors.dart';
 import 'package:flutter/services.dart' show rootBundle;
-
-import 'Chat/ChatScreen.dart';
 import 'DetailScreen/UniversitrListPage.dart';
 import 'DetailScreen/UniversityDetailScreen.dart';
-import 'Filter/FilterListPage.dart';
 import 'Model/CourseModel.dart';
 import 'Model/UniversitiesModel.dart';
 import 'SignupModule/SignupScreen.dart';
@@ -37,21 +31,17 @@ class _ExploreScreenState extends State<ExploreScreen> {
 
   List<DashboardBottomModel> items = DashboardBottomModel.sampleData();
 
-
-
   double getTextWidth(String text, TextStyle style) {
     final TextPainter textPainter = TextPainter(
       text: TextSpan(text: text, style: style),
       textDirection: ui.TextDirection.ltr,
     )..layout();
 
-
-
     return textPainter.width;
   }
 
   List<University> universities = [];
-  late Future<List<University>>  futureUniversity;
+  late Future<List<University>> futureUniversity;
 
   List<dynamic> parseDegreeID(String degreeIDString) {
     // Remove the leading and trailing single quotes
@@ -85,7 +75,7 @@ class _ExploreScreenState extends State<ExploreScreen> {
   //     model: UniversityModel.fromJson(parsedJson['Model']),
   //   );
   // }
-///"More_About_University": "[{\\"heading\\": \\"Why University of Essex?\\", \\"content\\": \\"<ul><li>More than 140 countries are represented in the student body<\/li><li>Number one for Knowledge Transfer Partnerships in the UK (Innovate UK)<\/li><li>Research income is often around \\u00a342m \\u2013 including contracts, grants and fees<\/li><\/ul><p>Enroll with the University of Essex, a globally acclaimed institution, and embark on a journey toward a prosperous and fulfilling future.<\/p><p>Transform your dreams into your present-day achievements.<\/p><p>Join the vast international network of students who have discovered their route to success with the University of Essex.<\/p>style=\\"text-align:center;\\"><a href=\\"https:\/\/edvoy.com\/courses\/?institutions=%5B%22University+of+Essex%22%5D&amp;fromInstitution=true&amp;locations=%5B%7B%22key%22%3A%22United+Kingdom%22%2C%22values%22%3A%5B%5D%7D%5D\\">Browse courses easily today!<\/a><\/p>\\"}, {\\"heading\\": \\"International Outlook\\", \\"content\\": \\"<p><span style=\\\"background-color:transparent;color:#000000;\\\"><span>As well as having a third of its students coming from abroad, the University of Essex has been ranked in the top 25 for international outlook by the Times Higher Education World University Rankings 2022.<\/span><\/span><\/p>\\"}, {\\"heading\\": \\"Data Science\\", \\"content\\": \\"<p><span style=\\\"background-color:transparent;color:#000000;\\\"><span>To help students get ahead in a data-led world, the university offers a new Data Science For All course, completely free. The ten-day course is open to all undergraduates not on a computer science course but wanting to improve their knowledge and be more employable.<\/span><\/span><\/p>\\"}, {\\"heading\\": \\"Location\\",\\"content\\": \\"<p>Colchester is a historic city in Essex with award-winning parkland and the famous Colchester Zoo. British indie legends Blur hail from here, making the area rife with fascinating cultural history. It also contains numerous pubs and restaurants for people of all ages to enjoy. The Colchester Arts Centre shows live performances all year round while The Hollytrees Museum is an architecturally striking building portraying historic life in Colchester with free admission. London is an hour away by train for students who want to venture into the big capital.<\/p>\\"}]",
+  ///"More_About_University": "[{\\"heading\\": \\"Why University of Essex?\\", \\"content\\": \\"<ul><li>More than 140 countries are represented in the student body<\/li><li>Number one for Knowledge Transfer Partnerships in the UK (Innovate UK)<\/li><li>Research income is often around \\u00a342m \\u2013 including contracts, grants and fees<\/li><\/ul><p>Enroll with the University of Essex, a globally acclaimed institution, and embark on a journey toward a prosperous and fulfilling future.<\/p><p>Transform your dreams into your present-day achievements.<\/p><p>Join the vast international network of students who have discovered their route to success with the University of Essex.<\/p>style=\\"text-align:center;\\"><a href=\\"https:\/\/edvoy.com\/courses\/?institutions=%5B%22University+of+Essex%22%5D&amp;fromInstitution=true&amp;locations=%5B%7B%22key%22%3A%22United+Kingdom%22%2C%22values%22%3A%5B%5D%7D%5D\\">Browse courses easily today!<\/a><\/p>\\"}, {\\"heading\\": \\"International Outlook\\", \\"content\\": \\"<p><span style=\\\"background-color:transparent;color:#000000;\\\"><span>As well as having a third of its students coming from abroad, the University of Essex has been ranked in the top 25 for international outlook by the Times Higher Education World University Rankings 2022.<\/span><\/span><\/p>\\"}, {\\"heading\\": \\"Data Science\\", \\"content\\": \\"<p><span style=\\\"background-color:transparent;color:#000000;\\\"><span>To help students get ahead in a data-led world, the university offers a new Data Science For All course, completely free. The ten-day course is open to all undergraduates not on a computer science course but wanting to improve their knowledge and be more employable.<\/span><\/span><\/p>\\"}, {\\"heading\\": \\"Location\\",\\"content\\": \\"<p>Colchester is a historic city in Essex with award-winning parkland and the famous Colchester Zoo. British indie legends Blur hail from here, making the area rife with fascinating cultural history. It also contains numerous pubs and restaurants for people of all ages to enjoy. The Colchester Arts Centre shows live performances all year round while The Hollytrees Museum is an architecturally striking building portraying historic life in Colchester with free admission. London is an hour away by train for students who want to venture into the big capital.<\/p>\\"}]",
 
   void main() {
     String jsonString = '''{
@@ -141,10 +131,7 @@ class _ExploreScreenState extends State<ExploreScreen> {
     }
   }''';
 
-
-
-
-   // UniversityResponse response = UniversityResponse.fromJson(jsonDecode(jsonString));
+    // UniversityResponse response = UniversityResponse.fromJson(jsonDecode(jsonString));
     //universities = response.model.universities;
 
     // print(universities.map((e) => e.universityName));
@@ -153,32 +140,23 @@ class _ExploreScreenState extends State<ExploreScreen> {
     // print(response.model.universities[0].ranking[0].source);
   }
 
-
-
   Future<String> getLogin() async {
     try {
-
       setState(() {
         isUniversitryLoading = true;
       });
 
       //var response = await https.post(Uri.parse('http://52.234.144.176/api/Token/LogIn'),
-      http://137.135.119.97/api
-      var response = await https.post(Uri.parse('${AppConstant.BaseUrl}/Token/LogIn'),
+      http: //137.135.119.97/api
+      var response = await https.post(
+        Uri.parse('${AppConstant.BaseUrl}/Token/LogIn'),
         headers: Headers.defaultheader,
         body: jsonEncode(<String, String>{
           'Email': 'TestUser@Mecstudy.com',
           'Password': "\$Admin#1",
         }),
       );
-      // final response = await http.post(
-      //   Uri.parse('http://52.234.144.176/api/Token/LogIn'),
-      //   headers: Headers.defaultheader,
-      //   body: {
-      //     "Email":"TestUser@Mecstudy.com",
-      //     "Password":"\$Admin#1"
-      //   },
-      // );
+
       if (response.statusCode == 200) {
         final responseData = jsonDecode(response.body);
         print(responseData);
@@ -187,31 +165,33 @@ class _ExploreScreenState extends State<ExploreScreen> {
         print(accessToken);
 
         MainHeaders.token = Login.fromJson(jsonDecode(response.body)).model;
-        MainHeaders.refreshToken = Login.fromJson(jsonDecode(response.body)).refreshToken;
+        MainHeaders.refreshToken =
+            Login.fromJson(jsonDecode(response.body)).refreshToken;
         print("new token");
         print(MainHeaders.token);
         print(MainHeaders.refreshToken);
         MainHeaders.updatedHeader = {
           'Content-Type': 'application/json',
-          'device-type' :'mobile',
-          'device-id' : '1',
+          'device-type': 'mobile',
+          'device-id': '1',
           'user-agents': 'postman',
-          'user-host-address' : '::::0',
-          'user-language' : 'English',
-          'license-key' : '213DD508-876F-4DD3-BBC1-0A33CC54A6C0',
-          'user-host-name' : 'hakim',
+          'user-host-address': '::::0',
+          'user-language': 'English',
+          'license-key': '213DD508-876F-4DD3-BBC1-0A33CC54A6C0',
+          'user-host-name': 'hakim',
           // httpsHeaders.authorizationHeader: 'bearer $token',
           // 'AuthToken': 'bearer $token',
           'faraz': 'bearer ${MainHeaders.token}'
         };
         print("anotuehr new header");
-        print( MainHeaders.updatedHeader);
-        print( MainHeaders.token);
+        print(MainHeaders.updatedHeader);
+        print(MainHeaders.token);
         getAllUniversity();
-       // createZoomMeeting(apiKey, apiSecret, "ads");
+        // createZoomMeeting(apiKey, apiSecret, "ads");
         return "accessToken";
       } else {
-        print('Failed to generate Zoom access token. Status code: ${response.statusCode}');
+        print(
+            'Failed to generate Zoom access token. Status code: ${response.statusCode}');
         return "ccc";
       }
     } catch (e) {
@@ -303,278 +283,269 @@ class _ExploreScreenState extends State<ExploreScreen> {
 //   }
 
   Future<String> getAllUniversity() async {
+    var response = await https.post(
+      Uri.parse('${AppConstant.BaseUrl}/Datasource/GetDataByDataSourceID'),
+      headers: MainHeaders.updatedHeader,
+      body: jsonEncode(<String, String>{
+        'DataSourceID': '1',
+      }),
+    );
 
+    if (response.statusCode == 200) {
+      final responseData = jsonDecode(response.body);
+      print(responseData);
+      UniversityResponse apiResponse =
+          UniversityResponse.fromJson(responseData);
 
-      var response = await https.post(Uri.parse('${AppConstant.BaseUrl}/Datasource/GetDataByDataSourceID'),
-        headers: MainHeaders.updatedHeader,
-        body: jsonEncode(<String, String>{
-          'DataSourceID': '1',
+      print(responseData);
 
-        }),
-      );
+      Map<String, dynamic> jsonMap = jsonDecode(response.body);
+      List<dynamic> table = jsonMap['Model']['Table'];
 
-      if (response.statusCode == 200) {
-        final responseData = jsonDecode(response.body);
-        print(responseData);
-        UniversityResponse apiResponse = UniversityResponse.fromJson(responseData);
-
-        print(responseData);
-
-        Map<String, dynamic> jsonMap = jsonDecode(response.body);
-        List<dynamic> table = jsonMap['Model']['Table'];
-
-
-
-        for (var item in table) {
-          String rankingJsonStr = item['Ranking'];
-          print(rankingJsonStr);
-         // Print the raw JSON string for debugging
+      for (var item in table) {
+        String rankingJsonStr = item['Ranking'];
+        print(rankingJsonStr);
+        // Print the raw JSON string for debugging
         //  print('Raw JSON String: $rankingJsonStr');
-          try {
-            if (rankingJsonStr == 'N/A' || rankingJsonStr.isEmpty) {
-              // If JSON string is 'N/A' or empty, replace it with an empty list
-             // print('Empty JSON String detected. Using an empty list.');
-             // rankings = [];
+        try {
+          if (rankingJsonStr == 'N/A' || rankingJsonStr.isEmpty) {
+            // If JSON string is 'N/A' or empty, replace it with an empty list
+            // print('Empty JSON String detected. Using an empty list.');
+            // rankings = [];
+            AppConstant.listedRanking.add([Ranking(source: "", rank: "")]);
+          } else {
+            // Decode the JSON string
+            var decodedJson = jsonDecode(rankingJsonStr);
+
+            // Ensure the decoded JSON is a list
+            if (decodedJson is List) {
+              // Convert the list of dynamic to a list of Ranking objects
+              List<Ranking> rankings = decodedJson
+                  .map<Ranking>(
+                      (e) => Ranking.fromJson(e as Map<String, dynamic>))
+                  .toList();
+              AppConstant.listedRanking.add(rankings);
+              // Print the parsed Ranking objects for verification
+              // print('Ranking List: $rankings');
+            } else {
               AppConstant.listedRanking.add([Ranking(source: "", rank: "")]);
 
-            } else {
-              // Decode the JSON string
-              var decodedJson = jsonDecode(rankingJsonStr);
-
-              // Ensure the decoded JSON is a list
-              if (decodedJson is List) {
-                // Convert the list of dynamic to a list of Ranking objects
-                List<Ranking> rankings  = decodedJson.map<Ranking>((e) => Ranking.fromJson(e as Map<String, dynamic>)).toList();
-                AppConstant.listedRanking.add(rankings);
-                // Print the parsed Ranking objects for verification
-               // print('Ranking List: $rankings');
-              } else {
-
-                AppConstant.listedRanking.add([Ranking(source: "", rank: "")]);
-
-                // print('Error: The decoded JSON is not a list.');
-                // print('Decoded JSON Type: ${decodedJson.runtimeType}');
-                // print('Decoded JSON Value: $decodedJson');
-              }
+              // print('Error: The decoded JSON is not a list.');
+              // print('Decoded JSON Type: ${decodedJson.runtimeType}');
+              // print('Decoded JSON Value: $decodedJson');
             }
-          } catch (e) {
-            print('An error occurred: $e');
           }
+        } catch (e) {
+          print('An error occurred: $e');
         }
+      }
 
+      //working on facilities
 
-
-
-        //working on facilities
-
-
-        for (var item in table) {
-          String facilitiesJsonStr = item['Facilities'];
-          print(facilitiesJsonStr);
-          // Print the raw JSON string for debugging
-         // print('Raw JSON String: $facilitiesJsonStr');
-          try {
-            if (facilitiesJsonStr == 'N/A' || facilitiesJsonStr.isEmpty) {
-              // If JSON string is 'N/A' or empty, replace it with an empty list
+      for (var item in table) {
+        String facilitiesJsonStr = item['Facilities'];
+        print(facilitiesJsonStr);
+        // Print the raw JSON string for debugging
+        // print('Raw JSON String: $facilitiesJsonStr');
+        try {
+          if (facilitiesJsonStr == 'N/A' || facilitiesJsonStr.isEmpty) {
+            // If JSON string is 'N/A' or empty, replace it with an empty list
             //  print('Empty JSON String detected. Using an empty list.');
-              // rankings = [];
-              AppConstant.listedFacilities.add([Facility(button: "",content: "")]);
+            // rankings = [];
+            AppConstant.listedFacilities
+                .add([Facility(button: "", content: "")]);
+          } else {
+            // Decode the JSON string
+            var decodedJson = jsonDecode(facilitiesJsonStr);
 
+            // Ensure the decoded JSON is a list
+            if (decodedJson is List) {
+              // Convert the list of dynamic to a list of Ranking objects
+              List<Facility> facility = decodedJson
+                  .map<Facility>(
+                      (e) => Facility.fromJson(e as Map<String, dynamic>))
+                  .toList();
+              AppConstant.listedFacilities.add(facility);
+              // Print the parsed Ranking objects for verification
+              print('facility List: $facility');
             } else {
-              // Decode the JSON string
-              var decodedJson = jsonDecode(facilitiesJsonStr);
+              AppConstant.listedFacilities
+                  .add([Facility(button: "", content: "")]);
 
-              // Ensure the decoded JSON is a list
-              if (decodedJson is List) {
-                // Convert the list of dynamic to a list of Ranking objects
-                List<Facility> facility  = decodedJson.map<Facility>((e) => Facility.fromJson(e as Map<String, dynamic>)).toList();
-                AppConstant.listedFacilities.add(facility);
-                // Print the parsed Ranking objects for verification
-                print('facility List: $facility');
-              } else {
-
-                AppConstant.listedFacilities.add([Facility(button: "",content: "")]);
-
-                // print('Error: The decoded JSON is not a list.');
-                // print('Decoded JSON Type: ${decodedJson.runtimeType}');
-                // print('Decoded JSON Value: $decodedJson');
-              }
+              // print('Error: The decoded JSON is not a list.');
+              // print('Decoded JSON Type: ${decodedJson.runtimeType}');
+              // print('Decoded JSON Value: $decodedJson');
             }
-          } catch (e) {
-            print('An error occurred: $e');
           }
+        } catch (e) {
+          print('An error occurred: $e');
         }
+      }
 
+      //Working on ALumnus
 
-        //Working on ALumnus
-
-
-        for (var item in table) {
-          String alumniJsonStr = item['Alumni'];
-          print(alumniJsonStr);
-          // Print the raw JSON string for debugging
-          //print('Raw JSON String: $alumniJsonStr');
-          try {
-            if (alumniJsonStr == 'N/A' || alumniJsonStr.isEmpty) {
-              // If JSON string is 'N/A' or empty, replace it with an empty list
+      for (var item in table) {
+        String alumniJsonStr = item['Alumni'];
+        print(alumniJsonStr);
+        // Print the raw JSON string for debugging
+        //print('Raw JSON String: $alumniJsonStr');
+        try {
+          if (alumniJsonStr == 'N/A' || alumniJsonStr.isEmpty) {
+            // If JSON string is 'N/A' or empty, replace it with an empty list
             //  print('Empty JSON String detected. Using an empty list.');
-              // rankings = [];
-              AppConstant.listedAlumnus.add([Alumnus(name: '', qualification: '')]);
+            // rankings = [];
+            AppConstant.listedAlumnus
+                .add([Alumnus(name: '', qualification: '')]);
+          } else {
+            // Decode the JSON string
+            var decodedJson = jsonDecode(alumniJsonStr);
 
+            // Ensure the decoded JSON is a list
+            if (decodedJson is List) {
+              // Convert the list of dynamic to a list of Ranking objects
+              List<Alumnus> alumni = decodedJson
+                  .map<Alumnus>(
+                      (e) => Alumnus.fromJson(e as Map<String, dynamic>))
+                  .toList();
+              AppConstant.listedAlumnus.add(alumni);
+              // Print the parsed Ranking objects for verification
+              print('facility List: $alumni');
             } else {
-              // Decode the JSON string
-              var decodedJson = jsonDecode(alumniJsonStr);
+              AppConstant.listedAlumnus
+                  .add([Alumnus(name: '', qualification: '')]);
 
-              // Ensure the decoded JSON is a list
-              if (decodedJson is List) {
-                // Convert the list of dynamic to a list of Ranking objects
-                List<Alumnus> alumni  = decodedJson.map<Alumnus>((e) => Alumnus.fromJson(e as Map<String, dynamic>)).toList();
-                AppConstant.listedAlumnus.add(alumni);
-                // Print the parsed Ranking objects for verification
-                print('facility List: $alumni');
-              } else {
-
-                AppConstant.listedAlumnus.add([Alumnus(name: '', qualification: '')]);
-
-                // print('Error: The decoded JSON is not a list.');
-                // print('Decoded JSON Type: ${decodedJson.runtimeType}');
-                // print('Decoded JSON Value: $decodedJson');
-              }
+              // print('Error: The decoded JSON is not a list.');
+              // print('Decoded JSON Type: ${decodedJson.runtimeType}');
+              // print('Decoded JSON Value: $decodedJson');
             }
-          } catch (e) {
-            print('An error occurred: $e');
           }
+        } catch (e) {
+          print('An error occurred: $e');
         }
+      }
 
-        // print("Alumnus length is ${AppConstant.listedAlumnus.length}");
-        // print("Alumnus length is ${AppConstant.listedAlumnus[0].map((e) => e.name)}");
-        // print("Alumnus length is ${AppConstant.listedAlumnus[0].map((e) => e.qualification)}");
+      // print("Alumnus length is ${AppConstant.listedAlumnus.length}");
+      // print("Alumnus length is ${AppConstant.listedAlumnus[0].map((e) => e.name)}");
+      // print("Alumnus length is ${AppConstant.listedAlumnus[0].map((e) => e.qualification)}");
 
+      //Working on FAQs
+      for (var item in table) {
+        String fAQsJsonStr = item['FAQs'];
+        print(fAQsJsonStr);
+        // Print the raw JSON string for debugging
+        print('Raw JSON String: $fAQsJsonStr');
+        try {
+          if (fAQsJsonStr == 'N/A' || fAQsJsonStr.isEmpty) {
+            // If JSON string is 'N/A' or empty, replace it with an empty list
+            print('Empty JSON String detected. Using an empty list.');
+            // rankings = [];
+            AppConstant.listedFaq.add([Faq(question: "", answer: "")]);
+          } else {
+            // Decode the JSON string
+            var decodedJson = jsonDecode(fAQsJsonStr);
 
-
-        //Working on FAQs
-        for (var item in table) {
-          String fAQsJsonStr = item['FAQs'];
-          print(fAQsJsonStr);
-          // Print the raw JSON string for debugging
-          print('Raw JSON String: $fAQsJsonStr');
-          try {
-            if (fAQsJsonStr == 'N/A' || fAQsJsonStr.isEmpty) {
-              // If JSON string is 'N/A' or empty, replace it with an empty list
-              print('Empty JSON String detected. Using an empty list.');
-              // rankings = [];
+            // Ensure the decoded JSON is a list
+            if (decodedJson is List) {
+              // Convert the list of dynamic to a list of Ranking objects
+              List<Faq> faqs = decodedJson
+                  .map<Faq>((e) => Faq.fromJson(e as Map<String, dynamic>))
+                  .toList();
+              AppConstant.listedFaq.add(faqs);
+              // Print the parsed Ranking objects for verification
+              print('faqs List: $faqs');
+            } else {
               AppConstant.listedFaq.add([Faq(question: "", answer: "")]);
 
-            } else {
-              // Decode the JSON string
-              var decodedJson = jsonDecode(fAQsJsonStr);
-
-              // Ensure the decoded JSON is a list
-              if (decodedJson is List) {
-                // Convert the list of dynamic to a list of Ranking objects
-                List<Faq> faqs  = decodedJson.map<Faq>((e) => Faq.fromJson(e as Map<String, dynamic>)).toList();
-                AppConstant.listedFaq.add(faqs);
-                // Print the parsed Ranking objects for verification
-                print('faqs List: $faqs');
-              } else {
-
-                AppConstant.listedFaq.add([Faq(question: "", answer: "")]);
-
-                print('Error: The decoded JSON is not a list.');
-                print('Decoded JSON Type: ${decodedJson.runtimeType}');
-                print('Decoded JSON Value: $decodedJson');
-              }
+              print('Error: The decoded JSON is not a list.');
+              print('Decoded JSON Type: ${decodedJson.runtimeType}');
+              print('Decoded JSON Value: $decodedJson');
             }
-          } catch (e) {
-            print('An error occurred: $e');
           }
+        } catch (e) {
+          print('An error occurred: $e');
         }
-
-        // print("Faqs length is ${AppConstant.listedFaq.length}");
-        // print("Faqs length is ${AppConstant.listedFaq[30].map((e) => e.question)}");
-        // print("FAqs length is ${AppConstant.listedFaq[30].map((e) => e.answer)}");
-        // print("FAqs length is ${universities.where((element) => element.universityName == "University of Lincoln")}");
-        // print("FAqs length is ${universities.length}");
-        // print("FAqs length is ${universities[30].id}");
-        // print("FAqs length is ${universities[30].id);
-        // print("FAqs length is ${universities[30].universityName);
-
-
-
-        // List<University> universities = List<University>.from(jsonResponse['Model']['Table'].map((x) => University.fromJson(x)));
-    List<University> tagObjs =
-    (responseData['Model']['Table'] as List)
-        .map((itemWord) => University.fromJson(itemWord))
-        .toList();
-
-
-        for (University university in tagObjs) {
-          print(university.name);
-          print(university.countryId);
-          print(university.degreeId);
-          print(university.trendingSubjectsId);
-          print(university.scholarships);
-          print(university.employabilityDetails);
-          print(university.universityInformation);
-          print(university.flagUrl);
-          print(university.userId);
-          print(university.statusId);
-
-          // Access other properties as needed
-        }
-        // List<Alumni> tagObj2 =
-        // (responseData['Model']['Table'][0]['Alumni'] as List)
-        //     .map((itemWord) => Alumni.fromJson(itemWord))
-        //     .toList();
-        // List<Alumni> tagObj23 =
-        // (responseData['Model']['Table'] as List)
-        //     .map((itemWord) => Alumni.fromJson(itemWord))
-        //     .toList();
-      //  print(tagObj2);
-        // Access universities list
-        setState(() {
-          universities = tagObjs;
-          isUniversitryLoading = false;
-        });
-
-        // print("FAqs length is ${universities[30].id}");
-        // print("FAqs length is ${universities[30].id}");
-        // print("FAqs length is ${universities[30].universityName}");
-        //
-        // print(tagObjs);
-       // getAllCountry();
-
-        // List<University> tagObjs = (responseData['Model']['Table'] as List)
-        //     .map((itemWord) => University.fromJson(itemWord))
-        //     .toList();
-
-
-       // print(tagObjs);
-
-        return "accessToken";
-      } else {
-        print(response);
-        print('Failed to generate Zoom access token. Status code: ${response.body}');
-        return "ccc";
       }
+
+      // print("Faqs length is ${AppConstant.listedFaq.length}");
+      // print("Faqs length is ${AppConstant.listedFaq[30].map((e) => e.question)}");
+      // print("FAqs length is ${AppConstant.listedFaq[30].map((e) => e.answer)}");
+      // print("FAqs length is ${universities.where((element) => element.universityName == "University of Lincoln")}");
+      // print("FAqs length is ${universities.length}");
+      // print("FAqs length is ${universities[30].id}");
+      // print("FAqs length is ${universities[30].id);
+      // print("FAqs length is ${universities[30].universityName);
+
+      // List<University> universities = List<University>.from(jsonResponse['Model']['Table'].map((x) => University.fromJson(x)));
+      List<University> tagObjs = (responseData['Model']['Table'] as List)
+          .map((itemWord) => University.fromJson(itemWord))
+          .toList();
+
+      for (University university in tagObjs) {
+        print(university.name);
+        print(university.countryId);
+        print(university.degreeId);
+        print(university.trendingSubjectsId);
+        print(university.scholarships);
+        print(university.employabilityDetails);
+        print(university.universityInformation);
+        print(university.flagUrl);
+        print(university.userId);
+        print(university.statusId);
+
+        // Access other properties as needed
+      }
+      // List<Alumni> tagObj2 =
+      // (responseData['Model']['Table'][0]['Alumni'] as List)
+      //     .map((itemWord) => Alumni.fromJson(itemWord))
+      //     .toList();
+      // List<Alumni> tagObj23 =
+      // (responseData['Model']['Table'] as List)
+      //     .map((itemWord) => Alumni.fromJson(itemWord))
+      //     .toList();
+      //  print(tagObj2);
+      // Access universities list
+      setState(() {
+        universities = tagObjs;
+        isUniversitryLoading = false;
+      });
+
+      // print("FAqs length is ${universities[30].id}");
+      // print("FAqs length is ${universities[30].id}");
+      // print("FAqs length is ${universities[30].universityName}");
+      //
+      // print(tagObjs);
+      // getAllCountry();
+
+      // List<University> tagObjs = (responseData['Model']['Table'] as List)
+      //     .map((itemWord) => University.fromJson(itemWord))
+      //     .toList();
+
+      // print(tagObjs);
+
+      return "accessToken";
+    } else {
+      print(response);
+      print(
+          'Failed to generate Zoom access token. Status code: ${response.body}');
+      return "ccc";
+    }
     // } catch (e) {
     //   print('Error generating Zoom access token: ${e}');
-      return 'bbb';
-   // }
+    return 'bbb';
+    // }
   }
+
   Future<String> getAllCountry() async {
     //   try {
     // Uri baseURL = Uri(scheme: 'http',
     // host: '52.234.144.176',
     // path: '/apiToken/LogIn');
 
-
-
-    var response = await https.post(Uri.parse('${AppConstant.BaseUrl}/Datasource/GetDataByDataSourceID'),
+    var response = await https.post(
+      Uri.parse('${AppConstant.BaseUrl}/Datasource/GetDataByDataSourceID'),
       headers: MainHeaders.updatedHeader,
       body: jsonEncode(<String, String>{
         'DataSourceID': '2',
-
       }),
     );
     // final response = await http.post(
@@ -592,7 +563,6 @@ class _ExploreScreenState extends State<ExploreScreen> {
       print("country Data is ");
       print(responseData);
       print(responseData['Model']['Table'][0]['CountryID']);
-
 
       // List<University> universities = List<University>.from(jsonResponse['Model']['Table'].map((x) => University.fromJson(x)));
       ///List<University> universities = List<University>.from(jsonResponse['Model']['Table'].map((x) => University.fromJson(x)));
@@ -612,7 +582,7 @@ class _ExploreScreenState extends State<ExploreScreen> {
       //   print(university.userID);
       //   print(university.statusID);
 
-        // Access other properties as needed
+      // Access other properties as needed
       //}
       // List<Alumni> tagObj2 =
       // (responseData['Model']['Table'][0]['Alumni'] as List)
@@ -634,13 +604,13 @@ class _ExploreScreenState extends State<ExploreScreen> {
       //     .map((itemWord) => University.fromJson(itemWord))
       //     .toList();
 
-
       // print(tagObjs);
 
       return "accessToken";
     } else {
       print(response);
-      print('Failed to generate Zoom access token. Status code: ${response.body}');
+      print(
+          'Failed to generate Zoom access token. Status code: ${response.body}');
       return "ccc";
     }
     // } catch (e) {
@@ -651,47 +621,48 @@ class _ExploreScreenState extends State<ExploreScreen> {
 
   Future<void> redFileFromDirectory() async {
     final directory = Directory.current;
-///    final filePath = path.join(directory.path, 'images/abc.json');
+
+    ///    final filePath = path.join(directory.path, 'images/abc.json');
     String jsonData = await rootBundle.loadString('images/abc.json');
     List<Map<String, dynamic>> dataList =
-    List<Map<String, dynamic>>.from(json.decode(jsonData));
-  //  List<University> universities = dataList.cast<University>();
+        List<Map<String, dynamic>>.from(json.decode(jsonData));
+    //  List<University> universities = dataList.cast<University>();
 
     //University response = University.fromJson(jsonDecode(jsonData));
     // var aaa = (jsonDecode(jsonData) as List)
     //     .map((itemWord) => University.fromJson(itemWord))
     //     .toList();
     // print(aaa.length);
-    List<University> listOfPersons = dataList.map((map) => University.fromJson(map)).toList();
+    List<University> listOfPersons =
+        dataList.map((map) => University.fromJson(map)).toList();
     print(listOfPersons.length);
     print(listOfPersons.map((e) => e.name));
 
     //University universityModel = UniversityResponse.fromJson(jsonDecode(jsonData));
 //
 //     // Accessing the universities list
-   /// List<Map<String, dynamic>> universities = dataList;
+    /// List<Map<String, dynamic>> universities = dataList;
 
-
-   // final file = File(filePath);
+    // final file = File(filePath);
     print(dataList);
     print(dataList.length);
     print(dataList.last);
     print(dataList[0]["More_About_University"]);
 
-  //   if (await file.exists()) {
-  //     final jsonString = await file.readAsString();
-  //     final jsonData = jsonDecode(jsonString);
-  //
-  //     University university = University.fromJson(jsonData);
-  //
-  //     print('University Name: ${university.universityName}');
-  //     print('Country ID: ${university.countryId}');
-  //     print('Degrees: ${university.degreeId}');
-  //     print('Trending Subjects: ${university.trendingSubjectsId}');
-  //     // Print other details as needed
-  //   } else {
-  //     print('File not found');
-  //   }
+    //   if (await file.exists()) {
+    //     final jsonString = await file.readAsString();
+    //     final jsonData = jsonDecode(jsonString);
+    //
+    //     University university = University.fromJson(jsonData);
+    //
+    //     print('University Name: ${university.universityName}');
+    //     print('Country ID: ${university.countryId}');
+    //     print('Degrees: ${university.degreeId}');
+    //     print('Trending Subjects: ${university.trendingSubjectsId}');
+    //     // Print other details as needed
+    //   } else {
+    //     print('File not found');
+    //   }
   }
 
   // void main() {
@@ -839,7 +810,6 @@ class _ExploreScreenState extends State<ExploreScreen> {
 //     // Add more print statements to display other parsed details if needed
 //   }
 
-
   bool isUniversitryLoading = true;
   @override
   void initState() {
@@ -848,20 +818,18 @@ class _ExploreScreenState extends State<ExploreScreen> {
 
     print("init call ");
     //main();
-   // redFileFromDirectory();
+    // redFileFromDirectory();
     getLogin();
     //getAllUniversities();
-
   }
+
   checkUserDetail() async {
-    var aa = await  getUserData();
+    var aa = await getUserData();
     print("aa");
     print(aa);
     bool loggedIn = await isLoggedIn();
     print(loggedIn);
-
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -870,14 +838,15 @@ class _ExploreScreenState extends State<ExploreScreen> {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-
           Container(
             height: Responsive.height(30, context),
             width: MediaQuery.sizeOf(context).width,
             decoration: BoxDecoration(
               // color: Colors.green,
               image: DecorationImage(
-                image: AssetImage('images/DashboardTopBarBG.png',),
+                image: AssetImage(
+                  'images/DashboardTopBarBG.png',
+                ),
                 fit: BoxFit.cover,
               ),
             ),
@@ -912,7 +881,10 @@ class _ExploreScreenState extends State<ExploreScreen> {
                                 32.0), // Set your desired border radius
                           ),
                           child: Center(
-                            child: Text("${AppConstant.userLgged ? AppConstant.userName: "Sign up"}",
+                            child: Text(
+                                AppConstant.userLgged
+                                    ? AppConstant.userName
+                                    : "Sign up",
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
                                 textAlign: TextAlign.center,
@@ -929,10 +901,13 @@ class _ExploreScreenState extends State<ExploreScreen> {
                           )),
                       onTap: () async {
                         bool loggedIn = await isLoggedIn();
-                        if(loggedIn){
+                        if (loggedIn) {
                           ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(content: Text('${AppConstant.userName} is Already logged in')),);
-                        }else{
+                            SnackBar(
+                                content: Text(
+                                    '${AppConstant.userName} is Already logged in')),
+                          );
+                        } else {
                           showModalBottomSheet(
                             context: context,
                             isScrollControlled: true,
@@ -943,7 +918,6 @@ class _ExploreScreenState extends State<ExploreScreen> {
                             },
                           );
                         }
-
                       },
                     ),
                     SizedBox(
@@ -961,46 +935,46 @@ class _ExploreScreenState extends State<ExploreScreen> {
                   ),
                   child: Center(
                       child: Row(
-                        children: [
-                          SizedBox(
-                            width: 12,
-                          ),
-                          Icon(
-                            Icons.search,
-                            color: AppColors.themeMaincolor,
-                            size: 30,
-                          ),
-                          Container(
-                              width: Responsive.width(65, context),
-                              height: Responsive.width(10, context),
-                              margin: EdgeInsets.only(left: 8),
-                              decoration: BoxDecoration(
-                                border: Border.all(
-                                  color: Colors.transparent,
-                                  width: 0, // Border width
-                                ),
-                                borderRadius:
+                    children: [
+                      SizedBox(
+                        width: 12,
+                      ),
+                      Icon(
+                        Icons.search,
+                        color: AppColors.themeMaincolor,
+                        size: 30,
+                      ),
+                      Container(
+                          width: Responsive.width(65, context),
+                          height: Responsive.width(10, context),
+                          margin: EdgeInsets.only(left: 8),
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                              color: Colors.transparent,
+                              width: 0, // Border width
+                            ),
+                            borderRadius:
                                 BorderRadius.circular(10), // Border radius
-                              ),
-                              child: Padding(
-                                padding: EdgeInsets.only(
-                                    top: 0.0, bottom: 0, left: 2, right: 2),
-                                child: Center(
-                                  child: TextField(
-                                    decoration: InputDecoration(
-                                      hintText: 'Find Courses and Institutions',
-                                      hintStyle: TextStyle(
-                                          color: Color(0xFF36404B), fontSize: 16),
-                                      border: InputBorder.none, // No border
-                                      focusedBorder: InputBorder
-                                          .none, // No border when focused
-                                    ),
-                                  ),
+                          ),
+                          child: Padding(
+                            padding: EdgeInsets.only(
+                                top: 0.0, bottom: 0, left: 2, right: 2),
+                            child: Center(
+                              child: TextField(
+                                decoration: InputDecoration(
+                                  hintText: 'Find Courses and Institutions',
+                                  hintStyle: TextStyle(
+                                      color: Color(0xFF36404B), fontSize: 16),
+                                  border: InputBorder.none, // No border
+                                  focusedBorder: InputBorder
+                                      .none, // No border when focused
                                 ),
-                              )),
-                          Spacer(),
-                        ],
-                      )),
+                              ),
+                            ),
+                          )),
+                      Spacer(),
+                    ],
+                  )),
                 ),
                 SizedBox(
                   height: 18,
@@ -1011,14 +985,17 @@ class _ExploreScreenState extends State<ExploreScreen> {
           Container(
             transform: Matrix4.translationValues(0.0, -46.0, 0.0),
             decoration: BoxDecoration(
-                borderRadius: BorderRadius.only(topLeft: Radius.circular(40),topRight: Radius.circular(40)),
-                color: Colors.white
-            ),
+                borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(40),
+                    topRight: Radius.circular(40)),
+                color: Colors.grey.shade50),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SizedBox(height: 40,),
+                SizedBox(
+                  height: 40,
+                ),
                 Row(
                   children: [
                     SizedBox(
@@ -1028,13 +1005,12 @@ class _ExploreScreenState extends State<ExploreScreen> {
                     Text("Discover Top",
                         style: GoogleFonts.roboto(
                             textStyle: TextStyle(
-                              fontWeight: FontWeight.w800,
-                              fontSize: AdaptiveTextSize()
-                                  .getadaptiveTextSize(context, 20),
-                              color: AppColors.headingColor,
-                              // fontFamily: 'SORA-BOLD'
-                            ))
-                    ),
+                          fontWeight: FontWeight.w800,
+                          fontSize: AdaptiveTextSize()
+                              .getadaptiveTextSize(context, 20),
+                          color: AppColors.headingColor,
+                          // fontFamily: 'SORA-BOLD'
+                        ))),
                     //  ),
 
                     SizedBox(
@@ -1044,7 +1020,6 @@ class _ExploreScreenState extends State<ExploreScreen> {
                     Spacer(),
                     InkWell(
                       onTap: () async {
-
                         // Navigator.of(context).push(
                         //   MaterialPageRoute(
                         //     builder: (context) => UniversityListPage(universities: universities,),
@@ -1081,25 +1056,29 @@ class _ExploreScreenState extends State<ExploreScreen> {
                         // );
                         Navigator.of(context).push(
                           MaterialPageRoute(
-                            builder: (context) => UniversityListPage(universities: universities,),
+                            builder: (context) => UniversityListPage(
+                              universities: universities,
+                            ),
                           ),
                         );
-                        // redFileFromDirectory();
-                        // getAllUniversities();
-                        print("go to FilterListPage");
                       },
                       child: Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          Text('See all',style: GoogleFonts.roboto(
-                              textStyle: TextStyle(
+                          Text('See all',
+                              style: GoogleFonts.roboto(
+                                  textStyle: TextStyle(
                                 fontWeight: FontWeight.w800,
                                 fontSize: AdaptiveTextSize()
                                     .getadaptiveTextSize(context, 14),
                                 color: Colors.orange,
                                 // fontFamily: 'SORA-BOLD'
                               ))),
-                          Icon(Icons.arrow_forward_rounded, color: Colors.orange,size: 30,)
+                          Icon(
+                            Icons.arrow_forward_rounded,
+                            color: Colors.orange,
+                            size: 30,
+                          )
                         ],
                       ),
                     ),
@@ -1114,15 +1093,14 @@ class _ExploreScreenState extends State<ExploreScreen> {
                   child: Text("Universities",
                       style: GoogleFonts.roboto(
                           textStyle: TextStyle(
-                            fontWeight: FontWeight.w800,
-                            fontSize: AdaptiveTextSize()
-                                .getadaptiveTextSize(context, 20),
-                            color: Color(0xff38332F),
-                            // color: Color(0xFF151C18),
-                            // fontFamily: 'SORA-BOLD'
-                          ))),
+                        fontWeight: FontWeight.w800,
+                        fontSize:
+                            AdaptiveTextSize().getadaptiveTextSize(context, 20),
+                        color: Color(0xff38332F),
+                        // color: Color(0xFF151C18),
+                        // fontFamily: 'SORA-BOLD'
+                      ))),
                 ),
-
                 SizedBox(
                   height: 6,
                 ),
@@ -1148,483 +1126,126 @@ class _ExploreScreenState extends State<ExploreScreen> {
                 SizedBox(
                   height: 20,
                 ),
-
-
-
-                isUniversitryLoading?  Center(
-                    child: new CircularProgressIndicator( valueColor: AlwaysStoppedAnimation<Color>(AppColors.themeMaincolor)))
-                    :  Container(
-                  height: Responsive.height(60, context),
-                  width: Responsive.width(100, context),
-                  margin: EdgeInsets.only(left: 12, right: 12),
-                  // transform: Matrix4.translationValues(0.0, -0, 0.0),
-                  child: GridView.count(
-                      scrollDirection: Axis.horizontal,
-                      // Set the s
-                      padding: EdgeInsets.zero,
-                      crossAxisCount: 1,
-                      childAspectRatio:
-                      MediaQuery.of(context).size.height / 680,
-                      mainAxisSpacing: 0,
-                      crossAxisSpacing: 0,
-                      children: List.generate(universities.length, (index) {
-                        return InkWell(
-                          child: GridItemWidget(universities[index].universityName,universities[index].name),
-                          onTap: () {
-                            print(index);
-                            //    getLogin();
-                            print(universities[index].universityName);
-                            print(universities[index].name);
-
-                            Navigator.of(context).push(
-                              MaterialPageRoute(
-                                builder: (context) => UniversityDetailScreen(
-                                  universityDetialModel: universities[index],
-                                  rankings: AppConstant.listedRanking[index],
-                                  facilties: AppConstant.listedFacilities[index],
-                                  alumus: AppConstant.listedAlumnus[index],
-                                  faqs: AppConstant.listedFaq[index],
-                                ),
-                              ),
-                            );
-                          },
-                        );
-                      })),
-                ),
-
-
-
-                SizedBox(
-                  height: 1,
-                ),
-
-                //comint course work
-                // Container(
-                //   //transform: Matrix4.translationValues(0.0, -6.0, 0.0),
-                //   child: Row(
-                //     children: [
-                //       SizedBox(
-                //         width: 26,
-                //       ),
-                //       //  SizedBox(
-                //       //  width: Responsive.width(44, context),
-                //       //  child:
-                //       Text("We'll help you find",
-                //           textAlign: TextAlign.left,
-                //           style: GoogleFonts.roboto(
-                //               textStyle: TextStyle(
-                //             fontWeight: FontWeight.w800,
-                //             fontSize: AdaptiveTextSize()
-                //                 .getadaptiveTextSize(context, 20),
-                //             color: Color(0xff36404B),
-                //           ))),
-                //       //  ),
-                //       SizedBox(
-                //         width: 8,
-                //       ),
-                //       // Container(
-                //       //   // transform: Matrix4.translationValues(0.0, 0.0, 0.0),
-                //       //   child: Image.asset(
-                //       //     'images/CapIcon.png',
-                //       //     width: 17,
-                //       //     height: 15,
-                //       //     fit: BoxFit.contain,
-                //       //   ),
-                //       // ),
-                //       Spacer(),
-                //       InkWell(
-                //         child: Image.asset(
-                //           'images/SeeAll.png',
-                //           width: 64,
-                //           height: 17,
-                //           fit: BoxFit.contain,
-                //         ),
-                //         // Icon(
-                //         //   Icons.arroarrow_forward_ios_outlined,
-                //         //   color: Color(0xff36404B),
-                //         //   size: 20,
-                //         // ),
-                //         onTap: () {
-                //           showDialog(
-                //             context: context,
-                //             builder: (BuildContext context) {
-                //               return AlertDialog(
-                //                 title: Text('Message'),
-                //                 content: Text(
-                //                     'This screen will be available soon'),
-                //                 actions: [
-                //                   TextButton(
-                //                     onPressed: () {
-                //                       Navigator.of(context).pop();
-                //                     },
-                //                     child: Text(
-                //                       'OK',
-                //                       style: TextStyle(
-                //                           color: AppColors.themeMaincolor),
-                //                     ),
-                //                   ),
-                //                 ],
-                //               );
-                //             },
-                //           );
-                //           print("go to next page");
-                //         },
-                //       ),
-                //       SizedBox(
-                //         width: 24,
-                //       ),
-                //     ],
-                //   ),
-                // ),
-                // Container(
-                //   margin: EdgeInsets.only(left: 26),
-                //   // transform: Matrix4.translationValues(0.0, -8.0, 0.0),
-                //   child: Text("the right courses",
-                //       textAlign: TextAlign.left,
-                //       style: GoogleFonts.roboto(
-                //           textStyle: TextStyle(
-                //         fontWeight: FontWeight.w800,
-                //         fontSize: AdaptiveTextSize()
-                //             .getadaptiveTextSize(context, 20),
-                //         color: AppColors.headingColor,
-                //       ))),
-                // ),
-                // SizedBox(
-                //   height: 6,
-                // ),
-                // Container(
-                //   // transform: Matrix4.translationValues(0.0, -8.0, 0.0),
-                //   margin: EdgeInsets.only(left: 26),
-                //   child: SizedBox(
-                //     width: Responsive.width(65, context),
-                //     child: Text(
-                //         "Search from over 63950 courses by subject or university.",
-                //         textAlign: TextAlign.left,
-                //         style: GoogleFonts.roboto(
-                //             textStyle: TextStyle(
-                //           fontWeight: FontWeight.normal,
-                //           fontSize: AdaptiveTextSize()
-                //               .getadaptiveTextSize(context, 13),
-                //           color: AppColors.headingColor,
-                //         ))),
-                //   ),
-                // ),
-                // SizedBox(
-                //   height: 10,
-                // ),
-                // Container(
-                //     height: Responsive.height(20, context),
-                //     width: Responsive.width(100, context),
-                //     margin: EdgeInsets.only(left: 12, right: 12),
-                //     child: GridView.builder(
-                //         gridDelegate:
-                //             SliverGridDelegateWithFixedCrossAxisCount(
-                //           crossAxisCount: 2,
-                //           childAspectRatio:
-                //               0.30, // width / height ratio (400 / 100)
-                //         ),
-                //         scrollDirection: Axis.horizontal,
-                //         // Set the s
-                //         padding: EdgeInsets.zero,
-                //         itemCount: items.length,
-                //         itemBuilder: (context, index) {
-                //           return InkWell(
-                //             child: Container(
-                //               //height: 5,
-                //               decoration: BoxDecoration(
-                //                 color: Colors.white,
-                //                 boxShadow: [
-                //                   BoxShadow(
-                //                     color: Colors.grey.withOpacity(0.12),
-                //                     spreadRadius: 2,
-                //                     blurRadius: 5,
-                //                     offset: Offset(
-                //                         0, 0), // changes position of shadow
-                //                   ),
-                //                 ],
-                //                 borderRadius: BorderRadius.circular(
-                //                     7.0), // Set your desired border radius
-                //               ),
-                //               //),
-                //               margin: EdgeInsets.all(8.0),
-                //               padding: EdgeInsets.all(8.0),
-                //               child: Center(
-                //                   child: Row(
-                //                 children: [
-                //                   ClipRRect(
-                //                     borderRadius: BorderRadius.circular(8.0),
-                //                     child: Image.asset(
-                //                       'images/ComputerScience.png',
-                //                       width: 39,
-                //                       height: 40,
-                //                       fit: BoxFit.contain,
-                //                     ),
-                //                   ),
-                //                   SizedBox(
-                //                     width: 12,
-                //                   ),
-                //                   Column(
-                //                     mainAxisAlignment:
-                //                         MainAxisAlignment.center,
-                //                     crossAxisAlignment:
-                //                         CrossAxisAlignment.start,
-                //                     children: [
-                //                       Text('${items[index].name}',
-                //                           style: GoogleFonts.roboto(
-                //                               textStyle: TextStyle(
-                //                             fontWeight: FontWeight.w600,
-                //                             fontSize: AdaptiveTextSize()
-                //                                 .getadaptiveTextSize(
-                //                                     context, 12),
-                //                             color: Color(0xff484D54),
-                //                           ))),
-                //                       SizedBox(height: 8),
-                //                       Row(
-                //                         children: [
-                //                           Text(
-                //                               '${items[index].noOfCourse} Course',
-                //                               style: GoogleFonts.roboto(
-                //                                   textStyle: TextStyle(
-                //                                 fontWeight: FontWeight.w400,
-                //                                 fontSize: AdaptiveTextSize()
-                //                                     .getadaptiveTextSize(
-                //                                         context, 10),
-                //                                 color: Color(0xff36404B),
-                //                               ))),
-                //                           SizedBox(
-                //                             width:
-                //                                 Responsive.width(2, context),
-                //                           ),
-                //                           Text(
-                //                               '${items[index].noOfUniversity} Universities',
-                //                               style: GoogleFonts.roboto(
-                //                                   textStyle: TextStyle(
-                //                                 fontWeight: FontWeight.w400,
-                //                                 fontSize: AdaptiveTextSize()
-                //                                     .getadaptiveTextSize(
-                //                                         context, 10),
-                //                                 color: Color(0xff36404B),
-                //                               ))),
-                //                         ],
-                //                       ),
-                //                       SizedBox(
-                //                         width: 12,
-                //                       ),
-                //                     ],
-                //                   ),
-                //                   Spacer(),
-                //                   Icon(
-                //                     Icons.arrow_forward_ios_outlined,
-                //                     color: Color(0xff28282A),
-                //                     size: 10,
-                //                   ),
-                //                 ],
-                //               )),
-                //             ),
-                //             onTap: () {
-                //               print(index);
-                //             },
-                //           );
-                //         })),
-                //),
+                isUniversitryLoading
+                    ? Center(
+                        child: new CircularProgressIndicator(
+                            valueColor: AlwaysStoppedAnimation<Color>(
+                                AppColors.themeMaincolor)))
+                    : SizedBox(
+                        height: 200.h,
+                        child: ListView.builder(
+                          itemCount: universities.length,
+                          scrollDirection: Axis.horizontal,
+                          itemBuilder: (context, index) =>
+                              GridItemWidget(universities[index], index),
+                        ),
+                      ),
                 SizedBox(
                   height: 28,
                 ),
-
-                //commit work start
-                /*   Container(
-                    //   transform: Matrix4.translationValues(0.0, -10.0, 0.0),
-                    child: Row(
-                      children: [
-                        SizedBox(
-                          width: 26,
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                  child: Row(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(right: 8.0),
+                        child: Icon(Icons.home_outlined,size: 26,color: Colors.black,),
+                      ),
+                      Expanded(child: Text('Top Institutions',style: customText(22,Colors.black,FontWeight.bold),)),
+                      Icon(Icons.arrow_forward_outlined,color: Colors.black,)
+                    ],
+                  ),
+                ),
+                SizedBox(height: 10,),
+                SizedBox(
+                  height: 120.h,
+                  child: ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    itemCount: 10,
+                    itemBuilder: (context,index)=>Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Container(
+                        width: 260.w,
+                        padding: EdgeInsets.all(12),
+                        decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(8)
                         ),
-                        Text("Explore Top Study",
-                            textAlign: TextAlign.left,
-                            style: GoogleFonts.roboto(
-                                textStyle: TextStyle(
-                              fontWeight: FontWeight.w800,
-                              fontSize: AdaptiveTextSize()
-                                  .getadaptiveTextSize(context, 20),
-                              color: AppColors.headingColor,
-                            ))),
-                        SizedBox(
-                          width: 8,
-                        ),
-                        Spacer(),
-                        InkWell(
-                          child: Image.asset(
-                            'images/SeeAll.png',
-                            width: 64,
-                            height: 17,
-                            fit: BoxFit.contain,
-                          ),
-                          onTap: () {
-                            showDialog(
-                              context: context,
-                              builder: (BuildContext context) {
-                                return AlertDialog(
-                                  title: Text('Message'),
-                                  content: Text(
-                                      'This screen will be available soon'),
-                                  actions: [
-                                    TextButton(
-                                      onPressed: () {
-                                        Navigator.of(context).pop();
-                                      },
-                                      child: Text(
-                                        'OK',
-                                        style: TextStyle(
-                                            color: AppColors.themeMaincolor),
-                                      ),
-                                    ),
-                                  ],
-                                );
-                              },
-                            );
-                            print("go to next page");
-                          },
-                        ),
-                        SizedBox(
-                          width: 24,
-                        ),
-                      ],
-                    ),
-                  ),
-                  Container(
-                    margin: EdgeInsets.only(left: 26),
-                    child: Text("Destinations",
-                        textAlign: TextAlign.left,
-                        style: GoogleFonts.roboto(
-                            textStyle: TextStyle(
-                          fontWeight: FontWeight.w800,
-                          fontSize: AdaptiveTextSize()
-                              .getadaptiveTextSize(context, 20),
-                          color: AppColors.headingColor,
-                        ))),
-                  ),
-                  SizedBox(
-                    height: 6,
-                  ),
-                  Container(
-                    // transform: Matrix4.translationValues(0.0, -8.0, 0.0),
-                    margin: EdgeInsets.only(left: 26),
-                    child: SizedBox(
-                      width: Responsive.width(80, context),
-                      child: Text(
-                          "We’re partnered with over 120 world class education providers in 6 countries.",
-                          textAlign: TextAlign.left,
-                          style: GoogleFonts.roboto(
-                              textStyle: TextStyle(
-                            fontWeight: FontWeight.w400,
-                            fontSize: AdaptiveTextSize()
-                                .getadaptiveTextSize(context, 14),
-                            color: AppColors.headingColor,
-                          ))),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  isUniversitryLoading?  Center(
-                      child: new CircularProgressIndicator( valueColor: AlwaysStoppedAnimation<Color>(AppColors.themeMaincolor)))
-
-                      :  Container(
-                    height: Responsive.height(32.5, context),
-                    width: Responsive.width(100, context),
-                    margin: EdgeInsets.only(left: 12, right: 0),
-                    child: GridView.count(
-                        scrollDirection: Axis.horizontal,
-                        padding: EdgeInsets.zero,
-                        crossAxisCount: 1,
-                        childAspectRatio:
-                            MediaQuery.of(context).size.height / 550,
-                        mainAxisSpacing: 16,
-                        crossAxisSpacing: 0,
-                        children: List.generate(universities.map((e) => e.name).toSet().toList().length, (index) {
-                          return InkWell(
-                            child: Container(
-                              child: BottomGridItemWidget(universities.map((e) => e.name).toSet().toList()[index]),
+                        child: Column(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.only(left: 8.0),
+                              child: Text('Graduate Certificate Intelligent Computing',style: customText(16, Colors.grey.shade700, FontWeight.w500),),
                             ),
-                            onTap: () {
-                              print(index);
-                            },
-                          );
-                        })),
-                  ),
-                  SizedBox(
-                    height: 18,
-                  ),
-                  Container(
-                    //   transform: Matrix4.translationValues(0.0, -10.0, 0.0),
-                    child: Row(
-                      children: [
-                        SizedBox(
-                          width: 26,
-                        ),
-                        Text("Popular Courses",
-                            textAlign: TextAlign.left,
-                            style: GoogleFonts.roboto(
-                                textStyle: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: AdaptiveTextSize()
-                                  .getadaptiveTextSize(context, 17),
-                              color: Color(0xff36404B),
-                            ))),
-                        SizedBox(
-                          width: 8,
-                        ),
-                        Spacer(),
-                        SizedBox(
-                          width: 24,
-                        ),
-                      ],
-                    ),
-                  ),
-                  SizedBox(
-                    height: 12,
-                  ),
-                  Container(
-                    margin: EdgeInsets.only(left: 24),
-                    child: Wrap(
-                      direction: Axis.horizontal,
-                      spacing: 12.0, // spacing between chips
-                      runSpacing: 8.0,
-                      // spacing between rows of chips
-                      children: List.generate(
-                          trendingSubjects.length,
-                          (index) => Ink(
-                                decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(24.0),
-                                ),
-                                child: Chip(
-                                    padding: EdgeInsets.all(4),
-                                    label: Text(trendingSubjects[index]),
-                                    avatar: Image.asset(
-                                      'images/TrendingSubjectIcon.png',
-                                      width: 22,
-                                      height: 22,
+                            SizedBox(height: 8,),
+                            Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Container(
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(50),
+                                        color: Colors.white
                                     ),
-                                    backgroundColor: Colors.white,
-                                    shadowColor: Colors.black,
-                                    elevation: 0,
-                                    labelStyle: GoogleFonts.roboto(
-                                        textStyle: TextStyle(
-                                      fontWeight: FontWeight.w400,
-                                      fontSize: AdaptiveTextSize()
-                                          .getadaptiveTextSize(context, 10),
-                                      color: Color(0xff484D54),
-                                      // color: Color(0xFF151C18),
-                                      // fontFamily: 'SORA-BOLD'
-                                    ))
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(4.0),
+                                      child: Icon(Icons.favorite,color: Colors.red,size: 20,),
+                                    )),
+                                Expanded(child: Text('Graduate Intelligent...',style: customText(14, Colors.grey, FontWeight.w500),)),
+                                Text('USD 14,755',style: customText(14, Colors.purple, FontWeight.w500),)
+                              ],
+                            )
+                          ],
+                        ),
+                      ),
+                    ),
+                  )
+                ),
 
-                                    //  TextStyle(color: Color(0xff36404B),fontSize: 14,fontWeight: FontWeight.w300),
-                                    ),
-                              )),
-                    ),
-                  ),*/
-                //commit work start
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                  child: Row(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(right: 8.0),
+                        child: Icon(Icons.map_outlined,size: 26,color: Colors.black,),
+                      ),
+                      Expanded(child: Text('Popular Places',style: customText(22,Colors.black,FontWeight.bold),)),
+                      Icon(Icons.arrow_forward_outlined,color: Colors.black,)
+                    ],
+                  ),
+                ),
+                SizedBox(height: 10,),
+                SizedBox(
+                    height: 200.h,
+                    child: ListView.builder(
+                      scrollDirection: Axis.horizontal,
+                      itemCount: 10,
+                      itemBuilder: (context,index)=>Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Container(
+                          decoration: BoxDecoration(
+                              
+                              borderRadius: BorderRadius.circular(8)
+                          ),
+                          child: Column(
+                            children: [
+                              Container(
+                                height: 100.h,
+                                width: 100.h,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(100),
+                                  image: DecorationImage(image: NetworkImage('https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/Westerkerk_Amsterdam.jpg/220px-Westerkerk_Amsterdam.jpg',),fit: BoxFit.cover)
+                                ),
+                              ),
+                              SizedBox(height: 8,),
+                              Text('United Kingdom',style: customText(14, Colors.grey.shade700, FontWeight.w700),),
+                              Text('100 Institutions',style: customText(12, Colors.grey, FontWeight.w500),)
+                            ],
+                          ),
+                        ),
+                      ),
+                    )
+                ),
                 SizedBox(
                   height: 65,
                 ),
@@ -1678,8 +1299,6 @@ class DashboardBottomModel {
 //     "UserId": 1
 // }
 
-
-
 class Headers {
   static var token;
   static var defaultheader = {
@@ -1694,7 +1313,6 @@ class Headers {
   };
 }
 
-
 class MainHeaders {
   static var token;
   static var refreshToken;
@@ -1708,26 +1326,21 @@ class MainHeaders {
     'license-key': '213DD508-876F-4DD3-BBC1-0A33CC54A6C0',
     'user-host-name': 'malik',
     'faraz': 'bearer $token',
-   // 'faraz': 'bearer $refreshToken'
+    // 'faraz': 'bearer $refreshToken'
   };
 }
-
-
-
 
 class Login {
   String model;
   String refreshToken;
 
-
   //int userId;
-  Login({required this.model,required this.refreshToken});
+  Login({required this.model, required this.refreshToken});
 
   factory Login.fromJson(Map<String, dynamic> json) {
     return Login(
-        model: json['Model']['Token'],
-        refreshToken: json['Model']['RefreshToken'],
-
+      model: json['Model']['Token'],
+      refreshToken: json['Model']['RefreshToken'],
 
       // iD: json['ID'],
       // uniqueUserName: json['UniqueUserName'],
@@ -1739,3 +1352,40 @@ class Login {
     return [model].contains(null);
   }
 }
+
+//Container(
+//                   height: Responsive.height(60, context),
+//                   width: Responsive.width(100, context),
+//                   margin: EdgeInsets.only(left: 12, right: 12),
+//                   // transform: Matrix4.translationValues(0.0, -0, 0.0),
+//                   child: GridView.count(
+//                       scrollDirection: Axis.horizontal,
+//                       // Set the s
+//                       padding: EdgeInsets.zero,
+//                       crossAxisCount: 1,
+//                       childAspectRatio:
+//                       MediaQuery.of(context).size.height / 680,
+//                       mainAxisSpacing: 0,
+//                       crossAxisSpacing: 0,
+//                       children: List.generate(universities.length, (index) {
+//                         return InkWell(
+//                           child: GridItemWidget(universities[index].universityName,universities[index].name),
+//                           onTap: () {
+//                             print(universities[index].universityName);
+//                             print(universities[index].name);
+//
+//                             Navigator.of(context).push(
+//                               MaterialPageRoute(
+//                                 builder: (context) => UniversityDetailScreen(
+//                                   universityDetialModel: universities[index],
+//                                   rankings: AppConstant.listedRanking[index],
+//                                   facilties: AppConstant.listedFacilities[index],
+//                                   alumus: AppConstant.listedAlumnus[index],
+//                                   faqs: AppConstant.listedFaq[index],
+//                                 ),
+//                               ),
+//                             );
+//                           },
+//                         );
+//                       })),
+//                 )
