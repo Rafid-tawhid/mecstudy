@@ -28,11 +28,11 @@ class UniversityResponse {
       message: json['Message'],
       messageCode: json['MessageCode'],
       messageLangIdentifier: json['MessageLangIdentifier'],
-      title: json['Title'],
+      title: json['Title']??'',
       titleLangIdentifier: json['TitleLangIdentifier'],
       status: json['Status'],
       statusCode: json['StatusCode'],
-      model: Model.fromJson(json['Model']),
+      model: Model.fromJson(json['Model']??{}),
     );
   }
 

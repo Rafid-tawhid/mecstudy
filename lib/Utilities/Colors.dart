@@ -45,10 +45,9 @@ String? username = prefs.getString('username');
 String? email = prefs.getString('email');
 String? phone = prefs.getString('phone');
 int? userID = prefs.getInt('UserId');
-AppConstant.UserID = userID == null? 0:userID;
-
-AppConstant.userName = username  == null ? "": username;
-AppConstant.userEmail = email  == null ? "": email;
+AppConstant.UserID = userID ?? 0;
+AppConstant.userName = username ?? "";
+AppConstant.userEmail = email ?? "";
 AppConstant.userLgged = await isLoggedIn();
 return {'username': username, 'email': email, 'phone': phone};
 }
