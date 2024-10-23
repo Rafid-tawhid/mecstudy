@@ -27,7 +27,7 @@ class ExploreScreen extends StatefulWidget {
 }
 
 class _ExploreScreenState extends State<ExploreScreen> {
-  final List<String> gridData = ['UAE', 'UK', 'Cananda', 'USA'];
+  final List<String> gridData = ['UAE', 'UK', 'Canada', 'USA'];
 
   List<DashboardBottomModel> items = DashboardBottomModel.sampleData();
 
@@ -43,102 +43,6 @@ class _ExploreScreenState extends State<ExploreScreen> {
   List<University> universities = [];
   late Future<List<University>> futureUniversity;
 
-  List<dynamic> parseDegreeID(String degreeIDString) {
-    // Remove the leading and trailing single quotes
-    String trimmed = degreeIDString.substring(1, degreeIDString.length - 1);
-
-    // Split the string into individual elements
-    List<String> elements = trimmed.split(', ');
-
-    // Convert each element to JSON format and parse it
-    List<dynamic> result = [];
-    for (String element in elements) {
-      result.add(jsonDecode(element));
-    }
-
-    return result;
-  }
-  // UniversityResponse parseUniversityResponse(String jsonString) {
-  //
-  //   print(jsonString);
-  //   final Map<String, dynamic> parsedJson = json.decode(jsonString);
-  //
-  //   return UniversityResponse(
-  //     httpStatusCode: parsedJson['HTTPStatusCode'],
-  //     message: parsedJson['Message'],
-  //     messageCode: parsedJson['MessageCode'],
-  //     messageLangIdentifier: parsedJson['MessageLangIdentifier'],
-  //     title: parsedJson['Title'],
-  //     titleLangIdentifier: parsedJson['TitleLangIdentifier'],
-  //     status: parsedJson['Status'],
-  //     statusCode: parsedJson['StatusCode'],
-  //     model: UniversityModel.fromJson(parsedJson['Model']),
-  //   );
-  // }
-  ///"More_About_University": "[{\\"heading\\": \\"Why University of Essex?\\", \\"content\\": \\"<ul><li>More than 140 countries are represented in the student body<\/li><li>Number one for Knowledge Transfer Partnerships in the UK (Innovate UK)<\/li><li>Research income is often around \\u00a342m \\u2013 including contracts, grants and fees<\/li><\/ul><p>Enroll with the University of Essex, a globally acclaimed institution, and embark on a journey toward a prosperous and fulfilling future.<\/p><p>Transform your dreams into your present-day achievements.<\/p><p>Join the vast international network of students who have discovered their route to success with the University of Essex.<\/p>style=\\"text-align:center;\\"><a href=\\"https:\/\/edvoy.com\/courses\/?institutions=%5B%22University+of+Essex%22%5D&amp;fromInstitution=true&amp;locations=%5B%7B%22key%22%3A%22United+Kingdom%22%2C%22values%22%3A%5B%5D%7D%5D\\">Browse courses easily today!<\/a><\/p>\\"}, {\\"heading\\": \\"International Outlook\\", \\"content\\": \\"<p><span style=\\\"background-color:transparent;color:#000000;\\\"><span>As well as having a third of its students coming from abroad, the University of Essex has been ranked in the top 25 for international outlook by the Times Higher Education World University Rankings 2022.<\/span><\/span><\/p>\\"}, {\\"heading\\": \\"Data Science\\", \\"content\\": \\"<p><span style=\\\"background-color:transparent;color:#000000;\\\"><span>To help students get ahead in a data-led world, the university offers a new Data Science For All course, completely free. The ten-day course is open to all undergraduates not on a computer science course but wanting to improve their knowledge and be more employable.<\/span><\/span><\/p>\\"}, {\\"heading\\": \\"Location\\",\\"content\\": \\"<p>Colchester is a historic city in Essex with award-winning parkland and the famous Colchester Zoo. British indie legends Blur hail from here, making the area rife with fascinating cultural history. It also contains numerous pubs and restaurants for people of all ages to enjoy. The Colchester Arts Centre shows live performances all year round while The Hollytrees Museum is an architecturally striking building portraying historic life in Colchester with free admission. London is an hour away by train for students who want to venture into the big capital.<\/p>\\"}]",
-
-  void main() {
-    String jsonString = '''{
-    "HTTPStatusCode": 200,
-    "Message": "Data Fetched Successfully from Database",
-    "MessageCode": null,
-    "MessageLangIdentifier": null,
-    "Title": "Success",
-    "TitleLangIdentifier": null,
-    "Status": true,
-    "StatusCode": 1,
-    "Model": {
-        "Table": [
-           {
-  "ID": 20,
-  "University_name": "University of Essex",
-  "CountryID": 77,
-  "DegreeID": "[\\"Undergraduate\\", \\"Postgraduate\\", \\"Doctorate\\"]",
-  "TrendingSubjectsID": "[\\"Finance\\", \\"Law\\", \\"Media Studies And Communication\\", \\"Economics\\", \\"Psychology\\", \\"Political science\\", \\"History\\", \\"Philosophy\\", \\"Languages\\", \\"Art History\\"]",
-  "Ranking": "[{\\"source\\": \\"by QS\\", \\"rank\\": \\"459th\\"}, {\\"source\\": \\"by THE\\", \\"rank\\": \\"56th\\"}, {\\"source\\": \\"by GUARDIAN\\", \\"rank\\": \\"30th\\"}]",
-  "Scholarships": "International students can apply for financial support via the many scholarships the University provides. The Academic Excellence International Masters Scholarship is typically awarded to high-achieving international students applying for a full-time Masters program at the University of Essex. A partial fee waiver is included. The International Bachelor's Degree Excellence Scholarship carries the same criteria for undergraduate students at the University of Essex. The competitive Vice Chancellor's International Scholarship is not unique to the university but international students can apply to receive a significant contribution of their tuition fees. There are also research scholarships for international students pursuing doctoral studies in social sciences, funded by the Economic and Social Research Council (ESRC).",
-  "Facilities": "[{\\"button\\": \\"About The University\\", \\"content\\": \\"<p>The University of Essex is one of the original \\u2018plate glass\\u2019 universities established in 1965 by royal charter. It has three campuses - the main one in Wivenhoe Park near Colchester along with Southend-on-Sea and Loughton. There are around 17,800 students with a third of them coming from more than 140 countries around the world.<\/p><p>The University of Essex was named University of the Year at the Times Higher Education Awards in 2018. It has also been awarded the Queen\\u2019s Anniversary Prize several times. It is ranked in the top 500 global universities by the QS World University Rankings 2023. It\\u2019s also in the top 50 UK universities in the Complete University Guide and the guide from The Times\/Sunday Times.<\/p>\\"}, {\\"button\\": \\"Campus Overview\\", \\"content\\": \\"<p>The Albert Sloman Library on the Colchester campus is sizable, offering 6 floors of space. Books, specialist materials, research resources and study space can be found within the comprehensive learning space. The campus also has its own cinema for students to catch the latest blockbuster films, a gym, climbing wall, sports arena, firstsite gallery and Mercury Theatre. The Student Union provides a focal point for socialisation via the SU Bar and Top Bar, while mornings come complete after buying a hot coffee from the Kitchen. There are even shops located on campus.<\/p>\\"}, {\\"button\\": \\"Student Life\\", \\"content\\": \\"<p>More than 160 sports clubs and student societies are active at the University of Essex, including Volleyball, Vietnamese and Cycling. Over 100 countries are represented in the student body and in the cultural events that take place throughout the year. Street markets and shops can be found along the picturesque campus for when students want to pass time in between lectures.<\/p>\\"}, {\\"button\\": \\"Accommodation\\", \\"content\\": \\"<p>The Colchester campus is the largest of all the sites at the University of Essex. The University houses the many students enrolled on courses by guaranteeing international students housing for the duration of their time at the institution. All the houses and flats provided are within walking distance of the campus, inclusive of wifi, heating, hot water, contents insurance, electricity and the cleaning of communal areas. Both self-catering flats and shared accommodation are options for students. If students are living in accommodation on the main Colchester Campus, they benefit from a silver Essex Sport gym membership at no extra cost.<\/p>\\"}]",
-  "Employability_Details": "<p>88% of University of Essex graduates are in employment or further study according to the Graduate Outcomes 2022. It is also the number 1 University in the UK for Knowledge Transfers Partnerships (KTPs), the flagship Innovate UK programme with 40 KTPS across eight academic departments. This gives students access to a range of business links. Skills for Success team and Careers Services Team work with students to identify and improve their talents and strengths and help them maximise their potential CV. This includes career events, workshops and advice sessions to help with everything from CV writing to interview skills. Graduates have access to the Generation Essex careers support package for up to 15 months after graduation.<\/p>  ",
-  "Alumni": "[{\\"name\\": \\"John Bercow\\", \\"qualification\\": \\"Former Member of Parliament of the United Kingdom\\"}, {\\"name\\": \\"Christopher A. Pissarides\\", \\"qualification\\": \\"Economist\\"}, {\\"name\\": \\"Ben Okri\\", \\"qualification\\": \\"Nigerian-British poet and novelist\\"}]",
-  "FAQs": "[{\\"question\\": \\"What is the acceptance rate for the University of Essex?\\", \\"answer\\": \\"<p>The University of Essex acceptance rate is 74%.<\/p>\\"}, {\\"question\\": \\"What is the employability rate for University of Essex?\\", \\"answer\\": \\"<p>The University of Essex employability rate is 88%.<\/p>\\"}, {\\"question\\": \\"What is the rank of University of Essex?\\", \\"answer\\": \\"<p>The University of Essex is ranked 439th in the QS World University Rankings, 85th in The Guardian University Guide and 301-350th in the Times Higher Education World University Rankings.<\/p>\\"}, {\\"question\\": \\"What kind of scholarships are available?\\", \\"answer\\": \\"<p>International students can apply for financial support via the many scholarships the University provides. The Academic Excellence International Masters Scholarship is typically awarded to high-achieving international students applying for a full-time Masters program at the University of Essex. A partial fee waiver is included. The International Bachelor's Degree Excellence Scholarship carries the same criteria for undergraduate students at the University of Essex. The competitive Vice Chancellor's International Scholarship is not unique to the university but international students can apply to receive a significant contribution of their tuition fees. There are also research scholarships for international students pursuing doctoral studies in social sciences, funded by the Economic and Social Research Council (ESRC).<\/p>\\"}]",
-  "Banner_Image_URL": "https:\/\/strapi-assets.edvoy.com\/live\/images\/institutions\/university-of-essex-banner.jpeg",
-  "University_Information": "<p>Do you want to study at a university ranked 15th for international outlook in the Times Higher Education World University Rankings 2024?<\/p><p>The University of Essex is one of the most international academic communities in the world.<\/p><p>89% of graduates from the University of Essex are in employment or further study six months after graduation (Graduate Outcomes 2023).<\/p><p>The University of Essex is a hub of world-leading excellence for the social sciences. Four social science subjects offered at the university are in the UK top 10 for research quality (Grade Point Average, REF2021) and three are in the UK Top 10 for research power (Times Higher Education 2022).Â&nbsp;<\/p><p><strong>There are four Essex subjects in the UK's top 10 for research quality<\/strong><\/p><ul><li>Sociology<\/li><li>Economics and Econometrics<\/li><li>Politics and International Studies<\/li><li>Modern Languages and Linguistics<\/li><\/ul><p>Maybe youâ€™re worried if you will be able to overcome the challenges of living and studying in a completely new cultural environment? Do you want to ensure you have the resources and strategies to cope with homesickness and cultural shock while studying overseas? Are you concerned about being prepared for the academic rigour and different educational system you'll encounter abroad?<\/p><p><strong>Discover why the University of Essex might just be the place for you!<\/strong><\/p><p><a href=\\"https:\/\/edvoy.com\/courses\/?institutions=%5B%22University+of+Essex%22%5D&fromInstitution=true&locations=%5B%7B%22key%22%3A%22United+Kingdom%22%2C%22values%22%3A%5B%5D%7D%5D\\">View courses now<\/a><\/p>",
-  "More_About_University": "[{\\"heading\\": \\"Why University of Essex?\\", \\"content\\": \\"<ul><li>More than 140 countries are represented in the student body<\/li><li>Number one for Knowledge Transfer Partnerships in the UK (Innovate UK)<\/li><li>Research income is often around \\u00a342m \\u2013 including contracts, grants and fees<\/li><\/ul><p>Enroll with the University of Essex, a globally acclaimed institution, and embark on a journey toward a prosperous and fulfilling future.<\/p><p>Transform your dreams into your present-day achievements.<\/p><p>Join the vast international network of students who have discovered their route to success with the University of Essex.<\/p><p><a href=\\\\"https:\/\/edvoy.com\/courses\/?institutions=%5B%22University+of+Essex%22%5D&fromInstitution=true&locations=%5B%7B%22key%22%3A%22United+Kingdom%22%2C%22values%22%3A%5B%5D%7D%5D\\\\">Browse courses easily today!<\/a><\/p>\\"}, {\\"heading\\": \\"International Outlook\\", \\"content\\": \\"<p>As well as having a third of its students coming from abroad, the University of Essex has been ranked in the top 25 for international outlook by the Times Higher Education World University Rankings 2022.<\/span><\/span><\/p>\\"}, {\\"heading\\": \\"Data Science\\", \\"content\\": \\"<p>To help students get ahead in a data-led world, the university offers a new Data Science For All course, completely free. The ten-day course is open to all undergraduates not on a computer science course but wanting to improve their knowledge and be more employable.<\/span><\/span><\/p>\\"}, {\\"heading\\": \\"Location\\", \\"content\\": \\"<p>Colchester is a historic city in Essex with award-winning parkland and the famous Colchester Zoo. British indie legends Blur hail from here, making the area rife with fascinating cultural history. It also contains numerous pubs and restaurants for people of all ages to enjoy. The Colchester Arts Centre shows live performances all year round while The Hollytrees Museum is an architecturally striking building portraying historic life in Colchester with free admission. London is an hour away by train for students who want to venture into the big capital.<\/p>\\"}]",
-  "Flag_URL": "https:\/\/assets.edvoy.com\/~institution-logo\/live\/images\/institutions\/university-of-essex.svg",
-  "StatusId": 1,
-  "UserId": 1
- },
-              {
-                "ID": 1,
-                "University_name": "University of Essex",
-                "CountryID": 77,
-                "DegreeID": "[\\"Undergraduate\\", \\"Postgraduate\\", \\"Doctorate\\"]",
-                "TrendingSubjectsID": "[\\"Finance\\", \\"Law\\", \\"Media Studies And Communication\\", \\"Economics\\", \\"Psychology\\", \\"Political science\\", \\"History\\", \\"Philosophy\\", \\"Languages\\", \\"Art History\\"]",
-                "Ranking": "[{\\"source\\": \\"by QS\\", \\"rank\\": \\"459th\\"}, {\\"source\\": \\"by THE\\", \\"rank\\": \\"56th\\"}, {\\"source\\": \\"by GUARDIAN\\", \\"rank\\": \\"30th\\"}]",
-                "Scholarships": "International students can apply for financial support via the many scholarships the University provides. The Academic Excellence International Masters Scholarship is typically awarded to high-achieving international students applying for a full-time Masters program at the University of Essex. A partial fee waiver is included. The International Bachelor's Degree Excellence Scholarship carries the same criteria for undergraduate students at the University of Essex. The competitive Vice Chancellor's International Scholarship is not unique to the university but international students can apply to receive a significant contribution of their tuition fees. There are also research scholarships for international students pursuing doctoral studies in social sciences, funded by the Economic and Social Research Council (ESRC).",
-                "Facilities": "[{\\"button\\": \\"About The University\\", \\"content\\": \\"<p>The University of Essex is one of the original \\u2018plate glass\\u2019 universities established in 1965 by royal charter. It has three campuses - the main one in Wivenhoe Park near Colchester along with Southend-on-Sea and Loughton. There are around 17,800 students with a third of them coming from more than 140 countries around the world.<\/p><p>The University of Essex was named University of the Year at the Times Higher Education Awards in 2018. It has also been awarded the Queen\\u2019s Anniversary Prize several times. It is ranked in the top 500 global universities by the QS World University Rankings 2023. It\\u2019s also in the top 50 UK universities in the Complete University Guide and the guide from The Times\/Sunday Times.<\/p>\\"}, {\\"button\\": \\"Campus Overview\\", \\"content\\": \\"<p>The Albert Sloman Library on the Colchester campus is sizable, offering 6 floors of space. Books, specialist materials, research resources and study space can be found within the comprehensive learning space. The campus also has its own cinema for students to catch the latest blockbuster films, a gym, climbing wall, sports arena, firstsite gallery and Mercury Theatre. The Student Union provides a focal point for socialisation via the SU Bar and Top Bar, while mornings come complete after buying a hot coffee from the Kitchen. There are even shops located on campus.<\/p>\\"}, {\\"button\\": \\"Student Life\\", \\"content\\": \\"<p>More than 160 sports clubs and student societies are active at the University of Essex, including Volleyball, Vietnamese and Cycling. Over 100 countries are represented in the student body and in the cultural events that take place throughout the year. Street markets and shops can be found along the picturesque campus for when students want to pass time in between lectures.<\/p>\\"}, {\\"button\\": \\"Accommodation\\", \\"content\\": \\"<p>The Colchester campus is the largest of all the sites at the University of Essex. The University houses the many students enrolled on courses by guaranteeing international students housing for the duration of their time at the institution. All the houses and flats provided are within walking distance of the campus, inclusive of wifi, heating, hot water, contents insurance, electricity and the cleaning of communal areas. Both self-catering flats and shared accommodation are options for students. If students are living in accommodation on the main Colchester Campus, they benefit from a silver Essex Sport gym membership at no extra cost.<\/p>\\"}]",
-                "Employability_Details": "<p>88% of University of Essex graduates are in employment or further study according to the Graduate Outcomes 2022. It is also the number 1 University in the UK for Knowledge Transfers Partnerships (KTPs), the flagship Innovate UK programme with 40 KTPS across eight academic departments. This gives students access to a range of business links. Skills for Success team and Careers Services Team work with students to identify and improve their talents and strengths and help them maximise their potential CV. This includes career events, workshops and advice sessions to help with everything from CV writing to interview skills. Graduates have access to the Generation Essex careers support package for up to 15 months after graduation.</p>",
-                "Alumni": "[{\\"name\\": \\"John Bercow\\", \\"qualification\\": \\"Former Member of Parliament of the United Kingdom\\"}, {\\"name\\": \\"Christopher A. Pissarides\\", \\"qualification\\": \\"Economist\\"}, {\\"name\\": \\"Ben Okri\\", \\"qualification\\": \\"Nigerian-British poet and novelist\\"}]",
-                "FAQs": "[{\\"question\\": \\"What is the acceptance rate for the University of Essex?\\", \\"answer\\": \\"<p>The University of Essex acceptance rate is 74%.</p>\\"}, {\\"question\\": \\"What is the employability rate for University of Essex?\\", \\"answer\\": \\"<p>The University of Essex employability rate is 88%.</p>\\"}, {\\"question\\": \\"What is the rank of University of Essex?\\", \\"answer\\": \\"<p>The University of Essex is ranked 439th in the QS World University Rankings, 85th in The Guardian University Guide and 301-350th in the Times Higher Education World University Rankings.</p>\\"}, {\\"question\\": \\"What kind of scholarships are available?\\", \\"answer\\": \\"<p>International students can apply for financial support via the many scholarships the University provides. The Academic Excellence International Masters Scholarship is typically awarded to high-achieving international students applying for a full-time Masters program at the University of Essex. A partial fee waiver is included. The International Bachelor's Degree Excellence Scholarship carries the same criteria for undergraduate students at the University of Essex. The competitive Vice Chancellor's International Scholarship is not unique to the university but international students can apply to receive a significant contribution of their tuition fees. There are also research scholarships for international students pursuing doctoral studies in social sciences, funded by the Economic and Social Research Council (ESRC).</p>\\"}]",
-                "Banner_Image_URL": "https://strapi-assets.edvoy.com/live/images/institutions/university-of-essex-banner.jpeg",
-                "University_Information": "<p>Do you want to study at a university ranked 15th for international outlook in the Times Higher Education World University Rankings 2024?</p><p>The University of Essex is one of the most international academic communities in the world.</p><p>89% of graduates from the University of Essex are in employment or further study six months after graduation (Graduate Outcomes 2023).</p><p>The University of Essex is a hub of world-leading excellence for the social sciences. Four social science subjects offered at the university are in the UK top 10 for research quality (Grade Point Average, REF2021) and three are in the UK Top 10 for research power (Times Higher Education 2022).Â&nbsp;</p><p><strong>There are four Essex subjects in the UK's top 10 for research quality</strong></p><ul><li>Sociology</li><li>Economics and Econometrics</li><li>Politics and International Studies</li><li>Modern Languages and Linguistics</li></ul><p>Maybe youâ€™re worried if you will be able to overcome the challenges of living and studying in a completely new cultural environment? Do you want to ensure you have the resources and strategies to cope with homesickness and cultural shock while studying overseas? Are you concerned about being prepared for the academic rigour and different educational system you'll encounter abroad?<\/p><p style=\\"text-align:center;\\"><strong>Discover why the University of Essex might just be the place for you!<\/strong><\/p><p style=\\"text-align:center;\\"><a href=\\"https:\/\/edvoy.com\/courses\/?institutions=%5B%22University+of+Essex%22%5D&amp;fromInstitution=true&amp;locations=%5B%7B%22key%22%3A%22United+Kingdom%22%2C%22values%22%3A%5B%5D%7D%5D\\">View courses now<\/a><\/p>",
-                 "More_About_University":"[{\\"heading\\": \\"Why University of Essex?\\", \\"content\\": \\"<ul><li>More than 140 countries are represented in the student body</li><li>Number one for Knowledge Transfer Partnerships in the UK (Innovate UK)</li><li>Research income is often around \£42m \– including contracts, grants and fees</li></ul><p>Enroll with the University of Essex, a globally acclaimed institution, and embark on a journey toward a prosperous and fulfilling future.</p><p>Transform your dreams into your present-day achievements.</p><p>Join the vast international network of students who have discovered their route to success with the University of Essex.</p>\\"}, {\\"heading\\": \\"International Outlook\\", \\"content\\": \\"<p><span>As well as having a third of its students coming from abroad, the University of Essex has been ranked in the top 25 for international outlook by the Times Higher Education World University Rankings 2022.</span></span></p>\\"}, {\\"heading\\": \\"Data Science\\", \\"content\\": \\"<p><span>To help students get ahead in a data-led world, the university offers a new Data Science For All course, completely free. The ten-day course is open to all undergraduates not on a computer science course but wanting to improve their knowledge and be more employable.</span></span></p>\\"}, {\\"heading\\": \\"Location\\", \\"content\\": \\"<p>Colchester is a historic city in Essex with award-winning parkland and the famous Colchester Zoo. British indie legends Blur hail from here, making the area rife with fascinating cultural history. It also contains numerous pubs and restaurants for people of all ages to enjoy. The Colchester Arts Centre shows live performances all year round while The Hollytrees Museum is an architecturally striking building portraying historic life in Colchester with free admission. London is an hour away by train for students who want to venture into the big capital.</p>\\"}]",
-                "Flag_URL": "https://assets.edvoy.com/~institution-logo/live/images/institutions/university-of-essex.svg",
-                "StatusId": 1,
-                "UserId": 1
-            }
-        ]
-    }
-  }''';
-
-    // UniversityResponse response = UniversityResponse.fromJson(jsonDecode(jsonString));
-    //universities = response.model.universities;
-
-    // print(universities.map((e) => e.universityName));
-    // print(response.model.universities[0].universityName);
-    // print(response.model.universities[0].degreeId);
-    // print(response.model.universities[0].ranking[0].source);
-  }
 
   Future<String> getLogin() async {
     try {
@@ -203,84 +107,6 @@ class _ExploreScreenState extends State<ExploreScreen> {
   bool isUniCourseLoading = true;
 
   List<Course> courseListWithoutFilterAccordingToType = [];
-
-//   Future<String> getCourseDetailAccordingToType() async {
-//
-//
-//     setState(() {
-//       isUniCourseLoading = true;
-//     });
-//    // print(universityDetialModel.id);
-//     //String customerNo = "${}";
-//     print("universityDetialModel.id");
-//     var response = await https.post(
-//       Uri.parse('${AppConstant.BaseUrl}/Datasource/GetDataByDataSourceID'),
-//       body: jsonEncode({
-//         "DataSourceID": 3,
-//         "Whereclause": "AND University_ID = 41"
-//         //  "Whereclause": "AND University_ID = ${universityDetialModel.id}"
-//       }),
-//       headers: MainHeaders.updatedHeader,
-//     );
-//
-//     print(response.body);
-//     if (response.statusCode == 200) {
-//
-//       final responseData = jsonDecode(response.body);
-//       print("responseData");
-//       print(responseData);
-//       // UniversityResponse apiResponse = UniversityResponse.fromJson(responseData);
-//
-//       print(responseData);
-//
-//       Map<String, dynamic> jsonMap = jsonDecode(response.body);
-//       //  List<dynamic> table = jsonMap['Model']['Table'];
-//
-//
-//
-//
-//       // List<University> universities = List<University>.from(jsonResponse['Model']['Table'].map((x) => University.fromJson(x)));
-//       courseListWithoutFilterAccordingToType  =
-//           (responseData['Model']['Table'] as List)
-//               .map((itemWord) => Course.fromJson(itemWord))
-//               .toList();
-//
-//       print(courseListWithoutFilterAccordingToType.map((e) => e.courseLevel).toSet().toList());
-//       var aa =courseListWithoutFilterAccordingToType.where((element) => element.courseLevel == "Premasters");
-//       print(aa.length);
-//       print(aa.map((e) => e.courseTitle));
-//       print(aa.map((e) => e.courseLevel));
-//
-//       for (Course university in courseListWithoutFilterAccordingToType) {
-//         print(university.id);
-//         print(university.courseLevel);
-//         print(university.courseTitle);
-//         print(university.tuitionFee);
-//         print(university.universityId);
-//
-//
-//         // Access other properties as needed
-//       }
-//
-//       setState(() {
-//         //    universities = tagObjs;
-//         ///courseListWithoutFilterAccordingToType = courseListAccordingToType;
-//         isUniCourseLoading  = false;
-//       });
-//
-//
-//       return "accessToken";
-//     }
-//     else {
-// //      print(response.body);
-//       print('Failed to generate Zoom access token. Status code: ${response.body}');
-//       return "ccc";
-//     }
-//     // } catch (e) {
-//     //   print('Error generating Zoom access token: ${e}');
-//     return 'bbb';
-//     // }
-//   }
 
   Future<String> getAllUniversity() async {
     var response = await https.post(
@@ -1258,6 +1084,9 @@ class _ExploreScreenState extends State<ExploreScreen> {
   }
 }
 
+
+
+
 class DashboardBottomModel {
   late String iconName;
   late String name;
@@ -1280,24 +1109,6 @@ class DashboardBottomModel {
     ];
   }
 }
-
-// {
-//     "ID": 1,
-//     "University_name": "University of Essex",
-//     "CountryID": 77,
-//     "DegreeID": "[\\"Undergraduate\\", \\"Postgraduate\\", \\"Doctorate\\"]",
-//     "TrendingSubjectsID": "[\\"Finance\\", \\"Law\\", \\"Media Studies And Communication\\", \\"Economics\\", \\"Psychology\\", \\"Political science\\", \\"History\\", \\"Philosophy\\", \\"Languages\\", \\"Art History\\"]",
-//     "Ranking": "[{\\"source\\": \\"by QS\\", \\"rank\\": \\"459th\\"}, {\\"source\\": \\"by THE\\", \\"rank\\": \\"56th\\"}, {\\"source\\": \\"by GUARDIAN\\", \\"rank\\": \\"30th\\"}]",
-//     "Scholarships": "International students can apply for financial support via the many scholarships the University provides. The Academic Excellence International Masters Scholarship is typically awarded to high-achieving international students applying for a full-time Masters program at the University of Essex. A partial fee waiver is included. The International Bachelor's Degree Excellence Scholarship carries the same criteria for undergraduate students at the University of Essex. The competitive Vice Chancellor's International Scholarship is not unique to the university but international students can apply to receive a significant contribution of their tuition fees. There are also research scholarships for international students pursuing doctoral studies in social sciences, funded by the Economic and Social Research Council (ESRC).",
-//     "Employability_Details": "<p>88% of University of Essex graduates are in employment or further study according to the Graduate Outcomes 2022. It is also the number 1 University in the UK for Knowledge Transfers Partnerships (KTPs), the flagship Innovate UK programme with 40 KTPS across eight academic departments. This gives students access to a range of business links. Skills for Success team and Careers Services Team work with students to identify and improve their talents and strengths and help them maximise their potential CV. This includes career events, workshops and advice sessions to help with everything from CV writing to interview skills. Graduates have access to the Generation Essex careers support package for up to 15 months after graduation.</p>",
-//     "Alumni": "[{\\"name\\": \\"John Bercow\\", \\"qualification\\": \\"Former Member of Parliament of the United Kingdom\\"}, {\\"name\\": \\"Christopher A. Pissarides\\", \\"qualification\\": \\"Economist\\"}, {\\"name\\": \\"Ben Okri\\", \\"qualification\\": \\"Nigerian-British poet and novelist\\"}]",
-//     "FAQs": "[{\\"question\\": \\"What is the acceptance rate for the University of Essex?\\", \\"answer\\": \\"<p>The University of Essex acceptance rate is 74%.</p>\\"}, {\\"question\\": \\"What is the employability rate for University of Essex?\\", \\"answer\\": \\"<p>The University of Essex employability rate is 88%.</p>\\"}, {\\"question\\": \\"What is the rank of University of Essex?\\", \\"answer\\": \\"<p>The University of Essex is ranked 439th in the QS World University Rankings, 85th in The Guardian University Guide and 301-350th in the Times Higher Education World University Rankings.</p>\\"}, {\\"question\\": \\"What kind of scholarships are available?\\", \\"answer\\": \\"<p>International students can apply for financial support via the many scholarships the University provides. The Academic Excellence International Masters Scholarship is typically awarded to high-achieving international students applying for a full-time Masters program at the University of Essex. A partial fee waiver is included. The International Bachelor's Degree Excellence Scholarship carries the same criteria for undergraduate students at the University of Essex. The competitive Vice Chancellor's International Scholarship is not unique to the university but international students can apply to receive a significant contribution of their tuition fees. There are also research scholarships for international students pursuing doctoral studies in social sciences, funded by the Economic and Social Research Council (ESRC).</p>\\"}]",
-//     "Banner_Image_URL": "https://strapi-assets.edvoy.com/live/images/institutions/university-of-essex-banner.jpeg",
-//     "University_Information": "<p>Do you want to study at a university ranked 15th for international outlook in the Times Higher Education World University Rankings 2024?</p><p>The University of Essex is one of the most international academic communities in the world.</p><p>89% of graduates from the University of Essex are in employment or further study six months after graduation (Graduate Outcomes 2023).</p><p>The University of Essex is a hub of world-leading excellence for the social sciences. Four social science subjects offered at the university are in the UK top 10 for research quality (Grade Point Average, REF2021) and three are in the UK Top 10 for research power (Times Higher Education 2022).Â&nbsp;</p><p><strong>There are four Essex subjects in the UK's top 10 for research quality</strong></p><ul><li>Sociology</li><li>Economics and Econometrics</li><li>Politics and International Studies</li><li>Modern Languages and Linguistics</li></ul><p>Maybe youâ€™re worried if you will be able to overcome the challenges of living and studying in a completely new cultural environment? Do you want to ensure you have the resources and strategies to cope with homesickness and cultural shock while studying overseas? Are you concerned about being prepared for the academic rigour and different educational system you'll encounter abroad?</p><p style=\\\"text-align:center;\\\"><strong>Discover why the University of Essex might just be the place for you!</strong></p><p style=\\\"text-align:center;\\\"><a href=\\\"https://edvoy.com/courses/?institutions=%5B%22University+of+Essex%22%5D&fromInstitution=true&locations=%5B%7B%22key%22%3A%22United+Kingdom%22%2C%22values%22%3A%5B%5D%7D%5D\\\">View courses now</a></p>",
-//     "Flag_URL": "https://assets.edvoy.com/~institution-logo/live/images/institutions/university-of-essex.svg",
-//     "StatusId": 1,
-//     "UserId": 1
-// }
 
 class Headers {
   static var token;
@@ -1353,39 +1164,3 @@ class Login {
   }
 }
 
-//Container(
-//                   height: Responsive.height(60, context),
-//                   width: Responsive.width(100, context),
-//                   margin: EdgeInsets.only(left: 12, right: 12),
-//                   // transform: Matrix4.translationValues(0.0, -0, 0.0),
-//                   child: GridView.count(
-//                       scrollDirection: Axis.horizontal,
-//                       // Set the s
-//                       padding: EdgeInsets.zero,
-//                       crossAxisCount: 1,
-//                       childAspectRatio:
-//                       MediaQuery.of(context).size.height / 680,
-//                       mainAxisSpacing: 0,
-//                       crossAxisSpacing: 0,
-//                       children: List.generate(universities.length, (index) {
-//                         return InkWell(
-//                           child: GridItemWidget(universities[index].universityName,universities[index].name),
-//                           onTap: () {
-//                             print(universities[index].universityName);
-//                             print(universities[index].name);
-//
-//                             Navigator.of(context).push(
-//                               MaterialPageRoute(
-//                                 builder: (context) => UniversityDetailScreen(
-//                                   universityDetialModel: universities[index],
-//                                   rankings: AppConstant.listedRanking[index],
-//                                   facilties: AppConstant.listedFacilities[index],
-//                                   alumus: AppConstant.listedAlumnus[index],
-//                                   faqs: AppConstant.listedFaq[index],
-//                                 ),
-//                               ),
-//                             );
-//                           },
-//                         );
-//                       })),
-//                 )
