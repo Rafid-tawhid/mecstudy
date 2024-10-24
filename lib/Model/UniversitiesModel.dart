@@ -201,8 +201,8 @@ class Ranking {
 
   factory Ranking.fromJson(Map<String, dynamic> json) {
     return Ranking(
-      source: json['source'],
-      rank: json['rank'],
+      source: json['source']??'',
+      rank: json['rank']??'',
     );
   }
   @override
@@ -225,8 +225,8 @@ class Facility {
 
   factory Facility.fromJson(Map<String, dynamic> json) {
     return Facility(
-      button: json['button'],
-      content: json['content'],
+      button: json['button']??'',
+      content: json['content']??'',
     );
   }
 
@@ -250,8 +250,8 @@ class Alumnus {
 
   factory Alumnus.fromJson(Map<String, dynamic> json) {
     return Alumnus(
-      name: json['name'],
-      qualification: json['qualification'],
+      name: json['name']??'',
+      qualification: json['qualification']??'',
     );
   }
 
@@ -271,8 +271,8 @@ class Faq {
 
   factory Faq.fromJson(Map<String, dynamic> json) {
     return Faq(
-      question: json['question'],
-      answer: json['answer'],
+      question: json['question']??'',
+      answer: json['answer']??'',
     );
   }
 
@@ -292,8 +292,8 @@ class MoreAboutUniversity {
 
   factory MoreAboutUniversity.fromJson(Map<String, dynamic> json) {
     return MoreAboutUniversity(
-      button: json['button'],
-      content: json['content'],
+      button: json['button']??'',
+      content: json['content']??'',
     );
   }
 

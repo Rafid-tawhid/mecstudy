@@ -13,24 +13,18 @@ class HomeProvider extends ChangeNotifier {
   bool isUniversityLoading=false;
   ApiService apiService=ApiService();
 
+  final List<List<Ranking>> listedRanking = [];
+  final List<List<Facility>> listedFacilities = [];
+  final List<List<Alumnus>> listedAlumnus = [];
+  final List<List<Faq>> listedFaq = [];
+  List<University> universities=[];
+
   Future<void> getLogin() async {
     setIsUniversityLoading(true);
     var resultData= await apiService.postData('/Token/LogIn', {'Email': 'TestUser@Mecstudy.com', 'Password': "\$Admin#1",},mainHeader:  Headers.defaultheader);
     if(resultData!=null){
-    //  var accessToken = resultData['Model']['Token'];
       MainHeaders.token = resultData['Model']['Token']??'';
       MainHeaders.refreshToken = resultData['Model']['RefreshToken']??'';
-      MainHeaders.updatedHeader = {
-        'Content-Type': 'application/json',
-        'device-type': 'mobile',
-        'device-id': '1',
-        'user-agents': 'postman',
-        'user-host-address': '::::0',
-        'user-language': 'English',
-        'license-key': '213DD508-876F-4DD3-BBC1-0A33CC54A6C0',
-        'user-host-name': 'hakim',
-        // 'faraz': 'bearer ${MainHeaders.token}'
-      };
       await getAllUniversity();
       setIsUniversityLoading(false);
     }
@@ -41,26 +35,43 @@ class HomeProvider extends ChangeNotifier {
   Future<void> getAllUniversity() async {
     var resultData = await apiService.postData('/Datasource/GetDataByDataSourceID', {'DataSourceID': '1'},mainHeader: MainHeaders.updatedHeader);
 
+    debugPrint('Header ${MainHeaders.updatedHeader}');
     if (resultData != null) {
 
-      debugPrint('resultData $resultData');
+      universities.clear();
+      listedRanking.clear();
+      listedFacilities.clear();
+      listedAlumnus.clear();
+      listedFaq.clear();
+      List<dynamic> table = resultData['Model']['Table'];
+      for (var item in table) {
+        parseJsonField(item['Ranking'], AppConstant.listedRanking, (json) => Ranking.fromJson(json));
+        parseJsonField(item['Facilities'], AppConstant.listedFacilities, (json) => Facility.fromJson(json));
+        parseJsonField(item['Alumni'], AppConstant.listedAlumnus, (json) => Alumnus.fromJson(json));
+        parseJsonField(item['FAQs'], AppConstant.listedFaq, (json) => Faq.fromJson(json));
+      }
 
-      // List<dynamic> table = resultData['Model']['Table'];
-      // for (var item in table) {
-      //   parseJsonField(item['Ranking'], AppConstant.listedRanking, (json) => Ranking.fromJson(json));
-      //   parseJsonField(item['Facilities'], AppConstant.listedFacilities, (json) => Facility.fromJson(json));
-      //   parseJsonField(item['Alumni'], AppConstant.listedAlumnus, (json) => Alumnus.fromJson(json));
-      //   parseJsonField(item['FAQs'], AppConstant.listedFaq, (json) => Faq.fromJson(json));
-      // }
-      //
-      // // Map the university data
-      // List<University> universities = (resultData['Model']['Table'] as List)
-      //     .map((item) => University.fromJson(item))
-      //     .toList();
-      //
-      // for (University university in universities) {
-      //   printUniversityDetails(university);
-      // }
+      // Map the university data
+      universities = (resultData['Model']['Table'] as List).map((item) => University.fromJson(item)).toList();
+
+      debugPrint('AppConstant.listedRanking ${AppConstant.listedRanking.length}');
+      debugPrint('AppConstant.listedFacilities ${AppConstant.listedFacilities.length}');
+      debugPrint('AppConstant.listedAlumnus ${AppConstant.listedAlumnus.length}');
+      debugPrint('AppConstant.listedFaq ${AppConstant.listedFaq.length}');
+      debugPrint('universities ${universities.length}');
+
+      listedRanking.addAll(AppConstant.listedRanking);
+      listedFacilities.addAll(AppConstant.listedFacilities);
+      listedAlumnus.addAll(AppConstant.listedAlumnus);
+      listedFaq.addAll(AppConstant.listedFaq);
+
+      debugPrint('.listedRanking ${listedRanking.length}');
+      debugPrint('.listedFacilities ${listedFacilities.length}');
+      debugPrint('.listedAlumnus ${listedAlumnus.length}');
+      debugPrint('.listedFaq ${listedFaq.length}');
+      debugPrint('universities ${universities.length}');
+
+      notifyListeners();
     }
   }
 

@@ -1,5 +1,8 @@
 import 'dart:convert';
 
+import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+
 class HelperClass {
   static List<dynamic> parseDegreeID(String degreeIDString) {
     // Remove the leading and trailing single quotes
@@ -15,5 +18,16 @@ class HelperClass {
     }
 
     return result;
+  }
+
+  static void showToast(String message) {
+    Fluttertoast.showToast(
+      msg: message,
+      toastLength: Toast.LENGTH_SHORT,
+      gravity: ToastGravity.BOTTOM,  // Position of the toast
+      backgroundColor: Colors.black,
+      textColor: Colors.white,
+      fontSize: 16.0,
+    );
   }
 }

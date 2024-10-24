@@ -103,325 +103,6 @@ class _ExploreScreenState extends State<ExploreScreen> {
 
   List<Course> courseListWithoutFilterAccordingToType = [];
 
-  // Future<String> getAllUniversity() async {
-  //   var response = await https.post(
-  //     Uri.parse('${AppConstant.BaseUrl}/Datasource/GetDataByDataSourceID'),
-  //     headers: MainHeaders.updatedHeader,
-  //     body: jsonEncode(<String, String>{
-  //       'DataSourceID': '1',
-  //     }),
-  //   );
-  //
-  //   if (response.statusCode == 200) {
-  //     final responseData = jsonDecode(response.body);
-  //     print(responseData);
-  //     UniversityResponse apiResponse =
-  //         UniversityResponse.fromJson(responseData);
-  //
-  //     print(responseData);
-  //
-  //     Map<String, dynamic> jsonMap = jsonDecode(response.body);
-  //     List<dynamic> table = jsonMap['Model']['Table'];
-  //
-  //     for (var item in table) {
-  //       String rankingJsonStr = item['Ranking'];
-  //       print(rankingJsonStr);
-  //       // Print the raw JSON string for debugging
-  //       //  print('Raw JSON String: $rankingJsonStr');
-  //       try {
-  //         if (rankingJsonStr == 'N/A' || rankingJsonStr.isEmpty) {
-  //           // If JSON string is 'N/A' or empty, replace it with an empty list
-  //           // print('Empty JSON String detected. Using an empty list.');
-  //           // rankings = [];
-  //           AppConstant.listedRanking.add([Ranking(source: "", rank: "")]);
-  //         } else {
-  //           // Decode the JSON string
-  //           var decodedJson = jsonDecode(rankingJsonStr);
-  //
-  //           // Ensure the decoded JSON is a list
-  //           if (decodedJson is List) {
-  //             // Convert the list of dynamic to a list of Ranking objects
-  //             List<Ranking> rankings = decodedJson
-  //                 .map<Ranking>(
-  //                     (e) => Ranking.fromJson(e as Map<String, dynamic>))
-  //                 .toList();
-  //             AppConstant.listedRanking.add(rankings);
-  //             // Print the parsed Ranking objects for verification
-  //             // print('Ranking List: $rankings');
-  //           } else {
-  //             AppConstant.listedRanking.add([Ranking(source: "", rank: "")]);
-  //
-  //             // print('Error: The decoded JSON is not a list.');
-  //             // print('Decoded JSON Type: ${decodedJson.runtimeType}');
-  //             // print('Decoded JSON Value: $decodedJson');
-  //           }
-  //         }
-  //       } catch (e) {
-  //         print('An error occurred: $e');
-  //       }
-  //     }
-  //
-  //     //working on facilities
-  //
-  //     for (var item in table) {
-  //       String facilitiesJsonStr = item['Facilities'];
-  //       print(facilitiesJsonStr);
-  //       // Print the raw JSON string for debugging
-  //       // print('Raw JSON String: $facilitiesJsonStr');
-  //       try {
-  //         if (facilitiesJsonStr == 'N/A' || facilitiesJsonStr.isEmpty) {
-  //           // If JSON string is 'N/A' or empty, replace it with an empty list
-  //           //  print('Empty JSON String detected. Using an empty list.');
-  //           // rankings = [];
-  //           AppConstant.listedFacilities
-  //               .add([Facility(button: "", content: "")]);
-  //         } else {
-  //           // Decode the JSON string
-  //           var decodedJson = jsonDecode(facilitiesJsonStr);
-  //
-  //           // Ensure the decoded JSON is a list
-  //           if (decodedJson is List) {
-  //             // Convert the list of dynamic to a list of Ranking objects
-  //             List<Facility> facility = decodedJson
-  //                 .map<Facility>(
-  //                     (e) => Facility.fromJson(e as Map<String, dynamic>))
-  //                 .toList();
-  //             AppConstant.listedFacilities.add(facility);
-  //             // Print the parsed Ranking objects for verification
-  //             print('facility List: $facility');
-  //           } else {
-  //             AppConstant.listedFacilities
-  //                 .add([Facility(button: "", content: "")]);
-  //
-  //             // print('Error: The decoded JSON is not a list.');
-  //             // print('Decoded JSON Type: ${decodedJson.runtimeType}');
-  //             // print('Decoded JSON Value: $decodedJson');
-  //           }
-  //         }
-  //       } catch (e) {
-  //         print('An error occurred: $e');
-  //       }
-  //     }
-  //
-  //     //Working on ALumnus
-  //
-  //     for (var item in table) {
-  //       String alumniJsonStr = item['Alumni'];
-  //       print(alumniJsonStr);
-  //       // Print the raw JSON string for debugging
-  //       //print('Raw JSON String: $alumniJsonStr');
-  //       try {
-  //         if (alumniJsonStr == 'N/A' || alumniJsonStr.isEmpty) {
-  //           // If JSON string is 'N/A' or empty, replace it with an empty list
-  //           //  print('Empty JSON String detected. Using an empty list.');
-  //           // rankings = [];
-  //           AppConstant.listedAlumnus
-  //               .add([Alumnus(name: '', qualification: '')]);
-  //         } else {
-  //           // Decode the JSON string
-  //           var decodedJson = jsonDecode(alumniJsonStr);
-  //
-  //           // Ensure the decoded JSON is a list
-  //           if (decodedJson is List) {
-  //             // Convert the list of dynamic to a list of Ranking objects
-  //             List<Alumnus> alumni = decodedJson
-  //                 .map<Alumnus>(
-  //                     (e) => Alumnus.fromJson(e as Map<String, dynamic>))
-  //                 .toList();
-  //             AppConstant.listedAlumnus.add(alumni);
-  //             // Print the parsed Ranking objects for verification
-  //             print('facility List: $alumni');
-  //           } else {
-  //             AppConstant.listedAlumnus
-  //                 .add([Alumnus(name: '', qualification: '')]);
-  //
-  //             // print('Error: The decoded JSON is not a list.');
-  //             // print('Decoded JSON Type: ${decodedJson.runtimeType}');
-  //             // print('Decoded JSON Value: $decodedJson');
-  //           }
-  //         }
-  //       } catch (e) {
-  //         print('An error occurred: $e');
-  //       }
-  //     }
-  //
-  //     // print("Alumnus length is ${AppConstant.listedAlumnus.length}");
-  //     // print("Alumnus length is ${AppConstant.listedAlumnus[0].map((e) => e.name)}");
-  //     // print("Alumnus length is ${AppConstant.listedAlumnus[0].map((e) => e.qualification)}");
-  //
-  //     //Working on FAQs
-  //     for (var item in table) {
-  //       String fAQsJsonStr = item['FAQs'];
-  //       print(fAQsJsonStr);
-  //       // Print the raw JSON string for debugging
-  //       print('Raw JSON String: $fAQsJsonStr');
-  //       try {
-  //         if (fAQsJsonStr == 'N/A' || fAQsJsonStr.isEmpty) {
-  //           // If JSON string is 'N/A' or empty, replace it with an empty list
-  //           print('Empty JSON String detected. Using an empty list.');
-  //           // rankings = [];
-  //           AppConstant.listedFaq.add([Faq(question: "", answer: "")]);
-  //         } else {
-  //           // Decode the JSON string
-  //           var decodedJson = jsonDecode(fAQsJsonStr);
-  //
-  //           // Ensure the decoded JSON is a list
-  //           if (decodedJson is List) {
-  //             // Convert the list of dynamic to a list of Ranking objects
-  //             List<Faq> faqs = decodedJson
-  //                 .map<Faq>((e) => Faq.fromJson(e as Map<String, dynamic>))
-  //                 .toList();
-  //             AppConstant.listedFaq.add(faqs);
-  //             // Print the parsed Ranking objects for verification
-  //             print('faqs List: $faqs');
-  //           } else {
-  //             AppConstant.listedFaq.add([Faq(question: "", answer: "")]);
-  //
-  //             print('Error: The decoded JSON is not a list.');
-  //             print('Decoded JSON Type: ${decodedJson.runtimeType}');
-  //             print('Decoded JSON Value: $decodedJson');
-  //           }
-  //         }
-  //       } catch (e) {
-  //         print('An error occurred: $e');
-  //       }
-  //     }
-  //
-  //     // print("Faqs length is ${AppConstant.listedFaq.length}");
-  //     // print("Faqs length is ${AppConstant.listedFaq[30].map((e) => e.question)}");
-  //     // print("FAqs length is ${AppConstant.listedFaq[30].map((e) => e.answer)}");
-  //     // print("FAqs length is ${universities.where((element) => element.universityName == "University of Lincoln")}");
-  //     // print("FAqs length is ${universities.length}");
-  //     // print("FAqs length is ${universities[30].id}");
-  //     // print("FAqs length is ${universities[30].id);
-  //     // print("FAqs length is ${universities[30].universityName);
-  //
-  //     // List<University> universities = List<University>.from(jsonResponse['Model']['Table'].map((x) => University.fromJson(x)));
-  //     List<University> tagObjs = (responseData['Model']['Table'] as List)
-  //         .map((itemWord) => University.fromJson(itemWord))
-  //         .toList();
-  //
-  //     for (University university in tagObjs) {
-  //       print(university.name);
-  //       print(university.countryId);
-  //       print(university.degreeId);
-  //       print(university.trendingSubjectsId);
-  //       print(university.scholarships);
-  //       print(university.employabilityDetails);
-  //       print(university.universityInformation);
-  //       print(university.flagUrl);
-  //       print(university.userId);
-  //       print(university.statusId);
-  //
-  //       // Access other properties as needed
-  //     }
-  //     // List<Alumni> tagObj2 =
-  //     // (responseData['Model']['Table'][0]['Alumni'] as List)
-  //     //     .map((itemWord) => Alumni.fromJson(itemWord))
-  //     //     .toList();
-  //     // List<Alumni> tagObj23 =
-  //     // (responseData['Model']['Table'] as List)
-  //     //     .map((itemWord) => Alumni.fromJson(itemWord))
-  //     //     .toList();
-  //     //  print(tagObj2);
-  //     // Access universities list
-  //     setState(() {
-  //       universities = tagObjs;
-  //       isUniversitryLoading = false;
-  //     });
-  //
-  //     // print("FAqs length is ${universities[30].id}");
-  //     // print("FAqs length is ${universities[30].id}");
-  //     // print("FAqs length is ${universities[30].universityName}");
-  //     //
-  //     // print(tagObjs);
-  //     // getAllCountry();
-  //
-  //     // List<University> tagObjs = (responseData['Model']['Table'] as List)
-  //     //     .map((itemWord) => University.fromJson(itemWord))
-  //     //     .toList();
-  //
-  //     // print(tagObjs);
-  //
-  //     return "accessToken";
-  //   } else {
-  //     print(response);
-  //     print(
-  //         'Failed to generate Zoom access token. Status code: ${response.body}');
-  //     return "ccc";
-  //   }
-  //   // } catch (e) {
-  //   //   print('Error generating Zoom access token: ${e}');
-  //   return 'bbb';
-  //   // }
-  // }
-
-  Future<String> getAllCountry() async {
-    var response = await https.post(
-      Uri.parse('${AppConstant.BaseUrl}/Datasource/GetDataByDataSourceID'),
-      headers: MainHeaders.updatedHeader,
-      body: jsonEncode(<String, String>{
-        'DataSourceID': '2',
-      }),
-    );
-    if (response.statusCode == 200) {
-      final responseData = jsonDecode(response.body);
-//        var jsonResponse = convert.jsonDecode(response.body);
-      print("country Data is ");
-      print(responseData);
-      print(responseData['Model']['Table'][0]['CountryID']);
-
-      // List<University> universities = List<University>.from(jsonResponse['Model']['Table'].map((x) => University.fromJson(x)));
-      ///List<University> universities = List<University>.from(jsonResponse['Model']['Table'].map((x) => University.fromJson(x)));
-      // List<University> tagObjs =
-      // (responseData['Model']['Table'] as List)
-      //     .map((itemWord) => University.fromJson(itemWord))
-      //     .toList();
-      // for (University university in tagObjs) {
-      //   print(university.name);
-      //   print(university.countryID);
-      //   print(university.degreeID);
-      //   print(university.trendingSubjectsID);
-      //   print(university.scholarships);
-      //   print(university.employabilityDetails);
-      //   print(university.universityInformation);
-      //   print(university.flagURL);
-      //   print(university.userID);
-      //   print(university.statusID);
-
-      // Access other properties as needed
-      //}
-      // List<Alumni> tagObj2 =
-      // (responseData['Model']['Table'][0]['Alumni'] as List)
-      //     .map((itemWord) => Alumni.fromJson(itemWord))
-      //     .toList();
-      // List<Alumni> tagObj23 =
-      // (responseData['Model']['Table'] as List)
-      //     .map((itemWord) => Alumni.fromJson(itemWord))
-      //     .toList();
-      // //  print(tagObj2);
-      // // Access universities list
-      // setState(() {
-      //   universities = tagObjs;
-      // });
-
-      //print(tagObjs);
-
-      // List<University> tagObjs = (responseData['Model']['Table'] as List)
-      //     .map((itemWord) => University.fromJson(itemWord))
-      //     .toList();
-
-      // print(tagObjs);
-
-      return "accessToken";
-    } else {
-      print(response);
-      print(
-          'Failed to generate Zoom access token. Status code: ${response.body}');
-      return "ccc";
-    }
-  }
-
   Future<void> redFileFromDirectory() async {
     final directory = Directory.current;
 
@@ -468,13 +149,10 @@ class _ExploreScreenState extends State<ExploreScreen> {
     //   }
   }
 
-
-  // bool isUniversitryLoading = true;
   @override
   void initState() {
     super.initState();
-    checkUserDetail();
-
+   // checkUserDetail();
   }
 
   checkUserDetail() async {
@@ -496,7 +174,6 @@ class _ExploreScreenState extends State<ExploreScreen> {
             height: Responsive.height(30, context),
             width: MediaQuery.sizeOf(context).width,
             decoration: BoxDecoration(
-              // color: Colors.green,
               image: DecorationImage(
                 image: AssetImage(
                   'images/DashboardTopBarBG.png',
@@ -782,16 +459,16 @@ class _ExploreScreenState extends State<ExploreScreen> {
                 ),
                 Consumer<HomeProvider>(builder: (context,pro,_)=>
                 pro.isUniversityLoading? Center(
-                    child: new CircularProgressIndicator(
+                    child: CircularProgressIndicator(
                         valueColor: AlwaysStoppedAnimation<Color>(
                             AppColors.themeMaincolor)))
                     : SizedBox(
                   height: 200.h,
                   child: ListView.builder(
-                    itemCount: universities.length,
+                    itemCount: pro.universities.length,
                     scrollDirection: Axis.horizontal,
                     itemBuilder: (context, index) =>
-                        GridItemWidget(universities[index], index),
+                        GridItemWidget(pro.universities[index], index),
                   ),
                 ),),
 
@@ -958,7 +635,7 @@ class MainHeaders {
   static var refreshToken;
   static var updatedHeader = {
     'Content-Type': 'application/json',
-    'device-type': 'web',
+    'device-type': 'mobile',
     'device-id': '1',
     'user-agents': 'postman',
     'user-host-address': '::::0',
@@ -966,7 +643,6 @@ class MainHeaders {
     'license-key': '213DD508-876F-4DD3-BBC1-0A33CC54A6C0',
     'user-host-name': 'hakim',
     'faraz': 'bearer ${MainHeaders.token}',
-    // 'faraz': 'bearer $refreshToken'
   };
 }
 
@@ -981,10 +657,6 @@ class Login {
     return Login(
       model: json['Model']['Token'],
       refreshToken: json['Model']['RefreshToken'],
-
-      // iD: json['ID'],
-      // uniqueUserName: json['UniqueUserName'],
-      //  rolename: json['jsonAssignedMenu']['rolename'],
     );
   }
 
