@@ -88,24 +88,24 @@ class _SearchScreenState extends State<SearchScreen> {
                       return ListTile(
                         title: Text(university.universityname??''),
                         subtitle: Text("Country ID: ${university.country}"),
-                        onTap: () async{
+                        onTap: () async {
+
                           try {
-                            var pro=context.read<HomeProvider>();
-                            var university= pro.universities.firstWhere((item)=>item.id==pro.allInstitutesInfoList[index].id);
-                            debugPrint('UNIVERSITY NAME ${university.universityName}');
+                            var hp=context.read<HomeProvider>();
+                            await hp.getAllInformationOfUniversityById(filteredUniversities[index].id.toString());
                             showModalBottomSheet(
                               context: context,
                               isScrollControlled: true,
                               backgroundColor: Colors.transparent,
                               builder: (BuildContext context) {
-                                return UniversityScreenBottomSheet(university); // Use the new widget here
+                                return UniversityScreenBottomSheet(hp.universities.first); // Use the new widget here
                               },
                             );
                           }
                           catch(e) {
                             HelperClass.showToast('No Info Found');
                           }
-                      },
+                        },
                       );
                     },
                   ),

@@ -9,6 +9,7 @@ import 'package:mecstudygroup/providers/home_provider.dart';
 import 'package:mecstudygroup/search/search_screen.dart';
 import 'package:provider/provider.dart';
 import 'Application/ExploreAllCoursesAndInstitutes.dart';
+import 'DetailScreen/UniversityDetailScreen.dart';
 import 'LoginAndSignupModule/SignupScreen.dart';
 import 'Model/Universities.dart';
 import 'Utilities/Constant.dart';
@@ -26,13 +27,6 @@ class ExploreScreen extends StatefulWidget {
 }
 
 class _ExploreScreenState extends State<ExploreScreen> {
-  final List<String> trendingSubject = [
-    'Business',
-    'Business Administration',
-    'Education',
-    'Computer Sciences',
-    'Media Studies And Communication'
-  ];
 
   List<DashboardBottomModel> items = DashboardBottomModel.sampleData();
 
@@ -358,9 +352,9 @@ class _ExploreScreenState extends State<ExploreScreen> {
                   ),
                   SizedBox(
                       height: 280.h,
-                      child: ListView.builder(
+                      child: Consumer<HomeProvider>(builder: (context,pro,_)=>ListView.builder(
                         scrollDirection: Axis.horizontal,
-                        itemCount: 10,
+                        itemCount: pro.topCountriesModelList.length,
                         itemBuilder: (context, index) => Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Container(
@@ -382,7 +376,7 @@ class _ExploreScreenState extends State<ExploreScreen> {
                                   child: Padding(
                                     padding: EdgeInsets.only(bottom: 16.h),
                                     child: Text(
-                                      'Study in UAE',
+                                      pro.topCountriesModelList[index].name??'',
                                       style: customText(
                                           16, Colors.white, FontWeight.w500),
                                     ),
@@ -392,7 +386,7 @@ class _ExploreScreenState extends State<ExploreScreen> {
                             ),
                           ),
                         ),
-                      )),
+                      ))),
                   Padding(
                     padding: const EdgeInsets.symmetric(
                       horizontal: 20.0,
@@ -424,14 +418,13 @@ class _ExploreScreenState extends State<ExploreScreen> {
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                    child: Wrap(
+                    child: Consumer<HomeProvider>(builder: (context,pro,_)=>Wrap(
                       spacing: 12.0, // Horizontal space between items
                       runSpacing: 16.0, // Vertical space between lines
                       children: List.generate(
-                        trendingSubject.length,
-                        (index) => InkWell(
+                        pro.trendingSubjectList.length,
+                            (index) => InkWell(
                           onTap: () async {
-
                           },
                           child: Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 4.0),
@@ -450,13 +443,13 @@ class _ExploreScreenState extends State<ExploreScreen> {
                               ),
                               padding: const EdgeInsets.symmetric(
                                   vertical: 8.0, horizontal: 16.0),
-                              child: Text(trendingSubject[index],style: customText(14, Colors.black, FontWeight.w500),
+                              child: Text(pro.trendingSubjectList[index].subjectName??'',style: customText(14, Colors.black, FontWeight.w500),
                               ),
                             ),
                           ),
                         ),
                       ),
-                    ),
+                    )),
                   ),
                   SizedBox(
                     height: 10,
@@ -737,18 +730,30 @@ class InstituteCard extends StatelessWidget {
           itemBuilder: (context, index) => Padding(
             padding: const EdgeInsets.all(8.0),
             child: InkWell(
-              onTap: () {
+              onTap: () async {
+
                 try {
-                  var university= pro.universities.firstWhere((item)=>item.id==pro.allInstitutesInfoList[index].id);
-                  debugPrint('UNIVERSITY NAME ${university.universityName}');
+                  var hp=context.read<HomeProvider>();
+                  await hp.getAllInformationOfUniversityById(pro.topUniversityList[index].id.toString());
                   showModalBottomSheet(
                     context: context,
                     isScrollControlled: true,
                     backgroundColor: Colors.transparent,
                     builder: (BuildContext context) {
-                      return UniversityScreenBottomSheet(university); // Use the new widget here
+                      return UniversityScreenBottomSheet(hp.universities.first); // Use the new widget here
                     },
                   );
+                  // var university= pro.universities.firstWhere((item)=>item.id==pro.allInstitutesInfoList[index].id);
+                  // debugPrint('UNIVERSITY NAME ${university.universityName}');
+                  // showModalBottomSheet(
+                  //   context: context,
+                  //   isScrollControlled: true,
+                  //   backgroundColor: Colors.transparent,
+                  //   builder: (BuildContext context) {
+                  //     return UniversityScreenBottomSheet(university); // Use the new widget here
+                  //   },
+                  // );
+
                 }
                 catch(e) {
                   HelperClass.showToast('No Info Found');

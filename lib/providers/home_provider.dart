@@ -5,6 +5,8 @@ import 'package:mecstudygroup/Utilities/interceptor_class.dart';
 import '../DashboardScreen.dart';
 import '../Model/Universities.dart';
 import '../Model/course_model.dart';
+import '../Model/top_countries_model.dart';
+import '../Model/trending_subject_model.dart';
 import '../Model/university_model.dart';
 import '../Utilities/Colors.dart';
 
@@ -23,6 +25,8 @@ class HomeProvider extends ChangeNotifier {
   List<CourseModel> allCoursesInfoList=[];
   List<UniversityModel> allInstitutesInfoList=[];
   List<UniversityModel> topUniversityList=[];
+  List<TrendingSubjectModel> trendingSubjectList=[];
+  List<TopCountriesModel> topCountriesModelList=[];
 
   Future<bool> getLogin({String? email, String? password}) async {
     bool returndata = false; // Set a default value
@@ -46,7 +50,7 @@ class HomeProvider extends ChangeNotifier {
         MainHeaders.refreshToken = resultData['Model']['RefreshToken'] ?? '';
 
         // Fetch additional data
-        await getAllUniversity();
+        // await getAllUniversity();
         await getHomePageInfo();
 
         // Set the return value to true upon successful login
@@ -114,6 +118,55 @@ class HomeProvider extends ChangeNotifier {
   }
 
 
+  Future<void> getAllInformationOfUniversityById(String id) async {
+
+    setAllInfoLoading(true);
+    var resultData = await apiService.postData('/Datasource/GetDataByDataSourceID', {'DataSourceID': '25',"Whereclause": "AND ID = $id"},mainHeader: MainHeaders.updatedHeader);
+    setAllInfoLoading(false);
+
+    debugPrint('Header ${MainHeaders.updatedHeader}');
+    if (resultData != null) {
+      universities.clear();
+      listedRanking.clear();
+      listedFacilities.clear();
+      listedAlumnus.clear();
+      listedFaq.clear();
+      List<dynamic> table = resultData['Model']['Table'];
+      for (var item in table) {
+        parseJsonField(item['Ranking'], AppConstant.listedRanking, (json) => Ranking.fromJson(json));
+        parseJsonField(item['Facilities'], AppConstant.listedFacilities, (json) => Facility.fromJson(json));
+        parseJsonField(item['Alumni'], AppConstant.listedAlumnus, (json) => Alumnus.fromJson(json));
+        parseJsonField(item['FAQs'], AppConstant.listedFaq, (json) => Faq.fromJson(json));
+      }
+
+      // Map the university data
+      universities = (resultData['Model']['Table'] as List).map((item) => University.fromJson(item)).toList();
+
+      AppConstant.universityList.addAll(universities);
+      debugPrint('all universities full info ${AppConstant.universityList.length}');
+
+      // debugPrint('AppConstant.listedRanking ${AppConstant.listedRanking.length}');
+      // debugPrint('AppConstant.listedFacilities ${AppConstant.listedFacilities.length}');
+      // debugPrint('AppConstant.listedAlumnus ${AppConstant.listedAlumnus.length}');
+      // debugPrint('AppConstant.listedFaq ${AppConstant.listedFaq.length}');
+      // debugPrint('universities ${universities.length}');
+      //
+      // listedRanking.addAll(AppConstant.listedRanking);
+      // listedFacilities.addAll(AppConstant.listedFacilities);
+      // listedAlumnus.addAll(AppConstant.listedAlumnus);
+      // listedFaq.addAll(AppConstant.listedFaq);
+      //
+      // debugPrint('.listedRanking ${listedRanking.length}');
+      // debugPrint('.listedFacilities ${listedFacilities.length}');
+      // debugPrint('.listedAlumnus ${listedAlumnus.length}');
+      // debugPrint('.listedFaq ${listedFaq.length}');
+      // debugPrint('universities ${universities.length}');
+
+      notifyListeners();
+    }
+  }
+
+
   Future<void> getHomePageInfo() async {
     setIsUniversityLoading(true);
     var resultData = await apiService.postData('/Datasource/GetDataByDataSourceID', {'DataSourceID': '16'},mainHeader: MainHeaders.updatedHeader);
@@ -121,17 +174,27 @@ class HomeProvider extends ChangeNotifier {
     if (resultData != null) {
       courseList.clear();
       topUniversityList.clear();
-       List<dynamic> table = resultData['Model']['Table'];
-       List<dynamic> table1 = resultData['Model']['Table1'];
+       List<dynamic> table = resultData['Model']['Table']; //course title
+       List<dynamic> table1 = resultData['Model']['Table1']; //university
+       List<dynamic> table2 = resultData['Model']['Table2'];//trending subject
+       List<dynamic> table3 = resultData['Model']['Table3'];//country
         for(Map i in table){
           courseList.add(CourseModel.fromJson(i));
         }
       for(Map i in table1){
         topUniversityList.add(UniversityModel.fromJson(i));
       }
+      for(Map i in table2){
+        trendingSubjectList.add(TrendingSubjectModel.fromJson(i));
+      }
+      for(Map i in table3){
+        topCountriesModelList.add(TopCountriesModel.fromJson(i));
+      }
 
         debugPrint('courseList ${courseList.length}');
         debugPrint('topUniversityList ${topUniversityList.length}');
+        debugPrint('trendingSubjectList ${trendingSubjectList.length}');
+        debugPrint('topCountriesModelList ${topCountriesModelList.length}');
       notifyListeners();
     }
   }
@@ -202,6 +265,8 @@ class HomeProvider extends ChangeNotifier {
       debugPrint('allInstitutesInfoList ${allInstitutesInfoList.length}');
     }
   }
+
+
 
   void setAllInfoLoading(bool bool) {
     allInfoLoading=bool;

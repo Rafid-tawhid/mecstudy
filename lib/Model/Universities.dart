@@ -157,9 +157,9 @@ class University {
       flagUrl: json['Flag_URL'],
       statusId: json['StatusId'],
       userId: json['UserId'],
-      countryId1: json['CountryID1'],
-      name: json['Name'],
-      countryCode: json['CountryCode'],
+      countryId1: json['CountryID1']??json['CountryID']??0,
+      name: json['Name']??'',
+      countryCode: json['CountryCode']??'',
     );
 
   }

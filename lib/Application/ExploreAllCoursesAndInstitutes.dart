@@ -87,8 +87,11 @@ class _ExploreCoursesAndInstitutionsState
                   height: 12,
                 ),
                 TextField(
-                  onTap: (){
-                    Navigator.push(context, CupertinoPageRoute(builder: (context)=>SearchScreen()));
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        CupertinoPageRoute(
+                            builder: (context) => SearchScreen()));
                   },
                   decoration: InputDecoration(
                     hintText: "Find Courses and Institutions",
@@ -212,15 +215,21 @@ class _ExploreCoursesAndInstitutionsState
                 // TabView
                 Expanded(
                   child: Consumer<HomeProvider>(
-                    builder: (context,provider,_)=>provider.allCoursesInfoList.isEmpty?Center(child: CircularProgressIndicator(color: Colors.orange,),):
-                    TabBarView(
-                      controller: _tabController,
-                      children: [
-                        ResultsTab1(),
-                        AllCourseShowWidget(),
-                        AllInstituteShowWidget(),
-                      ],
-                    ),
+                    builder: (context, provider, _) =>
+                        provider.allCoursesInfoList.isEmpty
+                            ? Center(
+                                child: CircularProgressIndicator(
+                                  color: Colors.orange,
+                                ),
+                              )
+                            : TabBarView(
+                                controller: _tabController,
+                                children: [
+                                  ResultsTab1(),
+                                  AllCourseShowWidget(),
+                                  AllInstituteShowWidget(),
+                                ],
+                              ),
                   ),
                 ),
               ],
@@ -250,29 +259,30 @@ class AllInstituteShowWidget extends StatelessWidget {
               itemBuilder: (context, index) => Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: InstituteCard1(
-                    universityName:
-                        pro.allInstitutesInfoList[index].universityname ?? '',
-                    universityLocation:
-                        pro.allInstitutesInfoList[index].country ?? '',
-                    logoPath: 'images/UniversityIcon.png',
-                    onTap: () {
-                      try {
-                        var university= pro.universities.firstWhere((item)=>item.id==pro.allInstitutesInfoList[index].id);
-                        debugPrint('UNIVERSITY NAME ${university.universityName}');
-                        showModalBottomSheet(
-                          context: context,
-                          isScrollControlled: true,
-                          backgroundColor: Colors.transparent,
-                          builder: (BuildContext context) {
-                            return UniversityScreenBottomSheet(university); // Use the new widget here
-                          },
-                        );
-                      }
-                     catch(e) {
-                       HelperClass.showToast('No Info Found');
-                     }
-
-                    }),
+                  universityName:
+                      pro.allInstitutesInfoList[index].universityname ?? '',
+                  universityLocation:
+                      pro.allInstitutesInfoList[index].country ?? '',
+                  logoPath: 'images/UniversityIcon.png',
+                  onTap: () async {
+                    try {
+                      var hp = context.read<HomeProvider>();
+                      await hp.getAllInformationOfUniversityById(
+                          pro.allInstitutesInfoList[index].id.toString());
+                      showModalBottomSheet(
+                        context: context,
+                        isScrollControlled: true,
+                        backgroundColor: Colors.transparent,
+                        builder: (BuildContext context) {
+                          return UniversityScreenBottomSheet(
+                              hp.universities.first); // Use the new widget here
+                        },
+                      );
+                    } catch (e) {
+                      HelperClass.showToast('No Info Found');
+                    }
+                  },
+                ),
               ),
             ),
     );

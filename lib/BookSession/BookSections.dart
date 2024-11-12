@@ -915,7 +915,6 @@ class _BookSessionTabBarViewState extends State<BookSessionTabBarView> {
               child: GradientButton(
                 text: 'Book a Session',
                 onPressed: () {
-
                   // showModalBottomSheet(
                   //   context: context,
                   //   isScrollControlled: true,
@@ -925,6 +924,7 @@ class _BookSessionTabBarViewState extends State<BookSessionTabBarView> {
                   //     // Your custom bottom sheet widget
                   //   },
                   // )
+                  
                   Navigator.of(context).push(
                     PageRouteBuilder(
                       pageBuilder: (context, animation, secondaryAnimation) => SignUpScreenBottomSheet(),

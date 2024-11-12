@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:mecstudygroup/DashboardScreen.dart';
 import 'package:mecstudygroup/Model/Universities.dart';
+import 'package:mecstudygroup/providers/home_provider.dart';
+import 'package:provider/provider.dart';
 import '../DetailScreen/UniversityDetailScreen.dart';
 import '../Utilities/Colors.dart';
 import '../Utilities/Constant.dart';
@@ -17,8 +20,9 @@ class GridItemWidget extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(12.0),
       child: InkWell(
-        onTap: (){
-          debugPrint(university.name);
+        onTap: () async {
+          // var hp=context.read<HomeProvider>();
+          // await hp.getAllInformationOfUniversityById(university.id.toString());
           Navigator.of(context).push(
             MaterialPageRoute(
               builder: (context) => UniversityDetailScreen(
