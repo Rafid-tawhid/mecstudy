@@ -31,11 +31,11 @@ class HomeProvider extends ChangeNotifier {
   Future<bool> getLogin({String? email, String? password}) async {
     bool returndata = false; // Set a default value
     setIsUniversityLoading(true);
-
+    http://137.135.119.97/MecStudies/api/Token/Login
     try {
       // Call API and await response
       var resultData = await apiService.postData(
-        '/Token/LogIn',
+        '/Token/Login',
         {
           'Email': email ?? 'TestUser@Mecstudy.com',
           'Password': password ?? "\$Admin#1",
