@@ -71,6 +71,7 @@ class HomeProvider extends ChangeNotifier {
 
   Future<void> getAllUniversity() async {
 
+    //have a great day
     setAllInfoLoading(true);
     var resultData = await apiService.postData('/Datasource/GetDataByDataSourceID', {'DataSourceID': '01'},mainHeader: MainHeaders.updatedHeader);
     setAllInfoLoading(false);
