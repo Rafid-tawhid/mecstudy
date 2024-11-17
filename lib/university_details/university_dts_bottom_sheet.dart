@@ -175,33 +175,36 @@ class _ScrollSyncButtonsState extends State<ScrollSyncButtons> {
           height: 10,
         ),
         SizedBox(
-          height: 40,
+          height: 50,
           child: ListView.builder(
             scrollDirection: Axis.horizontal,
             itemCount: buttonLabels.length,
             itemBuilder: (context, index) {
               return GestureDetector(
                 onTap: () => _onButtonPressed(index),
-                child: Container(
-                  margin: EdgeInsets.symmetric(horizontal: 8),
-                  padding: EdgeInsets.symmetric(
-                    horizontal: 16,
-                  ),
-                  decoration: BoxDecoration(
-                    color: _selectedButtonIndex == index
-                        ? Colors.grey.shade700
-                        : Colors.grey.shade200,
-                    borderRadius: BorderRadius.circular(40),
-                  ),
-                  child: Center(
-                    child: Text(
-                      buttonLabels[index],
-                      style: customText(
-                          14,
-                          _selectedButtonIndex == index
-                              ? Colors.white
-                              : Colors.black,
-                          FontWeight.w500),
+                child: Padding(
+                  padding: const EdgeInsets.only(bottom: 10.0),
+                  child: Container(
+                    margin: EdgeInsets.symmetric(horizontal: 8),
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 16,
+                    ),
+                    decoration: BoxDecoration(
+                      color: _selectedButtonIndex == index
+                          ? Colors.grey.shade700
+                          : Colors.grey.shade200,
+                      borderRadius: BorderRadius.circular(40),
+                    ),
+                    child: Center(
+                      child: Text(
+                        buttonLabels[index],
+                        style: customText(
+                            14,
+                            _selectedButtonIndex == index
+                                ? Colors.white
+                                : Colors.black,
+                            FontWeight.w500),
+                      ),
                     ),
                   ),
                 ),
