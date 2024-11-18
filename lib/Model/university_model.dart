@@ -8,7 +8,7 @@ class UniversityModel {
 
   UniversityModel.fromJson(dynamic json) {
     id = json['ID'];
-    universityname = json['UNIVERSITY_NAME'];
+    universityname = json['UNIVERSITY_NAME']??json['University_name']??'';
     country = json['country'];
     bannerImageURL = json['Banner_Image_URL'];
     flagURL = json['Flag_URL'];

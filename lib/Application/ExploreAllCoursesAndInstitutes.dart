@@ -275,7 +275,7 @@ class AllInstituteShowWidget extends StatelessWidget {
                         backgroundColor: Colors.transparent,
                         builder: (BuildContext context) {
                           return UniversityScreenBottomSheet(
-                              hp.universities.first); // Use the new widget here
+                             university:  hp.universities.first); // Use the new widget here
                         },
                       );
                     } catch (e) {

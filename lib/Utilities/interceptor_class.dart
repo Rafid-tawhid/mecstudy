@@ -45,6 +45,7 @@ class ApiService {
     try {
       // Perform the POST request
       debugPrint('URL: ${AppConstant.BaseUrl}$endpoint');
+      debugPrint('SEND DATA $body');
 
       final response = await client.post(
         Uri.parse('${AppConstant.BaseUrl}$endpoint'),

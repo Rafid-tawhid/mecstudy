@@ -98,7 +98,7 @@ class _SearchScreenState extends State<SearchScreen> {
                               isScrollControlled: true,
                               backgroundColor: Colors.transparent,
                               builder: (BuildContext context) {
-                                return UniversityScreenBottomSheet(hp.universities.first); // Use the new widget here
+                                return UniversityScreenBottomSheet(university: hp.universities.first); // Use the new widget here
                               },
                             );
                           }

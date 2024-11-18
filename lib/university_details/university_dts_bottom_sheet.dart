@@ -13,7 +13,8 @@ import 'expanded_text.dart';
 class UniversityScreenBottomSheet extends StatelessWidget {
 
   final University university;
-  const UniversityScreenBottomSheet(this.university, {super.key});
+  final String? countryName;
+  const UniversityScreenBottomSheet({required this.university,this.countryName});
 
   @override
   Widget build(BuildContext context) {
@@ -101,7 +102,7 @@ class UniversityScreenBottomSheet extends StatelessWidget {
                   style: customText(18, Colors.black, FontWeight.bold),
                 ),
                 subtitle: Text(
-                  university.countryCode,
+                  countryName?? university.countryCode,
                   style: customText(14, Colors.orange, FontWeight.w500),
                 ),
               ),

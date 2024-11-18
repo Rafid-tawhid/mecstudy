@@ -737,7 +737,7 @@ class InstituteCard extends StatelessWidget {
                     isScrollControlled: true,
                     backgroundColor: Colors.transparent,
                     builder: (BuildContext context) {
-                      return UniversityScreenBottomSheet(hp.universities.first); // Use the new widget here
+                      return UniversityScreenBottomSheet(university:  hp.universities.first,countryName: pro.topUniversityList[index].country,); // Use the new widget here
                     },
                   );
                   // var university= pro.universities.firstWhere((item)=>item.id==pro.allInstitutesInfoList[index].id);
