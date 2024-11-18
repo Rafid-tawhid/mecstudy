@@ -47,7 +47,7 @@ class UniversityScreenBottomSheet extends StatelessWidget {
                       topRight: Radius.circular(16),
                     ),
                     child: Image.network(
-                      "${AppConstant.BaseUrl}/${university.bannerImageUrl}",
+                      university.bannerImageUrl,
                       width: double.infinity, // Set your width here
                       height: 200, // Set your height here
                       fit: BoxFit.cover,
@@ -91,13 +91,17 @@ class UniversityScreenBottomSheet extends StatelessWidget {
               ),
               ListTile(
                 textColor: Colors.red,
-                leading: Icon(Icons.clear_all_rounded),
+                leading: Image.network(
+                  university.flagUrl??'',
+                  height: 30,
+                  width: 30,
+                ),
                 title: Text(
                   university.universityName,
                   style: customText(18, Colors.black, FontWeight.bold),
                 ),
                 subtitle: Text(
-                  university.name,
+                  university.countryCode,
                   style: customText(14, Colors.orange, FontWeight.w500),
                 ),
               ),

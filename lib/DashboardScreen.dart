@@ -257,8 +257,7 @@ class _ExploreScreenState extends State<ExploreScreen> {
                           children: [
                             Text(
                               'Discover Top Universities',
-                              style:
-                                  customText(18, Colors.black, FontWeight.w500),
+                              style: customText(18, Colors.black, FontWeight.w500),
                             ),
                             Text(
                               'We’re partnered with over 120 world class education providers in 6 countries',
@@ -298,8 +297,7 @@ class _ExploreScreenState extends State<ExploreScreen> {
                   ),
                   Consumer<HomeProvider>(
                     builder: (context, pro, _) => pro.isUniversityLoading
-                        ? Center(
-                            child: CircularProgressIndicator(
+                        ? Center(child: CircularProgressIndicator(
                                 valueColor: AlwaysStoppedAnimation<Color>(
                                     AppColors.themeMaincolor)))
                         : InstituteCard(pro),
@@ -731,7 +729,6 @@ class InstituteCard extends StatelessWidget {
             padding: const EdgeInsets.all(8.0),
             child: InkWell(
               onTap: () async {
-
                 try {
                   var hp=context.read<HomeProvider>();
                   await hp.getAllInformationOfUniversityById(pro.topUniversityList[index].id.toString());
@@ -769,7 +766,7 @@ class InstituteCard extends StatelessWidget {
                         padding: EdgeInsets.all(6),
                         decoration: BoxDecoration(
                             image: DecorationImage(
-                                image: AssetImage('images/TopGridBG.png'),
+                                image: NetworkImage(pro.topUniversityList[index].bannerImageURL??''),
                                 fit: BoxFit.cover),
                             borderRadius: BorderRadius.circular(8)),
                         child: Column(
@@ -783,12 +780,19 @@ class InstituteCard extends StatelessWidget {
                         ),
                       ),
                       Positioned(
-                        right: 4,
-                        top: 2,
-                        child: Icon(
-                          Icons.arrow_forward_sharp, // Right arrow icon
-                          color: Colors.black, // Color of the icon
-                          size: 24,
+                        right: 0,
+                        top: 0,
+                        child: Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.only(bottomLeft: Radius.circular(12),),
+                            color: Colors.white,
+                          ),
+                          padding: EdgeInsets.symmetric(vertical: 4,horizontal: 6),
+                          child: Icon(
+                            Icons.arrow_forward_sharp, // Right arrow icon
+                            color: Colors.black, // Color of the icon
+                            size: 24,
+                          ),
                         ),
                       ),
                     ],
@@ -798,8 +802,8 @@ class InstituteCard extends StatelessWidget {
                     width: 180.h,
                     child: Row(
                       children: [
-                        Image.asset(
-                          'images/UniversityIcon.png',
+                        Image.network(
+                          pro.topUniversityList[index].flagURL??'',
                           height: 30,
                           width: 30,
                         ),
