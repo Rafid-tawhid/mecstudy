@@ -8,6 +8,7 @@ import 'package:mecstudygroup/providers/home_provider.dart';
 import 'package:provider/provider.dart';
 import '../Utilities/Constant.dart';
 import '../Widgets/courses_details_bottomsheet.dart';
+import '../search/filter_search.dart';
 import '../university_details/university_dts_bottom_sheet.dart';
 import '../search/search_screen.dart';
 
@@ -89,157 +90,190 @@ class _ExploreCoursesAndInstitutionsState
         body: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 12.0),
           child: Consumer<HomeProvider>(
-            builder: (context, hp, _) => Column(
+            builder: (context, hp, _) => Stack(
+              alignment: Alignment.bottomCenter,
               children: [
-                SizedBox(
-                  height: 12,
-                ),
-                TextField(
-                  onTap: () {
-                    Navigator.push(
-                        context,
-                        CupertinoPageRoute(
-                            builder: (context) => SearchScreen()));
-                  },
-                  decoration: InputDecoration(
-                    hintText: "Find Courses and Institutions",
-                    contentPadding: EdgeInsets.symmetric(vertical: 8),
-                    border: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.grey, width: .2),
-                      borderRadius: BorderRadius.circular(30),
-                    ),
-                    prefixIcon: Icon(Icons.search, color: Colors.grey),
-                  ),
-                ),
-                SizedBox(
-                  height: 12,
-                ),
-                Row(
+                Column(
                   children: [
-                    Expanded(
-                        child: GestureDetector(
-                      onTap: () => _tabController.index = 0,
-                      child: Container(
-                        height: 40,
-                        decoration: BoxDecoration(
-                          color: _tabController.index == 0
-                              ? Colors.orange.shade300
-                              : Colors.grey.shade200,
-                          borderRadius: BorderRadius.circular(30),
-                          border: Border.all(color: Colors.white),
-                        ),
-                        child: Center(
-                          child: Padding(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 12.0),
-                            child: FittedBox(
-                              child: Text(
-                                '64809 Results',
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  color: _tabController.index == 0
-                                      ? Colors.white
-                                      : Colors.grey.shade500,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    )),
                     SizedBox(
-                      width: 10,
+                      height: 12,
                     ),
-                    Expanded(
-                        child: GestureDetector(
-                      onTap: () => _tabController.index = 1,
-                      child: Container(
-                        height: 40,
-                        decoration: BoxDecoration(
-                          color: _tabController.index == 1
-                              ? Colors.orange.shade300
-                              : Colors.grey.shade200,
+                    TextField(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            CupertinoPageRoute(
+                                builder: (context) => SearchScreen()));
+                      },
+                      decoration: InputDecoration(
+                        hintText: "Find Courses and Institutions",
+                        contentPadding: EdgeInsets.symmetric(vertical: 8),
+                        border: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.grey, width: .2),
                           borderRadius: BorderRadius.circular(30),
-                          border: Border.all(color: Colors.white),
                         ),
-                        child: Center(
-                          child: Padding(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 12.0),
-                            child: FittedBox(
-                              child: Text(
-                                '64504 Courses',
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  color: _tabController.index == 1
-                                      ? Colors.white
-                                      : Colors.grey.shade500,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
+                        prefixIcon: Icon(Icons.search, color: Colors.grey),
                       ),
-                    )),
+                    ),
                     SizedBox(
-                      width: 10,
+                      height: 12,
                     ),
-                    Expanded(
-                        child: GestureDetector(
-                      onTap: () => _tabController.index = 2,
-                      child: Container(
-                        height: 40,
-                        decoration: BoxDecoration(
-                          color: _tabController.index == 2
-                              ? Colors.orange.shade300
-                              : Colors.grey.shade200,
-                          borderRadius: BorderRadius.circular(30),
-                          border: Border.all(color: Colors.white),
-                        ),
-                        child: Center(
-                          child: Padding(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 12.0),
-                            child: FittedBox(
-                              child: Text(
-                                '305 Institutions',
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  color: _tabController.index == 2
-                                      ? Colors.white
-                                      : Colors.grey.shade500,
-                                  fontWeight: FontWeight.bold,
+                    Row(
+                      children: [
+                        Expanded(
+                            child: GestureDetector(
+                          onTap: () => _tabController.index = 0,
+                          child: Container(
+                            height: 40,
+                            decoration: BoxDecoration(
+                              color: _tabController.index == 0
+                                  ? Colors.orange.shade300
+                                  : Colors.grey.shade200,
+                              borderRadius: BorderRadius.circular(30),
+                              border: Border.all(color: Colors.white),
+                            ),
+                            child: Center(
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 12.0),
+                                child: FittedBox(
+                                  child: Text(
+                                    '64809 Results',
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      color: _tabController.index == 0
+                                          ? Colors.white
+                                          : Colors.grey.shade500,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
                                 ),
                               ),
                             ),
                           ),
+                        )),
+                        SizedBox(
+                          width: 10,
                         ),
+                        Expanded(
+                            child: GestureDetector(
+                          onTap: () => _tabController.index = 1,
+                          child: Container(
+                            height: 40,
+                            decoration: BoxDecoration(
+                              color: _tabController.index == 1
+                                  ? Colors.orange.shade300
+                                  : Colors.grey.shade200,
+                              borderRadius: BorderRadius.circular(30),
+                              border: Border.all(color: Colors.white),
+                            ),
+                            child: Center(
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 12.0),
+                                child: FittedBox(
+                                  child: Text(
+                                    '64504 Courses',
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      color: _tabController.index == 1
+                                          ? Colors.white
+                                          : Colors.grey.shade500,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        )),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Expanded(
+                            child: GestureDetector(
+                          onTap: () => _tabController.index = 2,
+                          child: Container(
+                            height: 40,
+                            decoration: BoxDecoration(
+                              color: _tabController.index == 2
+                                  ? Colors.orange.shade300
+                                  : Colors.grey.shade200,
+                              borderRadius: BorderRadius.circular(30),
+                              border: Border.all(color: Colors.white),
+                            ),
+                            child: Center(
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 12.0),
+                                child: FittedBox(
+                                  child: Text(
+                                    '305 Institutions',
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      color: _tabController.index == 2
+                                          ? Colors.white
+                                          : Colors.grey.shade500,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        )),
+                      ],
+                    ),
+                    // TabView
+                    Expanded(
+                      child: Consumer<HomeProvider>(
+                        builder: (context, provider, _) =>
+                            provider.allCoursesInfoList.isEmpty
+                                ? Center(
+                                    child: CircularProgressIndicator(
+                                      color: Colors.orange,
+                                    ),
+                                  )
+                                : TabBarView(
+                                    controller: _tabController,
+                                    children: [
+                                      ResultsTab1(),
+                                      AllCourseShowWidget(),
+                                      AllInstituteShowWidget(),
+                                    ],
+                                  ),
                       ),
-                    )),
+                    ),
                   ],
                 ),
-                // TabView
-                Expanded(
-                  child: Consumer<HomeProvider>(
-                    builder: (context, provider, _) =>
-                        provider.allCoursesInfoList.isEmpty
-                            ? Center(
-                                child: CircularProgressIndicator(
-                                  color: Colors.orange,
-                                ),
-                              )
-                            : TabBarView(
-                                controller: _tabController,
-                                children: [
-                                  ResultsTab1(),
-                                  AllCourseShowWidget(),
-                                  AllInstituteShowWidget(),
-                                ],
-                              ),
+               if(widget.hideTopTitle!=null) Positioned(
+                  bottom: 20,
+                  child: GestureDetector(
+                    onTap: (){
+                      showModalBottomSheet(
+                        context: context,
+                        isScrollControlled: true,
+                        backgroundColor: Colors.transparent,
+                        builder: (BuildContext context) {
+                          return FilterSearchScreen(); // Use the new widget here
+                        },
+                      );
+                    },
+                    child: Container(
+                      padding: EdgeInsets.symmetric(vertical: 6,horizontal: 12),
+                      decoration: BoxDecoration(
+                        color: Colors.black,
+                        borderRadius: BorderRadius.circular(16),
+                      ),
+                      child: Row(
+                        children: [
+                          Icon(Icons.filter_list,color: Colors.white,size: 20,),
+                          Text('Filters',style: customText(14, Colors.white, FontWeight.bold),)
+                        ],
+                      ),
+                    ),
                   ),
-                ),
+                )
               ],
             ),
           ),
