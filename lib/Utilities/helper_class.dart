@@ -23,6 +23,15 @@ class HelperClass {
     return result;
   }
 
+  static String cutTheLongText(String value,int length) {
+    if (value.length > length) {
+
+      return "${value.substring(0, length)}...";
+    } else {
+      return  value;
+    }
+  }
+
   static void showToast(String message) {
     Fluttertoast.showToast(
       msg: message,

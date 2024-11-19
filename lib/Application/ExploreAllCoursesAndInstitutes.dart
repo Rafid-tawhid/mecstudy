@@ -12,7 +12,12 @@ import '../university_details/university_dts_bottom_sheet.dart';
 import '../search/search_screen.dart';
 
 class ExploreCoursesAndInstitutions extends StatefulWidget {
-  const ExploreCoursesAndInstitutions({super.key});
+
+  bool? hideTopTitle;
+  int? selectedIndex;
+
+
+  ExploreCoursesAndInstitutions({this.hideTopTitle, this.selectedIndex});
 
   @override
   State<ExploreCoursesAndInstitutions> createState() =>
@@ -32,6 +37,9 @@ class _ExploreCoursesAndInstitutionsState
     _tabController.addListener(() {
       setState(() {}); // Update the UI when the tab changes
     });
+    if(widget.selectedIndex!=null){
+      _tabController.index=widget.selectedIndex??0;
+    }
     var hp = context.read<HomeProvider>();
     Future.microtask(() {
       if (hp.allInstitutesInfoList.isEmpty || hp.allCoursesInfoList.isEmpty) {
@@ -56,7 +64,7 @@ class _ExploreCoursesAndInstitutionsState
         backgroundColor: Colors.white,
         appBar: AppBar(
           elevation: 0.0,
-          title: Text("Explore Institutes",
+          title: widget.hideTopTitle==true?null:Text("Explore Institutes",
               style: TextStyle(
                 fontWeight: FontWeight.w600,
                 fontSize: AdaptiveTextSize().getadaptiveTextSize(context, 18),

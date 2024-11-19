@@ -1,9 +1,14 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:mecstudygroup/BookSession/widgets/buttons.dart';
+import 'package:mecstudygroup/Chat/ChatScreen.dart';
 import 'package:mecstudygroup/Utilities/Constant.dart';
+import 'package:mecstudygroup/Utilities/helper_class.dart';
 import 'package:mecstudygroup/university_details/expanded_text.dart';
 import 'package:provider/provider.dart';
 
 import '../../Model/top_countries_model.dart';
+import '../../courses/see_all_course_screen.dart';
 import '../../providers/home_provider.dart';
 import 'gridview.dart';
 
@@ -112,7 +117,7 @@ class DestinationBottomSheet extends StatelessWidget {
                               final item = items[index];
                               return GridItem(
                                 icon: item['icon'],
-                                title: item['title'],
+                                title: HelperClass.cutTheLongText(item['title'],12),
                                 rate: item['rate'],
                               );
                             },
@@ -264,7 +269,7 @@ class DestinationBottomSheet extends StatelessWidget {
                               ],
                             ),
                             SizedBox(
-                              height: 180,
+                              height: 200,
                               child: HorizontalListView(),
                             )
                           ],
@@ -274,6 +279,44 @@ class DestinationBottomSheet extends StatelessWidget {
                   ),
                 ),
               ),
+              Column(
+                children: [
+                  Container(
+                    height: 1,
+                    color: Colors.grey.shade200,
+                  ),
+                  Row(
+                    children: [
+                      SizedBox(width: 10,),
+                      Padding(
+                        padding: const EdgeInsets.all(12.0),
+                        child: GestureDetector(
+                          onTap: (){
+                            Navigator.pushReplacement(context, CupertinoPageRoute(builder: (context)=>ChatScreen()));
+                          },
+                          child: Container(
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                shape: BoxShape.circle
+                              ),
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Icon(Icons.message,color: Colors.grey,),
+                              )),
+                        ),
+                      ),
+                      Expanded(child: Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 12.0),
+                        child: GradientButton(text: 'View All Courses', onPressed: (){
+                          Navigator.pushReplacement(context, CupertinoPageRoute(builder: (context)=>SeeAllCourseScreen()));
+                        },verticalPadding: 10,),
+                      )),
+                      SizedBox(width: 20,)
+                    ],
+                  ),
+                  SizedBox(height: 20,)
+                ],
+              )
             ],
           ),
         );
@@ -295,7 +338,7 @@ class HorizontalListView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 16.0),
+      padding: const EdgeInsets.symmetric(vertical: 12.0),
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
         itemCount: items.length,
@@ -309,8 +352,8 @@ class HorizontalListView extends StatelessWidget {
                 ClipOval(
                   child: Image.network(
                     item['image']!,
-                    width: 70,
-                    height: 70,
+                    width: 100,
+                    height: 100,
                     fit: BoxFit.cover,
                   ),
                 ),

@@ -436,6 +436,7 @@ class _ExploreScreenState extends State<ExploreScreen> {
                         pro.trendingSubjectList.length,
                             (index) => InkWell(
                           onTap: () async {
+                            Navigator.push(context, CupertinoPageRoute(builder: (context)=>ExploreCoursesAndInstitutions(hideTopTitle: true,selectedIndex: 1,)));
                           },
                           child: Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 4.0),
