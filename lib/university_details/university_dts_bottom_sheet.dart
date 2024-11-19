@@ -473,7 +473,7 @@ class HeilightsWidgets extends StatelessWidget {
           ],
         ),
         SizedBox(height: 10,),
-        UniversityInformationWidget(information: widget.university.employabilityDetails,title: 'Employability Details',),
+        ExpendedText(information: widget.university.employabilityDetails,title: 'Employability Details',),
         SizedBox(height: 10,),
         Row(
           children: [
@@ -586,7 +586,7 @@ class OverviewWidget extends StatelessWidget {
             ],
           ),
           SizedBox(height: 20,),
-          UniversityInformationWidget(information: university.universityInformation,),
+          ExpendedText(information: university.universityInformation,),
           SizedBox(
             height: 20,
           ),

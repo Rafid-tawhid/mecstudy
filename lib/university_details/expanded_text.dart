@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 
-class UniversityInformationWidget extends StatefulWidget {
+class ExpendedText extends StatefulWidget {
   final String information;
   final String? title;
+  final Color? bgColor;
 
-  const UniversityInformationWidget({super.key, required this.information,this.title});
+  const ExpendedText({super.key, required this.information,this.title,this.bgColor});
 
   @override
-  _UniversityInformationWidgetState createState() => _UniversityInformationWidgetState();
+  _ExpendedTextState createState() => _ExpendedTextState();
 }
 
-class _UniversityInformationWidgetState extends State<UniversityInformationWidget> {
+class _ExpendedTextState extends State<ExpendedText> {
   bool _isExpanded = false;
 
   @override
@@ -20,7 +21,7 @@ class _UniversityInformationWidgetState extends State<UniversityInformationWidge
       padding: EdgeInsets.symmetric(vertical: 12, horizontal: 16),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(16),
-        color: Colors.white,
+        color: widget.bgColor??Colors.white,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

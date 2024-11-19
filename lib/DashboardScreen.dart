@@ -2,6 +2,7 @@ import 'dart:core';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/material.dart';
+import 'package:mecstudygroup/Destinations/widgets/destination_bottom_sheet.dart';
 import 'package:mecstudygroup/LoginAndSignupModule/login_bottom_sheet.dart';
 import 'package:mecstudygroup/Utilities/Colors.dart';
 import 'package:mecstudygroup/Utilities/helper_class.dart';
@@ -360,23 +361,35 @@ class _ExploreScreenState extends State<ExploreScreen> {
                                 borderRadius: BorderRadius.circular(8)),
                             child: Column(
                               children: [
-                                Container(
-                                  height: 250.h,
-                                  width: 180.w,
-                                  alignment: Alignment.bottomCenter,
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(12),
-                                      image: DecorationImage(
-                                          image: NetworkImage(
-                                            'https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/Westerkerk_Amsterdam.jpg/220px-Westerkerk_Amsterdam.jpg',
-                                          ),
-                                          fit: BoxFit.fitHeight)),
-                                  child: Padding(
-                                    padding: EdgeInsets.only(bottom: 16.h),
-                                    child: Text(
-                                      pro.topCountriesModelList[index].name??'',
-                                      style: customText(
-                                          16, Colors.white, FontWeight.w500),
+                                GestureDetector(
+                                  onTap: (){
+                                    showModalBottomSheet(
+                                      context: context,
+                                      isScrollControlled: true,
+                                      backgroundColor: Colors.transparent,
+                                      builder: (BuildContext context) {
+                                        return DestinationBottomSheet(pro.topCountriesModelList[index]); // Use the new widget here
+                                      },
+                                    );
+                                  },
+                                  child: Container(
+                                    height: 250.h,
+                                    width: 180.w,
+                                    alignment: Alignment.bottomCenter,
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(12),
+                                        image: DecorationImage(
+                                            image: NetworkImage(
+                                              'https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/Westerkerk_Amsterdam.jpg/220px-Westerkerk_Amsterdam.jpg',
+                                            ),
+                                            fit: BoxFit.fitHeight)),
+                                    child: Padding(
+                                      padding: EdgeInsets.only(bottom: 16.h),
+                                      child: Text(
+                                        pro.topCountriesModelList[index].name??'',
+                                        style: customText(
+                                            16, Colors.white, FontWeight.w500),
+                                      ),
                                     ),
                                   ),
                                 ),
