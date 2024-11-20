@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mecstudygroup/Model/university_model.dart';
 import 'package:mecstudygroup/providers/home_provider.dart';
+import 'package:mecstudygroup/search/search_screen_combine.dart';
 import 'package:provider/provider.dart';
 
 import '../Utilities/helper_class.dart';
@@ -115,6 +116,9 @@ class _SearchScreenState extends State<SearchScreen> {
             ],
           ),
         ),
+        floatingActionButton: FloatingActionButton(onPressed: (){
+          Navigator.push(context, MaterialPageRoute(builder: (context)=>SearchScreenCombination()));
+        },child: Icon(Icons.add),),
       ),
     );
   }

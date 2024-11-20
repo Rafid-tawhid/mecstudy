@@ -27,6 +27,7 @@ class HomeProvider extends ChangeNotifier {
   List<UniversityModel> topUniversityList=[];
   List<TrendingSubjectModel> trendingSubjectList=[];
   List<TopCountriesModel> topCountriesModelList=[];
+  List<dynamic> combinedList = [];
 
   Future<bool> getLogin({String? email, String? password}) async {
     bool returndata = false; // Set a default value
@@ -271,6 +272,11 @@ class HomeProvider extends ChangeNotifier {
 
   void setAllInfoLoading(bool bool) {
     allInfoLoading=bool;
+    notifyListeners();
+  }
+
+  void setSearchListList() {
+    combinedList=[...allInstitutesInfoList,...allCoursesInfoList];
     notifyListeners();
   }
 }
