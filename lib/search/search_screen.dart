@@ -4,7 +4,9 @@ import 'package:mecstudygroup/providers/home_provider.dart';
 import 'package:mecstudygroup/search/search_screen_combine.dart';
 import 'package:provider/provider.dart';
 
+import '../Model/course_model.dart';
 import '../Utilities/helper_class.dart';
+import '../Widgets/courses_details_bottomsheet.dart';
 import '../university_details/university_dts_bottom_sheet.dart';
 
 class SearchScreen extends StatefulWidget {
@@ -18,7 +20,7 @@ class _SearchScreenState extends State<SearchScreen> {
   final TextEditingController _searchController = TextEditingController();
   final FocusNode _focusNode = FocusNode();
   List<UniversityModel> filteredUniversities = [];
-
+  String query = "";
   @override
   void initState() {
     super.initState();
@@ -70,7 +72,8 @@ class _SearchScreenState extends State<SearchScreen> {
                 ),
                 child: TextField(
                   controller: _searchController,
-                  focusNode: _focusNode, // Set the focus node
+                  focusNode: _focusNode,
+                  onChanged: search,
                   decoration: InputDecoration(
                     hintText: "Search Courses and Institutions",
                     border: InputBorder.none,
@@ -83,31 +86,23 @@ class _SearchScreenState extends State<SearchScreen> {
                 builder: (context,provider,_)=>provider.isUniversityLoading?Center(child: CircularProgressIndicator(color: Colors.orange,),):
                 Expanded(
                   child: ListView.builder(
-                    itemCount: filteredUniversities.length,
+                    itemCount: provider.combinedList.length,
                     itemBuilder: (context, index) {
-                      final university = filteredUniversities[index];
-                      return ListTile(
-                        title: Text(university.universityname??''),
-                        subtitle: Text("Country ID: ${university.country}"),
-                        onTap: () async {
-
-                          try {
-                            var hp=context.read<HomeProvider>();
-                            await hp.getAllInformationOfUniversityById(filteredUniversities[index].id.toString());
-                            showModalBottomSheet(
-                              context: context,
-                              isScrollControlled: true,
-                              backgroundColor: Colors.transparent,
-                              builder: (BuildContext context) {
-                                return UniversityScreenBottomSheet(university: hp.universities.first); // Use the new widget here
-                              },
-                            );
-                          }
-                          catch(e) {
-                            HelperClass.showToast('No Info Found');
-                          }
-                        },
-                      );
+                      final item = provider.combinedList[index];
+                      if (item is CourseModel) {
+                        return ListTile(
+                          title: Text(item.coursetitle!),
+                          subtitle: Text("University: ${item.universityname}"),
+                          onTap: () => handleItemClick(item),
+                        );
+                      }
+                      else if (item is UniversityModel) {
+                        return ListTile(
+                          title: Text(item.universityname!),
+                          subtitle: Text("Country: ${item.country}"),
+                          onTap: () => handleItemClick(item),
+                        );
+                      }
                     },
                   ),
                 ),
@@ -127,34 +122,65 @@ class _SearchScreenState extends State<SearchScreen> {
     var hp = context.read<HomeProvider>();
     await Future.microtask(() {
       if (hp.allInstitutesInfoList.isEmpty || hp.allCoursesInfoList.isEmpty) {
-        hp.getAllCourseAndUniversityInfo();
-        filteredUniversities = hp.allInstitutesInfoList;
-        // Listen to search query changes
-        _searchController.addListener(() {
-          setState(() {
-            filteredUniversities = searchUniversities(hp.allInstitutesInfoList, _searchController.text);
-          });
-          FocusScope.of(context).requestFocus(_focusNode);
+        hp.getAllCourseAndUniversityInfo().then((done){
+          hp.setSearchListList();
         });
       }
       else {
-        filteredUniversities = hp.allInstitutesInfoList;
-        _searchController.addListener(() {
-          setState(() {
-            filteredUniversities = searchUniversities(hp.allInstitutesInfoList, _searchController.text);
-          });
-
-        });
+        hp.setSearchListList();
         callforFocus();
       }
     });
+  }
+
+  void search(String query) {
+    var hp = context.read<HomeProvider>();
+    setState(() {
+      this.query = query.toLowerCase();
+      hp.combinedList = [
+        ...hp.allCoursesInfoList.where((course) =>
+        course.coursetitle!.toLowerCase().contains(this.query) ||
+            course.universityname!.toLowerCase().contains(this.query)),
+        ...hp.allInstitutesInfoList.where((university) =>
+            university.matchesSearchQuery(this.query)),
+      ];
+    });
 
 
-         // WidgetsBinding.instance.addPostFrameCallback((_) {
-         //    FocusScope.of(context).requestFocus(_focusNode);
-         //  });
+  }
 
-
+  Future<void> handleItemClick(dynamic item) async {
+    if (item is CourseModel) {
+      // Handle CourseModel click
+      debugPrint("Clicked Course: ${item.coursetitle}");
+      showModalBottomSheet(
+        context: context,
+        isScrollControlled: true,
+        backgroundColor: Colors.transparent,
+        builder: (BuildContext context) {
+          return CoursesScreenBottomSheet(item);
+        },
+      );
+    } else if (item is UniversityModel) {
+      // Handle UniversityModel click
+      debugPrint("Clicked University: ${item.universityname}");
+      try {
+        var hp=context.read<HomeProvider>();
+        await hp.getAllInformationOfUniversityById(item.id.toString());
+        if (!mounted) return;
+        showModalBottomSheet(
+          context: context,
+          isScrollControlled: true,
+          backgroundColor: Colors.transparent,
+          builder: (BuildContext context) {
+            return UniversityScreenBottomSheet(university: hp.universities.first); // Use the new widget here
+          },
+        );
+      }
+      catch(e) {
+        HelperClass.showToast('No Info Found');
+      }
+    }
   }
 
   void callforFocus() {

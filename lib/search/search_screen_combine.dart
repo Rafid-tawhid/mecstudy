@@ -52,7 +52,8 @@ class _SearchScreenCombinationState extends State<SearchScreenCombination> {
                       subtitle: Text("University: ${item.universityname}"),
                       onTap: () => handleItemClick(item),
                     );
-                  } else if (item is UniversityModel) {
+                  }
+                  else if (item is UniversityModel) {
                     return ListTile(
                       title: Text(item.universityname!),
                       subtitle: Text("Country: ${item.country}"),
@@ -94,6 +95,8 @@ class _SearchScreenCombinationState extends State<SearchScreenCombination> {
             university.matchesSearchQuery(this.query)),
       ];
     });
+
+
   }
 
   void handleItemClick(dynamic item) {
