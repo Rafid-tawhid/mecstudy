@@ -158,41 +158,51 @@ class _SignUpScreenBottomSheet extends State<SignUpScreenBottomSheet> {
                                 keyboardType: TextInputType.phone),
                             SizedBox(height: 16),
                             Consumer<UserProvider>(
-                              builder: (context,up,_)=>CustomDropdownNew<Country>(
-                                items: up.countriesModelList,
-                                hintText: 'Select an option',
-                                selectedValue: _country,
-                                onChanged: (value) {
+                              builder: (context,up,_)=>Padding(
+                                padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                                child: CustomDropdownNew<Country>(
+                                  items: up.countriesModelList,
+                                  hintText: 'Select an option',
+                                  selectedValue: _country,
+                                  onChanged: (value) {
 
-                                  if(value!=null){
-                                    up.getCtiyNames(_country!.name);
-                                    setState(() {
-                                      _city=null;
-                                      _country=value;
-                                      _selectedCountry = value.name ?? '';
-                                      //getCtiyNames();
-                                      _selectedCity = '';
-                                    });
-                                  }
-                                },
-                                itemLabel: (model) => model.name,
+                                    if(value!=null){
+                                      up.getCtiyNames(_country!.name);
+                                      setState(() {
+                                        _city=null;
+                                        _country=value;
+                                        _selectedCountry = value.name ?? '';
+                                        //getCtiyNames();
+                                        _selectedCity = '';
+                                      });
+                                    }
+                                  },
+                                  itemLabel: (model) => model.name,
+                                  validator: (value) =>
+                                  value == null ? 'Please select a country' : null,
+                                ),
                               ),),
 
                             SizedBox(height: 16),
                             Consumer<UserProvider>(
-                              builder: (context,up,_)=>CustomDropdownNew<City>(
-                                items: up.citiesModelList,
-                                hintText: 'Select an option',
-                                selectedValue: _city,
-                                onChanged: (value) {
-                                  if(value!=null){
-                                    _city=value;
-                                    setState(() {
-                                      _selectedCity = value.cityName ?? '';
-                                    });
-                                  }
-                                },
-                                itemLabel: (model) => model.cityName,
+                              builder: (context,up,_)=>Padding(
+                                padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                                child: CustomDropdownNew<City>(
+                                  items: up.citiesModelList,
+                                  hintText: 'Select an option',
+                                  selectedValue: _city,
+                                  onChanged: (value) {
+                                    if(value!=null){
+                                      _city=value;
+                                      setState(() {
+                                        _selectedCity = value.cityName ?? '';
+                                      });
+                                    }
+                                  },
+                                  itemLabel: (model) => model.cityName,
+                                  validator: (value) =>
+                                  value == null ? 'Please select a city' : null,
+                                ),
                               ),),
 
                             SizedBox(height: 16),

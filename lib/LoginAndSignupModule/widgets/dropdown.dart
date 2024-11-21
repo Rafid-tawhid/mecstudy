@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 
-import 'package:flutter/material.dart';
-
 class CustomDropdownNew<T> extends StatelessWidget {
   final List<T> items; // List of custom model items
   final String hintText; // Hint text for the dropdown
   final T? selectedValue; // Initial selected value
   final ValueChanged<T?> onChanged; // Callback for value changes
   final String Function(T) itemLabel; // Function to extract label from the model
+  final String? Function(T?)? validator; // Validator for dropdown
 
   const CustomDropdownNew({
     super.key,
@@ -16,6 +15,7 @@ class CustomDropdownNew<T> extends StatelessWidget {
     this.selectedValue,
     required this.onChanged,
     required this.itemLabel,
+    this.validator,
   });
 
   @override
@@ -49,7 +49,7 @@ class CustomDropdownNew<T> extends StatelessWidget {
         ),
         contentPadding: EdgeInsets.symmetric(vertical: 4, horizontal: 10),
       ),
+      validator: validator,
     );
   }
 }
-
