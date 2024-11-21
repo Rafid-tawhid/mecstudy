@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mecstudygroup/BottomMenu/BottomMenuScreen.dart';
 import 'package:mecstudygroup/providers/home_provider.dart';
+import 'package:mecstudygroup/providers/user_provider.dart';
 import 'package:provider/provider.dart';
 import 'Utilities/Constant.dart';
 
@@ -24,7 +25,8 @@ class MySplashScreen extends StatelessWidget {
     ));
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (context)=>HomeProvider()..getLogin())
+        ChangeNotifierProvider(create: (context)=>HomeProvider()..getLogin()),
+        ChangeNotifierProvider(create: (context)=>UserProvider()),
       ],
       child: MaterialApp(
         title: 'Flutter Demo',
