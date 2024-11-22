@@ -25,7 +25,14 @@ class CustomDropdownNew<T> extends StatelessWidget {
       items: items
           .map((item) => DropdownMenuItem(
         value: item,
-        child: Text(itemLabel(item)), // Use the label extractor
+        child: Container(
+          constraints: const BoxConstraints(maxWidth: 200), // Prevent text overflow
+          child: Text(
+            itemLabel(item),
+            overflow: TextOverflow.ellipsis, // Add ellipsis for long text
+            maxLines: 1, // Restrict to a single line
+          ),
+        ),
       ))
           .toList(),
       onChanged: onChanged,
@@ -47,9 +54,12 @@ class CustomDropdownNew<T> extends StatelessWidget {
           borderSide: BorderSide(color: Colors.grey.shade400, width: .5),
           borderRadius: BorderRadius.circular(8),
         ),
-        contentPadding: EdgeInsets.symmetric(vertical: 4, horizontal: 10),
+        contentPadding: const EdgeInsets.symmetric(vertical: 4, horizontal: 10),
       ),
       validator: validator,
+      dropdownColor: Colors.white, // Optional: Set dropdown color
+      icon: const Icon(Icons.arrow_drop_down),
+      menuMaxHeight: 300, // Limit dropdown menu height
     );
   }
 }

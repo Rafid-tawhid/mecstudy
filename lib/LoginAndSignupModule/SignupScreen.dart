@@ -1,13 +1,16 @@
 import 'dart:convert';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mecstudygroup/Application/ExploreAllCoursesAndInstitutes.dart';
 import 'package:mecstudygroup/LoginAndSignupModule/widgets/dropdown.dart';
 import 'package:mecstudygroup/LoginAndSignupModule/widgets/textfield.dart';
 import 'package:mecstudygroup/Model/CountryModel.dart';
 import 'package:mecstudygroup/Utilities/Colors.dart';
+import 'package:mecstudygroup/Utilities/helper_class.dart';
 import 'package:mecstudygroup/providers/user_provider.dart';
 import 'package:provider/provider.dart';
 
+import '../BottomMenu/BottomMenuScreen.dart';
 import '../DashboardScreen.dart';
 import '../Utilities/Constant.dart';
 import 'package:http/http.dart' as https;
@@ -167,7 +170,8 @@ class _SignUpScreenBottomSheet extends State<SignUpScreenBottomSheet> {
                                   onChanged: (value) {
 
                                     if(value!=null){
-                                      up.getCtiyNames(_country!.name);
+                                      debugPrint('value.countryID ${value.name}: ${value.countryID.toString()}');
+                                      up.getCtiyNames(value.countryID.toString());
                                       setState(() {
                                         _city=null;
                                         _country=value;
@@ -207,19 +211,17 @@ class _SignUpScreenBottomSheet extends State<SignUpScreenBottomSheet> {
 
                             SizedBox(height: 16),
                           ]))),
-              Container(
-                  height: 50, // Set your desired height
-                  width: Responsive.width(88, context),
-                  decoration: BoxDecoration(
-                    color: Colors.green,
-                    borderRadius: BorderRadius.circular(32), // Border radius
-                  ),
-                  child: ElevatedButton(
-                    onPressed: () {
-                      if (validateFields()) {
-
-                        var up=context.read<UserProvider>();
-
+              Consumer<UserProvider>(
+                builder: (context,up,_)=>up.signupLoadingButton?CircularProgressIndicator():Container(
+                    height: 50, // Set your desired height
+                    width: Responsive.width(88, context),
+                    decoration: BoxDecoration(
+                      color: Colors.green,
+                      borderRadius: BorderRadius.circular(32), // Border radius
+                    ),
+                    child: ElevatedButton(
+                      onPressed:  () async {
+                        if (validateFields()) {
                           print(firstNameController.text);
                           print(lastNameController.text);
                           print(addressController.text);
@@ -229,7 +231,7 @@ class _SignUpScreenBottomSheet extends State<SignUpScreenBottomSheet> {
                           print(emailAddressController.text);
                           print(_selectedGender!);
                           print(passwordController.text);
-                          up.signUp(
+                         bool result=await up.signUp(
                               FName: firstNameController.text,
                               LName: lastNameController.text,
                               address: addressController.text,
@@ -240,26 +242,34 @@ class _SignUpScreenBottomSheet extends State<SignUpScreenBottomSheet> {
                               gender: _selectedGender == "Male" ? "1" : "2",
                               email: emailAddressController.text,
                               password: passwordController.text);
+                         if(result){
+                           HelperClass.showToast('Registration Successful');
+                           Navigator.pushReplacement(context, CupertinoPageRoute(builder: (context)=>BottomMenuScreen()));
+                         }
+                         else {
+                           HelperClass.showToast('Something went wrong');
+                         }
 
-                      } else {
-                        print('Form is invalid');
-                      }
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: AppColors.themeMaincolor,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(
-                            24), // Adjust the radius as needed
+                        } else {
+                          debugPrint('Form is invalid');
+                        }
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: AppColors.themeMaincolor,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(
+                              24), // Adjust the radius as needed
+                        ),
                       ),
-                    ),
-                    child: Text('Continue',
-                        style: TextStyle(
-                          fontWeight: FontWeight.w500,
-                          fontSize: AdaptiveTextSize()
-                              .getadaptiveTextSize(context, 19),
-                          color: Colors.white,
-                        )),
-                  )),
+                      child: Text('Continue',
+                          style: TextStyle(
+                            fontWeight: FontWeight.w500,
+                            fontSize: AdaptiveTextSize()
+                                .getadaptiveTextSize(context, 19),
+                            color: Colors.white,
+                          )),
+                    )),
+              ),
               SizedBox(
                 height: 46,
               ),
