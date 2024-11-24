@@ -8,7 +8,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class HelperClass {
 
-
+  static UserProfileModel? userProfileModel;
   static List<dynamic> parseDegreeID(String degreeIDString) {
     // Remove the leading and trailing single quotes
     String trimmed = degreeIDString.substring(1, degreeIDString.length - 1);
@@ -100,10 +100,9 @@ class HelperClass {
     debugPrint('Saved User : ${userProfileModel.toJson()}');
     SharedPreferences preferences=await SharedPreferences.getInstance();
     preferences.setString("user", userProfileModel.toJson().toString());
-    getUserInfo();
   }
 
-  static Future<void> getUserInfo() async{
+  static Future<bool> getUserInfo() async{
     SharedPreferences preferences=await SharedPreferences.getInstance();
     var data=preferences.getString("user");
     // Convert string to map
@@ -117,7 +116,6 @@ class HelperClass {
           },
         ),
       );
-
       // Convert Gender, City, and Country to integers
       map['Gender'] = map['Gender']??'';
       map['City'] = map['City']??'';
@@ -126,10 +124,14 @@ class HelperClass {
       // Use the model class to parse the map
       final user = UserProfileModel.fromJson(map);
 
+      userProfileModel=user;
       // Print result
       print(user.toJson());
+      return true;
     }
-
+    else {
+      return false;
+    }
   }
 
 

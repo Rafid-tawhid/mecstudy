@@ -8,7 +8,11 @@ class UserProfileModel {
       this.country,
       this.email, 
       this.gender, 
-      this.phone,});
+      this.phone,
+      this.password,
+      this.token,
+      this.refreshToken,
+  });
 
   UserProfileModel.fromJson(dynamic json) {
     firstName = json['FirstName']??'';
@@ -20,6 +24,9 @@ class UserProfileModel {
     email = json['Email']??'';
     gender = json['Gender']??'';
     phone = json['Phone']??'';
+    password = json['password']??'';
+    token = json['token']??'';
+    refreshToken = json['refreshToken']??'';
   }
   String? firstName;
   String? lastName;
@@ -29,6 +36,9 @@ class UserProfileModel {
   String? country;
   String? email;
   String? gender;
+  String? password;
+  String? token;
+  String? refreshToken;
   dynamic phone;
 UserProfileModel copyWith({  String? firstName,
   String? lastName,
@@ -38,6 +48,9 @@ UserProfileModel copyWith({  String? firstName,
   String? country,
   String? email,
   String? gender,
+  String? password,
+  String? token,
+  String? refreshToken,
   dynamic phone,
 }) => UserProfileModel(  firstName: firstName ?? this.firstName,
   lastName: lastName ?? this.lastName,
@@ -48,6 +61,9 @@ UserProfileModel copyWith({  String? firstName,
   email: email ?? this.email,
   gender: gender ?? this.gender,
   phone: phone ?? this.phone,
+  password: password ?? this.password,
+  token: token ?? this.token,
+  refreshToken: refreshToken ?? this.refreshToken,
 );
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
@@ -60,6 +76,9 @@ UserProfileModel copyWith({  String? firstName,
     map['Email'] = email;
     map['Gender'] = gender;
     map['Phone'] = phone;
+    map['password'] = password;
+    map['token'] = token;
+    map['refreshToken'] = refreshToken;
     return map;
   }
 

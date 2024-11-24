@@ -73,18 +73,7 @@ class UserProvider extends ChangeNotifier {
     },mainHeader: Headers.defaultheader,);
     setLoading(false);
     if (result != null) {
-      HelperClass.saveUserInfo(
-          UserProfileModel(
-        firstName: result['Model']['FirstName'],
-        lastName: result['Model']['LastName'],
-        email: result['Model']['Email'],
-        address1: result['Model']['Address1'],
-        address2: result['Model']['Address2'],
-        city: result['Model']['City'].toString(),
-        country: result['Model']['Country'].toString(),
-        gender: result['Model']['Gender'].toString(),
-        phone: result['Model']['Phone'].toString(),
-      ));
+
       return true;
     }
     else {

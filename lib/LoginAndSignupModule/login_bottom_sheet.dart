@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:mecstudygroup/BottomMenu/BottomMenuScreen.dart';
 import 'package:mecstudygroup/DashboardScreen.dart';
 import 'package:mecstudygroup/LoginAndSignupModule/SignupScreen.dart';
 import 'package:mecstudygroup/providers/home_provider.dart';
@@ -98,7 +99,7 @@ class LoginBottomSheet extends StatelessWidget {
                         if(_formKey.currentState!.validate()){
                           var hp=context.read<HomeProvider>();
                           if(await hp.getLogin(email: emailController.text.trim(),password: passwordController.text.trim())){
-
+                            Navigator.push(context, CupertinoPageRoute(builder: (context)=>BottomMenuScreen()));
                           }
                         }
                       },

@@ -8,7 +8,9 @@ import '../Model/course_model.dart';
 import '../Model/top_countries_model.dart';
 import '../Model/trending_subject_model.dart';
 import '../Model/university_model.dart';
+import '../Model/user_profile_model.dart';
 import '../Utilities/Colors.dart';
+import '../Utilities/helper_class.dart';
 
 class HomeProvider extends ChangeNotifier {
 
@@ -35,6 +37,7 @@ class HomeProvider extends ChangeNotifier {
     http://137.135.119.97/MecStudies/api/Token/Login
     try {
       // Call API and await response
+
       var resultData = await apiService.postData(
         '/Token/Login',
         {
@@ -50,13 +53,29 @@ class HomeProvider extends ChangeNotifier {
         MainHeaders.token = resultData['Model']['Token'] ?? '';
         MainHeaders.refreshToken = resultData['Model']['RefreshToken'] ?? '';
 
-        // Fetch additional data
-        // await getAllUniversity();
-        await getHomePageInfo();
+        //save userinfo
+        HelperClass.saveUserInfo(
+            UserProfileModel(
+              firstName: resultData['Model']['FirstName'],
+              lastName: resultData['Model']['LastName'],
+              email: resultData['Model']['Email'],
+              address1: resultData['Model']['Address1'],
+              address2: resultData['Model']['Address2'],
+              city: resultData['Model']['City'].toString(),
+              country: resultData['Model']['Country'].toString(),
+              gender: resultData['Model']['Gender'].toString(),
+              phone: resultData['Model']['Phone'].toString(),
+              password: resultData['Model']['Phone'],
+              token: MainHeaders.token,
+              refreshToken: MainHeaders.refreshToken
+            ));
+
+        // await getHomePageInfo();
 
         // Set the return value to true upon successful login
         returndata = true;
-      } else {
+      }
+      else {
         debugPrint('Login failed: Invalid response format or null Model');
       }
     } catch (e) {
