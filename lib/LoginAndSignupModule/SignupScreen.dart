@@ -244,7 +244,8 @@ class _SignUpScreenBottomSheet extends State<SignUpScreenBottomSheet> {
                               password: passwordController.text);
                          if(result){
                            HelperClass.showToast('Registration Successful');
-                           Navigator.pushReplacement(context, CupertinoPageRoute(builder: (context)=>BottomMenuScreen()));
+                           //Save user info and
+                           Navigator.push(context, CupertinoPageRoute(builder: (context)=>BottomMenuScreen()));
                          }
                          else {
                            HelperClass.showToast('Something went wrong');

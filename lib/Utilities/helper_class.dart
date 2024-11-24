@@ -2,7 +2,9 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:mecstudygroup/Model/user_profile_model.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class HelperClass {
 
@@ -92,6 +94,42 @@ class HelperClass {
     }
 
     return null; // Return null if the key is not found
+  }
+
+  static Future<void> saveUserInfo(UserProfileModel userProfileModel) async {
+    debugPrint('Saved User : ${userProfileModel.toJson()}');
+    SharedPreferences preferences=await SharedPreferences.getInstance();
+    preferences.setString("user", userProfileModel.toJson().toString());
+    getUserInfo();
+  }
+
+  static Future<void> getUserInfo() async{
+    SharedPreferences preferences=await SharedPreferences.getInstance();
+    var data=preferences.getString("user");
+    // Convert string to map
+    if(data!=null){
+      final cleanedInput = data.replaceAll(RegExp(r'[\{\}]'), ''); // Remove `{` and `}`
+      final map = Map.fromEntries(
+        cleanedInput.split(', ').map(
+              (e) {
+            final keyValue = e.split(': ');
+            return MapEntry(keyValue[0], keyValue[1]);
+          },
+        ),
+      );
+
+      // Convert Gender, City, and Country to integers
+      map['Gender'] = map['Gender']??'';
+      map['City'] = map['City']??'';
+      map['Country'] = map['City']??'';
+
+      // Use the model class to parse the map
+      final user = UserProfileModel.fromJson(map);
+
+      // Print result
+      print(user.toJson());
+    }
+
   }
 
 
