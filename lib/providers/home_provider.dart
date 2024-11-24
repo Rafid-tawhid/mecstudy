@@ -54,21 +54,23 @@ class HomeProvider extends ChangeNotifier {
         MainHeaders.refreshToken = resultData['Model']['RefreshToken'] ?? '';
 
         //save userinfo
-        HelperClass.saveUserInfo(
-            UserProfileModel(
-              firstName: resultData['Model']['FirstName'],
-              lastName: resultData['Model']['LastName'],
-              email: resultData['Model']['Email'],
-              address1: resultData['Model']['Address1'],
-              address2: resultData['Model']['Address2'],
-              city: resultData['Model']['City'].toString(),
-              country: resultData['Model']['Country'].toString(),
-              gender: resultData['Model']['Gender'].toString(),
-              phone: resultData['Model']['Phone'].toString(),
-              password: resultData['Model']['Phone'],
-              token: MainHeaders.token,
-              refreshToken: MainHeaders.refreshToken
-            ));
+        if(email!=null||password!=null){
+          HelperClass.saveUserInfo(
+              UserProfileModel(
+                  firstName: resultData['Model']['FirstName'],
+                  lastName: resultData['Model']['LastName'],
+                  email: resultData['Model']['Email'],
+                  address1: resultData['Model']['Address1'],
+                  address2: resultData['Model']['Address2'],
+                  city: resultData['Model']['City'].toString(),
+                  country: resultData['Model']['Country'].toString(),
+                  gender: resultData['Model']['Gender'].toString(),
+                  phone: resultData['Model']['Phone'].toString(),
+                  password: resultData['Model']['Phone'],
+                  token: MainHeaders.token,
+                  refreshToken: MainHeaders.refreshToken
+              ));
+        }
 
         // await getHomePageInfo();
 
