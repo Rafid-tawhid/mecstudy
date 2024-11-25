@@ -100,6 +100,7 @@ class HelperClass {
     debugPrint('Saved User : ${userProfileModel.toJson()}');
     SharedPreferences preferences=await SharedPreferences.getInstance();
     preferences.setString("user", userProfileModel.toJson().toString());
+    getUserInfo();
   }
 
   static Future<bool> getUserInfo() async{

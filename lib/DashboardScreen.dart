@@ -85,7 +85,7 @@ class _ExploreScreenState extends State<ExploreScreen> {
                         ),
                       ),
                       Spacer(),
-                      InkWell(
+                     HelperClass.userProfileModel==null? InkWell(
                         child: Container(
                             width: Responsive.width(21, context),
                             height: Responsive.height(4, context),
@@ -121,7 +121,14 @@ class _ExploreScreenState extends State<ExploreScreen> {
                           //   },
                           // );
                         },
-                      ),
+                      ):
+                     Column(
+                       crossAxisAlignment: CrossAxisAlignment.end,
+                       children: [
+                         Text('Hi!',style: customText(14, Colors.white, FontWeight.bold),),
+                         Text(HelperClass.userProfileModel!.firstName??'',style: customText(14, Colors.white, FontWeight.bold)),
+                       ],
+                     ),
                       SizedBox(
                         width: 30,
                       ),
