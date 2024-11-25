@@ -102,6 +102,7 @@ class HelperClass {
     preferences.setString("user", userProfileModel.toJson().toString());
     getUserInfo();
   }
+  //nothing
 
   static Future<bool> getUserInfo() async{
     SharedPreferences preferences=await SharedPreferences.getInstance();
