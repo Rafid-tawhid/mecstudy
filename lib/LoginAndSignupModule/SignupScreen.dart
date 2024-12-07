@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:mecstudygroup/Application/ExploreAllCoursesAndInstitutes.dart';
 import 'package:mecstudygroup/LoginAndSignupModule/widgets/dropdown.dart';
 import 'package:mecstudygroup/LoginAndSignupModule/widgets/textfield.dart';
@@ -221,6 +222,14 @@ class _SignUpScreenBottomSheet extends State<SignUpScreenBottomSheet> {
                     ),
                     child: ElevatedButton(
                       onPressed:  () async {
+                      Position? position=await  HelperClass.getCurrentLocation();
+
+                      if(position!=null){
+                        String meetLink = HelperClass.createGoogleMapsLink(latitude: position.latitude, longitude: position.longitude, dateTime: DateTime.now());
+                        debugPrint('Google meet link: ${meetLink}');
+                      //  HelperClass.sendEmailWithLocation(toEmail: 'rafidtawhid01@gmail.com', subject: 'Meet Link', locationLink: meetLink, dateTime: DateTime.now());
+                      }
+
                         if (validateFields()) {
                           print(firstNameController.text);
                           print(lastNameController.text);

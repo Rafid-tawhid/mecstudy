@@ -2,12 +2,14 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:intl/intl.dart';
 import 'package:mecstudygroup/Model/user_profile_model.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class HelperClass {
-
   static UserProfileModel? userProfileModel;
   static List<dynamic> parseDegreeID(String degreeIDString) {
     // Remove the leading and trailing single quotes
@@ -25,12 +27,11 @@ class HelperClass {
     return result;
   }
 
-  static String cutTheLongText(String value,int length) {
+  static String cutTheLongText(String value, int length) {
     if (value.length > length) {
-
       return "${value.substring(0, length)}...";
     } else {
-      return  value;
+      return value;
     }
   }
 
@@ -38,14 +39,12 @@ class HelperClass {
     Fluttertoast.showToast(
       msg: message,
       toastLength: Toast.LENGTH_SHORT,
-      gravity: ToastGravity.BOTTOM,  // Position of the toast
+      gravity: ToastGravity.BOTTOM, // Position of the toast
       backgroundColor: Colors.black,
       textColor: Colors.white,
       fontSize: 16.0,
     );
   }
-
-
 
 // Get the local file
   static Future<File> _getLocalFile() async {
@@ -54,7 +53,7 @@ class HelperClass {
   }
 
 // Save a string with a key
- static Future<void> saveString(String key, String value) async {
+  static Future<void> saveString(String key, String value) async {
     final file = await _getLocalFile();
 
     // Read all lines in the file
@@ -98,44 +97,43 @@ class HelperClass {
 
   static Future<void> saveUserInfo(UserProfileModel userProfileModel) async {
     debugPrint('Saved User : ${userProfileModel.toJson()}');
-    SharedPreferences preferences=await SharedPreferences.getInstance();
+    SharedPreferences preferences = await SharedPreferences.getInstance();
     preferences.setString("user", userProfileModel.toJson().toString());
     getUserInfo();
   }
   //nothing
 
-  static Future<bool> getUserInfo() async{
-    SharedPreferences preferences=await SharedPreferences.getInstance();
-    var data=preferences.getString("user");
+  static Future<bool> getUserInfo() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    var data = preferences.getString("user");
     // Convert string to map
-    if(data!=null){
-      final cleanedInput = data.replaceAll(RegExp(r'[\{\}]'), ''); // Remove `{` and `}`
+    if (data != null) {
+      final cleanedInput =
+          data.replaceAll(RegExp(r'[\{\}]'), ''); // Remove `{` and `}`
       final map = Map.fromEntries(
         cleanedInput.split(', ').map(
-              (e) {
+          (e) {
             final keyValue = e.split(': ');
             return MapEntry(keyValue[0], keyValue[1]);
           },
         ),
       );
       // Convert Gender, City, and Country to integers
-      map['Gender'] = map['Gender']??'';
-      map['City'] = map['City']??'';
-      map['Country'] = map['City']??'';
+      map['Gender'] = map['Gender'] ?? '';
+      map['City'] = map['City'] ?? '';
+      map['Country'] = map['City'] ?? '';
 
       // Use the model class to parse the map
       final user = UserProfileModel.fromJson(map);
 
-      userProfileModel=user;
+      userProfileModel = user;
       // Print result
       print(user.toJson());
       return true;
-    }
-    else {
+    } else {
       return false;
     }
   }
-
 
 // /// Save a map as JSON-encoded string
   // static Future<void> saveMap(String key, Map<String, dynamic> value) async {
@@ -161,6 +159,101 @@ class HelperClass {
   //   await _storage.deleteAll();
   // }
 
+// Function to check location permissions
+  static Future<void> checkLocationPermission() async {
+    bool serviceEnabled;
+    LocationPermission permission;
 
+    // Check if location services are enabled
+    serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    if (!serviceEnabled) {
+      // Location services are not enabled
+      await Geolocator.openLocationSettings();
+      return Future.error('Location services are disabled.');
+    }
 
+    // Check location permissions
+    permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      if (permission == LocationPermission.denied) {
+        // Permissions are denied
+        return Future.error('Location permissions are denied');
+      }
+    }
+
+    if (permission == LocationPermission.deniedForever) {
+      // Permissions are permanently denied
+      return Future.error(
+          'Location permissions are permanently denied, we cannot request permissions.');
+    }
+  }
+
+  // Function to get the current location
+  static Future<Position?> getCurrentLocation() async {
+    try {
+      await checkLocationPermission();
+
+      Position position = await Geolocator.getCurrentPosition(
+          desiredAccuracy: LocationAccuracy.high);
+
+      var locationMessage = "Latitude: ${position.latitude}, Longitude: ${position.longitude}";
+
+      debugPrint(locationMessage);
+      return position;
+    } catch (e) {
+      var locationMessage = "Error: $e";
+      debugPrint(locationMessage);
+      return null;
+    }
+  }
+
+  static String createGoogleMapsLink({
+    required double latitude,
+    required double longitude,
+    required DateTime dateTime,
+  }) {
+    // Format date and time
+    String formattedDate = DateFormat('yyyy-MM-dd').format(dateTime);
+    String formattedTime = DateFormat('HH:mm').format(dateTime);
+
+    // Create the Google Maps link
+    return 'https://www.google.com/maps/search/?api=1&query=$latitude,$longitude'
+        '&date=$formattedDate&time=$formattedTime';
+  }
+
+  static Future<void> sendEmailWithLocation({
+    required String toEmail,
+    required String subject,
+    required String locationLink,
+    required DateTime dateTime,
+  }) async {
+    // Format the email body
+    String formattedDate = "${dateTime.year}-${dateTime.month}-${dateTime.day}";
+    String formattedTime =
+        "${dateTime.hour}:${dateTime.minute.toString().padLeft(2, '0')}";
+
+    String emailBody = '''
+            Hello,
+            
+            Here is the location and meeting details:
+            
+            Location: $locationLink
+            Date: $formattedDate
+            Time: $formattedTime
+            
+            Thank you!
+            ''';
+
+    // Create the mailto link
+    String mailtoLink =
+        Uri.encodeFull('mailto:$toEmail?subject=$subject&body=$emailBody');
+
+    // Launch the email app
+    if (await canLaunchUrl(Uri.parse(mailtoLink))) {
+      await launchUrl(Uri.parse(mailtoLink));
+    } else {
+      throw 'Could not send email';
+    }
+  }
 }

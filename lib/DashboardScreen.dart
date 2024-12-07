@@ -111,6 +111,7 @@ class _ExploreScreenState extends State<ExploreScreen> {
                             )),
                         onTap: () async {
                           Navigator.push(context, CupertinoPageRoute(builder: (context)=>LoginBottomSheet()));
+
                           // showModalBottomSheet(
                           //   context: context,
                           //   isScrollControlled: true,
