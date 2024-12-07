@@ -1,16 +1,26 @@
+
 import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:intl/intl.dart';
+import 'package:googleapis/compute/v1.dart';
+import 'package:intl/intl.dart' as intl;
+import 'package:mailer/mailer.dart';
+import 'package:mailer/smtp_server/gmail.dart';
 import 'package:mecstudygroup/Model/user_profile_model.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:googleapis/calendar/v3.dart' as calendar;
+import 'package:googleapis_auth/auth_io.dart';
+import 'package:mailer/mailer.dart' as mail;
+import 'package:mailer/smtp_server.dart';
+
 
 class HelperClass {
   static UserProfileModel? userProfileModel;
+
   static List<dynamic> parseDegreeID(String degreeIDString) {
     // Remove the leading and trailing single quotes
     String trimmed = degreeIDString.substring(1, degreeIDString.length - 1);
@@ -39,7 +49,8 @@ class HelperClass {
     Fluttertoast.showToast(
       msg: message,
       toastLength: Toast.LENGTH_SHORT,
-      gravity: ToastGravity.BOTTOM, // Position of the toast
+      gravity: ToastGravity.BOTTOM,
+      // Position of the toast
       backgroundColor: Colors.black,
       textColor: Colors.white,
       fontSize: 16.0,
@@ -101,6 +112,7 @@ class HelperClass {
     preferences.setString("user", userProfileModel.toJson().toString());
     getUserInfo();
   }
+
   //nothing
 
   static Future<bool> getUserInfo() async {
@@ -109,10 +121,10 @@ class HelperClass {
     // Convert string to map
     if (data != null) {
       final cleanedInput =
-          data.replaceAll(RegExp(r'[\{\}]'), ''); // Remove `{` and `}`
+      data.replaceAll(RegExp(r'[\{\}]'), ''); // Remove `{` and `}`
       final map = Map.fromEntries(
         cleanedInput.split(', ').map(
-          (e) {
+              (e) {
             final keyValue = e.split(': ');
             return MapEntry(keyValue[0], keyValue[1]);
           },
@@ -197,7 +209,8 @@ class HelperClass {
       Position position = await Geolocator.getCurrentPosition(
           desiredAccuracy: LocationAccuracy.high);
 
-      var locationMessage = "Latitude: ${position.latitude}, Longitude: ${position.longitude}";
+      var locationMessage = "Latitude: ${position
+          .latitude}, Longitude: ${position.longitude}";
 
       debugPrint(locationMessage);
       return position;
@@ -214,8 +227,8 @@ class HelperClass {
     required DateTime dateTime,
   }) {
     // Format date and time
-    String formattedDate = DateFormat('yyyy-MM-dd').format(dateTime);
-    String formattedTime = DateFormat('HH:mm').format(dateTime);
+    String formattedDate = intl.DateFormat('yyyy-MM-dd').format(dateTime);
+    String formattedTime = intl.DateFormat('HH:mm').format(dateTime);
 
     // Create the Google Maps link
     return 'https://www.google.com/maps/search/?api=1&query=$latitude,$longitude'
@@ -247,7 +260,7 @@ class HelperClass {
 
     // Create the mailto link
     String mailtoLink =
-        Uri.encodeFull('mailto:$toEmail?subject=$subject&body=$emailBody');
+    Uri.encodeFull('mailto:$toEmail?subject=$subject&body=$emailBody');
 
     // Launch the email app
     if (await canLaunchUrl(Uri.parse(mailtoLink))) {
@@ -255,5 +268,82 @@ class HelperClass {
     } else {
       throw 'Could not send email';
     }
+  }
+
+  static Future<String> createGoogleMeetLink(String clientId,
+      String clientSecret, String refreshToken) async {
+    final client = await clientViaUserConsent(
+      ClientId(clientId, clientSecret),
+      [calendar.CalendarApi.calendarScope],
+          (uri) {
+        print('Please go to the following URL and grant access:');
+        print('  => $uri');
+      },
+    );
+
+    final calendarApi = calendar.CalendarApi(client);
+
+    final event = calendar.Event()
+      ..summary = 'Meeting Title'
+      ..start = (calendar.EventDateTime()
+        ..dateTime = DateTime.now())
+      ..end = (calendar.EventDateTime()
+        ..dateTime = DateTime.now())
+      ..conferenceData = calendar.ConferenceData(
+        createRequest: calendar.CreateConferenceRequest(
+            requestId: 'random-string'),
+      );
+
+    final createdEvent = await calendarApi.events.insert(
+      event,
+      'primary',
+      conferenceDataVersion: 1,
+    );
+
+    return createdEvent.conferenceData?.entryPoints?.first.uri ??
+        'No link generated';
+  }
+
+ static Future<void> sendEmail({
+    required String username,
+    required String password,
+    required String recipientEmail,
+    required String subject,
+    required String plainText,
+    required String htmlContent,
+    List<String> ccEmails = const [],
+    List<String> bccEmails = const [],
+    List<File>? attachments,
+  }) async {
+    // SMTP server configuration
+    final smtpServer = gmail(username, password);
+
+    // Create the email message
+    final message = mail.Message()
+      ..from = mail.Address(username, 'Your Name')
+      ..recipients.add(recipientEmail)
+      ..ccRecipients.addAll(ccEmails)
+      ..bccRecipients.addAll(bccEmails)
+      ..subject = subject
+      ..text = plainText
+      ..html = htmlContent;
+
+    // Attach files if provided
+    if (attachments != null) {
+      for (var file in attachments) {
+        message.attachments.add(FileAttachment(file));
+      }
+    }
+    try {
+      // Send the email
+      final sendReport = await send(message, smtpServer);
+      print('Message sent: $sendReport');
+    } on MailerException catch (e) {
+      print('Message not sent. ${e}');
+      for (var p in e.problems) {
+        print('Problem: ${p.code}: ${p.msg}');
+      }
+    }
+
   }
 }

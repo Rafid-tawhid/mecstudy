@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
@@ -222,13 +223,22 @@ class _SignUpScreenBottomSheet extends State<SignUpScreenBottomSheet> {
                     ),
                     child: ElevatedButton(
                       onPressed:  () async {
-                      Position? position=await  HelperClass.getCurrentLocation();
 
-                      if(position!=null){
-                        String meetLink = HelperClass.createGoogleMapsLink(latitude: position.latitude, longitude: position.longitude, dateTime: DateTime.now());
-                        debugPrint('Google meet link: ${meetLink}');
-                      //  HelperClass.sendEmailWithLocation(toEmail: 'rafidtawhid01@gmail.com', subject: 'Meet Link', locationLink: meetLink, dateTime: DateTime.now());
-                      }
+                        try {
+                          await HelperClass.sendEmail(
+                            username: 'rafidtawhid@gmail.com',
+                            password: '0123571011131719',
+                            recipientEmail: 'rafidtawhid01@gmail.com',
+                            subject: 'Test Dart Mailer :: ${DateTime.now()}',
+                            plainText: 'This is the plain text content.',
+                            htmlContent: '<h1>Test</h1><p>Here is some HTML content.</p>',
+                            ccEmails: ['cc1@example.com', 'cc2@example.com'],
+                            bccEmails: ['bcc@example.com'],
+                            attachments: [File('path/to/attachment.png')],
+                          );
+                        } catch (e) {
+                          print('Failed to send email: $e');
+                        }
 
                         if (validateFields()) {
                           print(firstNameController.text);
