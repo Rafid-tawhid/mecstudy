@@ -2,7 +2,8 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:geolocator/geolocator.dart';
+import 'package:mailer/mailer.dart';
+import 'package:mailer/smtp_server.dart';
 import 'package:mecstudygroup/Application/ExploreAllCoursesAndInstitutes.dart';
 import 'package:mecstudygroup/LoginAndSignupModule/widgets/dropdown.dart';
 import 'package:mecstudygroup/LoginAndSignupModule/widgets/textfield.dart';
@@ -19,6 +20,7 @@ import 'package:http/http.dart' as https;
 import 'dart:core';
 
 import '../Widgets/drop_down.dart';
+import 'auth/google_auth_api.dart';
 import 'login_bottom_sheet.dart';
 
 class SignUpScreenBottomSheet extends StatefulWidget {
@@ -224,21 +226,48 @@ class _SignUpScreenBottomSheet extends State<SignUpScreenBottomSheet> {
                     child: ElevatedButton(
                       onPressed:  () async {
 
-                        try {
-                          await HelperClass.sendEmail(
-                            username: 'rafidtawhid@gmail.com',
-                            password: '0123571011131719',
-                            recipientEmail: 'rafidtawhid01@gmail.com',
-                            subject: 'Test Dart Mailer :: ${DateTime.now()}',
-                            plainText: 'This is the plain text content.',
-                            htmlContent: '<h1>Test</h1><p>Here is some HTML content.</p>',
-                            ccEmails: ['cc1@example.com', 'cc2@example.com'],
-                            bccEmails: ['bcc@example.com'],
-                            attachments: [File('path/to/attachment.png')],
-                          );
-                        } catch (e) {
-                          print('Failed to send email: $e');
+                        final user=await GoogleAuthApi.signIn();
+                        if(user!=null){
+                          final email='rafidtawhid02@gmail.com';
+                          final auth= await user.authentication;
+                          final token=auth.accessToken;
+                          final smtpServer = gmailRelaySaslXoauth2(email, token??'');
+                          final message=Message()
+                            ..from=Address('rafidtawhid02@gmail.com','Rimon')
+                            ..recipients=['rafidtawhid01@gmail.com']
+                            ..subject='Hello World'
+                            ..text='This is mail testing';
+
+                          try {
+                            final sendReport = await send(message, smtpServer);
+                            print('Message sent: $sendReport');
+                          } on MailerException catch (e) {
+                            print('Message not sent.');
+                            print('Message not sent. ${e.toString()}');
+                            for (var p in e.problems) {
+                              print('Problem: ${p.code}: ${p.msg}');
+                            }
+                          }
                         }
+
+
+
+
+                        // try {
+                        //   await HelperClass.sendEmail(
+                        //     username: 'rafidtawhid@gmail.com',
+                        //     password: '0123571011131719',
+                        //     recipientEmail: 'rafidtawhid01@gmail.com',
+                        //     subject: 'Test Dart Mailer :: ${DateTime.now()}',
+                        //     plainText: 'This is the plain text content.',
+                        //     htmlContent: '<h1>Test</h1><p>Here is some HTML content.</p>',
+                        //     ccEmails: ['cc1@example.com', 'cc2@example.com'],
+                        //     bccEmails: ['bcc@example.com'],
+                        //     attachments: [File('path/to/attachment.png')],
+                        //   );
+                        // } catch (e) {
+                        //   print('Failed to send email: $e');
+                        // }
 
                         if (validateFields()) {
                           print(firstNameController.text);

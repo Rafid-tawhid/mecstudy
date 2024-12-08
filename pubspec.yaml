@@ -34,7 +34,7 @@ dependencies:
 
   #intl_phone_number_input:
   dropdown_search: ^6.0.1
-  google_sign_in: ^6.2.1
+  google_sign_in: ^6.2.2
   # firebase_auth:
   table_calendar: ^3.0.0
   intl: ^0.17.0
@@ -52,9 +52,7 @@ dependencies:
   fluttertoast: ^8.2.4
   path_provider: ^2.1.5
   shared_preferences: ^2.0.6
-  geolocator: ^13.0.2
-  googleapis: ^13.2.0
-  googleapis_auth: ^1.6.0
+
 
 
 

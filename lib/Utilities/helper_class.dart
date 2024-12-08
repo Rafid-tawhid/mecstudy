@@ -3,8 +3,6 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:geolocator/geolocator.dart';
-import 'package:googleapis/compute/v1.dart';
 import 'package:intl/intl.dart' as intl;
 import 'package:mailer/mailer.dart';
 import 'package:mailer/smtp_server/gmail.dart';
@@ -12,8 +10,6 @@ import 'package:mecstudygroup/Model/user_profile_model.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:googleapis/calendar/v3.dart' as calendar;
-import 'package:googleapis_auth/auth_io.dart';
 import 'package:mailer/mailer.dart' as mail;
 import 'package:mailer/smtp_server.dart';
 
@@ -171,55 +167,7 @@ class HelperClass {
   //   await _storage.deleteAll();
   // }
 
-// Function to check location permissions
-  static Future<void> checkLocationPermission() async {
-    bool serviceEnabled;
-    LocationPermission permission;
 
-    // Check if location services are enabled
-    serviceEnabled = await Geolocator.isLocationServiceEnabled();
-    if (!serviceEnabled) {
-      // Location services are not enabled
-      await Geolocator.openLocationSettings();
-      return Future.error('Location services are disabled.');
-    }
-
-    // Check location permissions
-    permission = await Geolocator.checkPermission();
-    if (permission == LocationPermission.denied) {
-      permission = await Geolocator.requestPermission();
-      if (permission == LocationPermission.denied) {
-        // Permissions are denied
-        return Future.error('Location permissions are denied');
-      }
-    }
-
-    if (permission == LocationPermission.deniedForever) {
-      // Permissions are permanently denied
-      return Future.error(
-          'Location permissions are permanently denied, we cannot request permissions.');
-    }
-  }
-
-  // Function to get the current location
-  static Future<Position?> getCurrentLocation() async {
-    try {
-      await checkLocationPermission();
-
-      Position position = await Geolocator.getCurrentPosition(
-          desiredAccuracy: LocationAccuracy.high);
-
-      var locationMessage = "Latitude: ${position
-          .latitude}, Longitude: ${position.longitude}";
-
-      debugPrint(locationMessage);
-      return position;
-    } catch (e) {
-      var locationMessage = "Error: $e";
-      debugPrint(locationMessage);
-      return null;
-    }
-  }
 
   static String createGoogleMapsLink({
     required double latitude,
@@ -270,39 +218,7 @@ class HelperClass {
     }
   }
 
-  static Future<String> createGoogleMeetLink(String clientId,
-      String clientSecret, String refreshToken) async {
-    final client = await clientViaUserConsent(
-      ClientId(clientId, clientSecret),
-      [calendar.CalendarApi.calendarScope],
-          (uri) {
-        print('Please go to the following URL and grant access:');
-        print('  => $uri');
-      },
-    );
 
-    final calendarApi = calendar.CalendarApi(client);
-
-    final event = calendar.Event()
-      ..summary = 'Meeting Title'
-      ..start = (calendar.EventDateTime()
-        ..dateTime = DateTime.now())
-      ..end = (calendar.EventDateTime()
-        ..dateTime = DateTime.now())
-      ..conferenceData = calendar.ConferenceData(
-        createRequest: calendar.CreateConferenceRequest(
-            requestId: 'random-string'),
-      );
-
-    final createdEvent = await calendarApi.events.insert(
-      event,
-      'primary',
-      conferenceDataVersion: 1,
-    );
-
-    return createdEvent.conferenceData?.entryPoints?.first.uri ??
-        'No link generated';
-  }
 
  static Future<void> sendEmail({
     required String username,
