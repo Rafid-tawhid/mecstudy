@@ -244,6 +244,7 @@ class _SignUpScreenBottomSheet extends State<SignUpScreenBottomSheet> {
                           } on MailerException catch (e) {
                             print('Message not sent.');
                             print('Message not sent. ${e.toString()}');
+                            GoogleAuthApi.signOut();
                             for (var p in e.problems) {
                               print('Problem: ${p.code}: ${p.msg}');
                             }
