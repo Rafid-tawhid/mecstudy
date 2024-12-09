@@ -237,7 +237,6 @@ class _SignUpScreenBottomSheet extends State<SignUpScreenBottomSheet> {
                             ..recipients=['rafidtawhid01@gmail.com']
                             ..subject='Hello World'
                             ..text='This is mail testing';
-
                           try {
                             final sendReport = await send(message, smtpServer);
                             print('Message sent: $sendReport');

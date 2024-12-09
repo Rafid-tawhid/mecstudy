@@ -111,9 +111,9 @@ class _SearchScreenState extends State<SearchScreen> {
             ],
           ),
         ),
-        floatingActionButton: FloatingActionButton(onPressed: (){
-          Navigator.push(context, MaterialPageRoute(builder: (context)=>SearchScreenCombination()));
-        },child: Icon(Icons.add),),
+        // floatingActionButton: FloatingActionButton(onPressed: (){
+        //   Navigator.push(context, MaterialPageRoute(builder: (context)=>SearchScreenCombination()));
+        // },child: Icon(Icons.add),),
       ),
     );
   }
@@ -161,6 +161,7 @@ class _SearchScreenState extends State<SearchScreen> {
           return CoursesScreenBottomSheet(item);
         },
       );
+
     } else if (item is UniversityModel) {
       // Handle UniversityModel click
       debugPrint("Clicked University: ${item.universityname}");
