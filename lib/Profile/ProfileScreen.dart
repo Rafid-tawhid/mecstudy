@@ -2,8 +2,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/material.dart';
 import 'package:mecstudygroup/Chat/ChatScreen.dart';
+import 'package:mecstudygroup/LoginAndSignupModule/login_bottom_sheet.dart';
 import 'package:mecstudygroup/Profile/DocumentsUpload.dart';
 import 'package:mecstudygroup/Utilities/Colors.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../Utilities/Constant.dart';
 import 'GiveuoFeedback.dart';
 import 'SettingScreen.dart';
@@ -66,9 +68,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                       .getadaptiveTextSize(context, 18),
                                   color: Colors.black,
                                 )),
-                        onTap: (){
-                              print("logout");
-                         /// Navigator.pop(context);
+                        onTap: () async {
+                          SharedPreferences preferences = await SharedPreferences.getInstance();
+                           preferences.remove("user");
+                           Navigator.push(context, CupertinoPageRoute(builder: (context)=>LoginBottomSheet()));
+
                         },),
                         SizedBox(
                             width: Responsive.width(18.5, context),

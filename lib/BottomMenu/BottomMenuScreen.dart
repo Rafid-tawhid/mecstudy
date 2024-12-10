@@ -20,7 +20,7 @@ class _BottomMenuScreenState extends State<BottomMenuScreen> {
   // Define your pages here
   final List<Widget> _pages = [
     ExploreScreen(),
-    ChatScreen(),
+    // ChatScreen(),
     BookASections(),
     StartApplication(title: 'Start Application',),
     ProfileScreen(),
@@ -48,12 +48,12 @@ class _BottomMenuScreenState extends State<BottomMenuScreen> {
               ),
               label: 'Explore',
             ),
-            BottomNavigationBarItem(
-              icon: Icon(
-                Icons.chat_bubble_outline,
-              ),
-              label: 'Chat',
-            ),
+            // BottomNavigationBarItem(
+            //   icon: Icon(
+            //     Icons.chat_bubble_outline,
+            //   ),
+            //   label: 'Chat',
+            // ),
             BottomNavigationBarItem(
               icon: Icon(Icons.video_camera_back_outlined),
               label: 'Meet',

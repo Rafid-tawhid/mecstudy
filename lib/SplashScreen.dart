@@ -102,6 +102,12 @@ class _SplashScreenState extends State<SplashScreen> {
     }
     else {
       if(mounted){
+
+        // Navigator.of(context).pushReplacement(
+        //   CupertinoPageRoute(
+        //     builder: (context) => LoginBottomSheet(),
+        //   ),
+        // );
         debugPrint('ADMIN LOGIN');
         var up=context.read<HomeProvider>();
         if(await up.getLogin()){

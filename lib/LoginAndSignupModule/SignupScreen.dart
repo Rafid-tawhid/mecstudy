@@ -12,6 +12,7 @@ import 'package:mecstudygroup/Utilities/Colors.dart';
 import 'package:mecstudygroup/Utilities/helper_class.dart';
 import 'package:mecstudygroup/providers/user_provider.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../BottomMenu/BottomMenuScreen.dart';
 import '../DashboardScreen.dart';
@@ -74,6 +75,7 @@ class _SignUpScreenBottomSheet extends State<SignUpScreenBottomSheet> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    //setUserInfo();
     getAllCountry();
   }
 
@@ -226,29 +228,29 @@ class _SignUpScreenBottomSheet extends State<SignUpScreenBottomSheet> {
                     child: ElevatedButton(
                       onPressed:  () async {
 
-                        final user=await GoogleAuthApi.signIn();
-                        if(user!=null){
-                          final email='rafidtawhid02@gmail.com';
-                          final auth= await user.authentication;
-                          final token=auth.accessToken;
-                          final smtpServer = gmailRelaySaslXoauth2(email, token??'');
-                          final message=Message()
-                            ..from=Address('rafidtawhid02@gmail.com','Rimon')
-                            ..recipients=['rafidtawhid01@gmail.com']
-                            ..subject='Hello World'
-                            ..text='This is mail testing';
-                          try {
-                            final sendReport = await send(message, smtpServer);
-                            print('Message sent: $sendReport');
-                          } on MailerException catch (e) {
-                            print('Message not sent.');
-                            print('Message not sent. ${e.toString()}');
-                            GoogleAuthApi.signOut();
-                            for (var p in e.problems) {
-                              print('Problem: ${p.code}: ${p.msg}');
-                            }
-                          }
-                        }
+                        // final user=await GoogleAuthApi.signIn();
+                        // if(user!=null){
+                        //   final email='rafidtawhid02@gmail.com';
+                        //   final auth= await user.authentication;
+                        //   final token=auth.accessToken;
+                        //   final smtpServer = gmailRelaySaslXoauth2(email, token??'');
+                        //   final message=Message()
+                        //     ..from=Address('rafidtawhid02@gmail.com','Rimon')
+                        //     ..recipients=['rafidtawhid01@gmail.com']
+                        //     ..subject='Hello World'
+                        //     ..text='This is mail testing';
+                        //   try {
+                        //     final sendReport = await send(message, smtpServer);
+                        //     print('Message sent: $sendReport');
+                        //   } on MailerException catch (e) {
+                        //     print('Message not sent.');
+                        //     print('Message not sent. ${e.toString()}');
+                        //     GoogleAuthApi.signOut();
+                        //     for (var p in e.problems) {
+                        //       print('Problem: ${p.code}: ${p.msg}');
+                        //     }
+                        //   }
+                        // }
 
 
 
@@ -291,7 +293,7 @@ class _SignUpScreenBottomSheet extends State<SignUpScreenBottomSheet> {
                               email: emailAddressController.text,
                               password: passwordController.text);
                          if(result){
-                           HelperClass.showToast('Registration Successful');
+                           HelperClass.showToast('Successful! please wait...');
                            //Save user info and
                            Navigator.push(context, CupertinoPageRoute(builder: (context)=>BottomMenuScreen()));
                          }
@@ -332,6 +334,12 @@ class _SignUpScreenBottomSheet extends State<SignUpScreenBottomSheet> {
   void getAllCountry() {
     var up=context.read<UserProvider>();
     up.getAllCountry();
+  }
+
+  void setUserInfo() async{
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    var data = preferences.getString("user");
+
   }
 
 }
