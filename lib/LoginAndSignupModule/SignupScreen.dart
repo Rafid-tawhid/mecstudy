@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:mailer/mailer.dart';
 import 'package:mailer/smtp_server.dart';
 import 'package:mecstudygroup/Application/ExploreAllCoursesAndInstitutes.dart';
+import 'package:mecstudygroup/LoginAndSignupModule/widgets/contact_emai.dart';
 import 'package:mecstudygroup/LoginAndSignupModule/widgets/dropdown.dart';
 import 'package:mecstudygroup/LoginAndSignupModule/widgets/textfield.dart';
 import 'package:mecstudygroup/Model/CountryModel.dart';
@@ -323,6 +324,10 @@ class _SignUpScreenBottomSheet extends State<SignUpScreenBottomSheet> {
               ),
               SizedBox(
                 height: 46,
+              ),
+              ContactWidget(email: 'Mecstudy7@gmail.com'),
+              SizedBox(
+                height: 100,
               ),
             ],
           ),

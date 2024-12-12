@@ -19,9 +19,9 @@ class _BottomMenuScreenState extends State<BottomMenuScreen> {
 
   // Define your pages here
   final List<Widget> _pages = [
-    ExploreScreen(),
+    HomeScreen(),
     // ChatScreen(),
-    BookASections(),
+   // BookASections(),
     StartApplication(title: 'Start Application',),
     ProfileScreen(),
   ];
@@ -44,9 +44,9 @@ class _BottomMenuScreenState extends State<BottomMenuScreen> {
           items: [
             BottomNavigationBarItem(
               icon: Icon(
-                Icons.search,
+                Icons.home_outlined,
               ),
-              label: 'Explore',
+              label: 'Home',
             ),
             // BottomNavigationBarItem(
             //   icon: Icon(
@@ -54,13 +54,13 @@ class _BottomMenuScreenState extends State<BottomMenuScreen> {
             //   ),
             //   label: 'Chat',
             // ),
+            // BottomNavigationBarItem(
+            //   icon: Icon(Icons.video_camera_back_outlined),
+            //   label: 'Meet',
+            // ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.video_camera_back_outlined),
-              label: 'Meet',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.chat_outlined),
-              label: 'Applications',
+              icon: Icon(Icons.search),
+              label: 'Explore',
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.person),

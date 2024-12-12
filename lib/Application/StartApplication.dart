@@ -22,7 +22,7 @@ class _StartApplicationState extends State<StartApplication> {
     return Scaffold(
       appBar: AppBar(
         elevation: 0.0,
-        title: Text("Applications",
+        title: Text("Explore",
             style:  TextStyle(
                   fontWeight: FontWeight.w600,
                   fontSize: AdaptiveTextSize().getadaptiveTextSize(context, 22),

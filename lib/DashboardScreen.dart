@@ -18,16 +18,16 @@ import 'Widgets/courses_details_bottomsheet.dart';
 import 'university_details/university_dts_bottom_sheet.dart';
 import 'courses/see_all_course_screen.dart';
 
-class ExploreScreen extends StatefulWidget {
-  const ExploreScreen({
+class HomeScreen extends StatefulWidget {
+  const HomeScreen({
     super.key,
   });
 
   @override
-  State<ExploreScreen> createState() => _ExploreScreenState();
+  State<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _ExploreScreenState extends State<ExploreScreen> {
+class _HomeScreenState extends State<HomeScreen> {
 
   List<DashboardBottomModel> items = DashboardBottomModel.sampleData();
 
