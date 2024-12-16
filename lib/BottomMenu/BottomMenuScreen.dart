@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:mecstudygroup/Chat/ChatScreen.dart';
 import 'package:mecstudygroup/DashboardScreen.dart';
 import 'package:mecstudygroup/Utilities/Colors.dart';
-
 import '../Application/StartApplication.dart';
-import '../BookSession/BookSections.dart';
 import '../Profile/ProfileScreen.dart';
 
 class BottomMenuScreen extends StatefulWidget {
