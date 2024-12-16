@@ -36,7 +36,7 @@ class AppConstant {
   static List<List<Alumnus>> listedAlumnus = [];
   static List<List<Faq>> listedFaq = [];
   static List<University> universityList = [];
-  //static String BaseUrl = "http://137.135.119.97/api";
-  static String BaseUrl = "http://137.135.119.97/MecStudies/api";
+  static String BaseUrl = "http://137.135.119.97/api";
+  //static String BaseUrl = "http://137.135.119.97/MecStudies/api";
   static int UserID = 0;
 }
