@@ -787,20 +787,26 @@ class InstituteCard extends StatelessWidget {
                         height: 180.h,
                         padding: EdgeInsets.all(6),
                         decoration: BoxDecoration(
-                            image: DecorationImage(
-                                image: NetworkImage(pro.topUniversityList[index].bannerImageURL??''),
-                                fit: BoxFit.cover),
-                            borderRadius: BorderRadius.circular(8)),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              pro.topUniversityList[index].country ?? '',
-                              style: customText(14, Colors.white, FontWeight.bold),
-                            ),
-                          ],
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(8),
+                          child: Image.network(
+                            pro.topUniversityList[index].bannerImageURL ?? '',
+                            fit: BoxFit.cover,
+                            errorBuilder: (context, error, stackTrace) {
+                              return Image.asset(
+                                'images/TopGridBG.png', // Path to your local placeholder image
+                                fit: BoxFit.cover,
+                                height: 180.h,
+                                width: 180.h,
+                              );
+                            },
+
+                          ),
                         ),
                       ),
+
                       Positioned(
                         right: 0,
                         top: 0,
@@ -826,6 +832,14 @@ class InstituteCard extends StatelessWidget {
                       children: [
                         Image.network(
                           pro.topUniversityList[index].flagURL??'',
+                          errorBuilder: (context, error, stackTrace) {
+                            return Image.asset(
+                              'images/TopGridBG.png', // Path to your local placeholder image
+                              fit: BoxFit.cover,
+                              height: 30.h,
+                              width: 30.h,
+                            );
+                          },
                           height: 30,
                           width: 30,
                         ),
