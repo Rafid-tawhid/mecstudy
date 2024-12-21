@@ -45,7 +45,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
           children: <Widget>[
             UserProfileInfo(context),
             SizedBox(height: 20,),
-            CounsellorCardInfo(context),
+            CounsellorCardInfo(
+              isExpandedCounsellor: isExpandedCounsellor,
+              onExpandToggle: (value) {
+                setState(() {
+                  isExpandedCounsellor = value;
+                });
+              },
+            ),
             SizedBox(height: 20,),
             DocumentsAll(),
             SizedBox(height: 20,),
@@ -211,7 +218,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             AnimatedContainer(
                               duration: Duration(milliseconds: 300),
                               height: isExpanded ? 100.h : 0.0,
-
                               child: Column(
                                 children: [
                                   SizedBox(height: 12,),
@@ -220,11 +226,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                     child: Text(
                                         'Looking  for a undergraduate Course in Software Design by December 2023 in united States',
                                         style: TextStyle(
-                                              fontWeight: FontWeight.normal,
-                                              fontSize:
-                                              AdaptiveTextSize().getadaptiveTextSize(context, 14),
-                                              color: Colors.black,
-                                              )),
+                                          fontWeight: FontWeight.normal,
+                                          fontSize:
+                                          AdaptiveTextSize().getadaptiveTextSize(context, 14),
+                                          color: Colors.black,
+                                        )),
                                   ),
                                 ],
                               ),
@@ -237,221 +243,407 @@ class _ProfileScreenState extends State<ProfileScreen> {
          );
   }
 
-  Column CounsellorCardInfo(BuildContext context) {
+  // Column CounsellorCardInfo(BuildContext context) {
+  //   return Column(
+  //             children: [
+  //               Row(
+  //                 children: [
+  //                   Container(
+  //                       margin: EdgeInsets.only(left: 22),
+  //                       child: Text('YOUR COUNSELLOR',
+  //                           style:  TextStyle(
+  //                                 fontWeight: FontWeight.w400,
+  //                                 fontSize: AdaptiveTextSize()
+  //                                     .getadaptiveTextSize(context, 12),
+  //                                 color: Colors.grey,
+  //                                 // fontFamily: 'SORA-BOLD'
+  //                               ))),
+  //                   Spacer(),
+  //                 ],
+  //               ),
+  //               SizedBox(height: 8,),
+  //               Padding(
+  //                 padding: const EdgeInsets.symmetric(horizontal: 16.0,),
+  //                 child: Container(
+  //                     color: Color(0xFFFAFAFA),
+  //                     child: Column(
+  //                       children: [
+  //                         Container(
+  //                             decoration: BoxDecoration(
+  //                               color: Colors.white,
+  //                               borderRadius: BorderRadius.circular(12),
+  //                               boxShadow: [
+  //                                 BoxShadow(
+  //                                   color: Colors.grey.withOpacity(0.4),
+  //                                   // Shadow color
+  //                                   spreadRadius: 1,
+  //                                   // Spread radius
+  //                                   blurRadius: 6,
+  //                                   // Blur radius
+  //                                   offset: Offset(0, 4), // Offset in the y direction
+  //                                 ),
+  //                               ],
+  //                             ),
+  //                             child: Column(
+  //                               children: [
+  //                                 SizedBox(
+  //                                   height: 8,
+  //                                 ),
+  //                                 Row(
+  //                                   children: [
+  //                                     SizedBox(
+  //                                       width: 16,
+  //                                     ),
+  //                                     Container(
+  //                                       decoration: BoxDecoration(
+  //                                           shape: BoxShape.circle,
+  //                                           color: Colors.black
+  //                                       ),
+  //                                       child: Padding(
+  //                                         padding: const EdgeInsets.all(8.0),
+  //                                         child: Icon(
+  //                                           Icons.person_outlined,
+  //                                           size: 30,
+  //                                           color: Colors.white,
+  //                                         ),
+  //                                       ),
+  //                                     ),
+  //                                     SizedBox(width: 8,),
+  //                                     SizedBox(
+  //                                       width: Responsive.width(60, context),
+  //                                       child: Column(
+  //                                         mainAxisAlignment:
+  //                                         MainAxisAlignment.center,
+  //                                         crossAxisAlignment:
+  //                                         CrossAxisAlignment.start,
+  //                                         children: [
+  //                                           Text("Muhammad Adeel",
+  //                                               style: TextStyle(
+  //                                                     fontWeight: FontWeight.w400,
+  //                                                     fontSize: AdaptiveTextSize()
+  //                                                         .getadaptiveTextSize(
+  //                                                         context, 16),
+  //                                                     color: Colors.black,
+  //                                                   )),
+  //                                           SizedBox(
+  //                                             height: 2,
+  //                                           ),
+  //                                           Text("Counsellor",
+  //                                               maxLines: 1,
+  //                                               style: TextStyle(
+  //                                                     fontWeight: FontWeight.normal,
+  //                                                     fontSize: AdaptiveTextSize()
+  //                                                         .getadaptiveTextSize(
+  //                                                         context, 14),
+  //                                                     color: Colors.grey,
+  //                                                     // fontFamily: 'SORA-BOLD'
+  //                                                   )),
+  //                                           SizedBox(
+  //                                             height: 2,
+  //                                           ),
+  //                                         ],
+  //                                       ),
+  //                                     ),
+  //                                     Spacer(),
+  //                                     IconButton(onPressed: (){
+  //                                       setState(() {
+  //                                         isExpandedCounsellor = !isExpandedCounsellor;
+  //                                       });
+  //                                     }, icon: Icon(!isExpandedCounsellor?Icons.keyboard_arrow_down_outlined:Icons.keyboard_arrow_up_outlined)),
+  //
+  //                                   ],
+  //                                 ),
+  //                                 SizedBox(
+  //                                   height: 4,
+  //                                 ),
+  //                                 Row(
+  //                                   children: [
+  //                                     SizedBox(
+  //                                       width: 12,
+  //                                     ),
+  //                                     Spacer(),
+  //                                     GestureDetector(
+  //                                       onTap: (){
+  //                                         Navigator.push(context, CupertinoPageRoute(builder: (context)=>ChatScreen()));
+  //                                       },
+  //                                       child: Icon(
+  //                                         Icons.question_answer,
+  //                                         size: 25,
+  //                                         color: Colors.black,
+  //                                       ),
+  //                                     ),
+  //                                     Spacer(),
+  //                                     GestureDetector(
+  //                                         child: Column(
+  //                                           children: [
+  //                                             Container(
+  //                                               height: 40.h,
+  //                                               alignment: Alignment.center,// Set your desired height
+  //                                               decoration: BoxDecoration(
+  //                                                 image: DecorationImage(
+  //                                                   image: AssetImage(
+  //                                                       'images/BookSessionButtonBG.png'),
+  //                                                   fit: BoxFit.fill,
+  //                                                 ),
+  //                                               ),
+  //                                               child: Padding(
+  //                                                 padding: const EdgeInsets.only(left: 32.0,right: 32,bottom: 6),
+  //                                                 child: Text('Book a Session',
+  //                                                     style:  TextStyle(
+  //                                                           fontWeight: FontWeight.normal,
+  //                                                           fontSize: AdaptiveTextSize()
+  //                                                               .getadaptiveTextSize(
+  //                                                               context, 14),
+  //                                                           color: Colors.white,
+  //                                                         )),
+  //                                               ),
+  //                                             ),
+  //
+  //                                           ],
+  //                                         ),
+  //                                         onTap: () async {}
+  //                                       //   },
+  //                                       // );
+  //                                       //   } else {
+  //                                       //     // Error handling
+  //                                       //     print(
+  //                                       //         'Failed to create Zoom meeting. Status code: ${response.statusCode}');
+  //                                       //   }
+  //                                       // },
+  //
+  //                                       // showModalBottomSheet(
+  //                                       //   context: context,
+  //                                       //   isScrollControlled: true,
+  //                                       //   backgroundColor: Colors.transparent,
+  //                                       //   builder: (BuildContext context) {
+  //                                       //     return BookSectionBottomSheet();
+  //                                       //     // Your custom bottom sheet widget
+  //                                       //   },
+  //                                       //);
+  //                                       //  },
+  //                                     ),
+  //                                     Spacer()
+  //                                   ],
+  //                                 ),
+  //                                 SizedBox(
+  //                                   height: 6,
+  //                                 ),
+  //                                 AnimatedContainer(
+  //                                   duration: Duration(milliseconds: 300),
+  //                                   height: isExpandedCounsellor ? 100.0 : 0.0,
+  //
+  //                                   // transform: Matrix4.translationValues(0.0, -14.0, 0.0),
+  //
+  //                                   // color: Colors.grey[200],
+  //                                   // margin: EdgeInsets.only(left: 12,right: 12),
+  //                                   child: Padding(
+  //                                     padding: const EdgeInsets.symmetric(horizontal: 16.0),
+  //                                     child: Text(
+  //                                         'Looking  for a undergraduate Course in Software Design by December 2023 in united States',
+  //                                         style:  TextStyle(
+  //                                               fontWeight: FontWeight.normal,
+  //                                               fontSize:
+  //                                               AdaptiveTextSize().getadaptiveTextSize(context, 14),
+  //                                               color: Colors.black,
+  //                                               // fontFamily: 'SORA-BOLD'
+  //                                             )),
+  //                                   ),
+  //                                 ),
+  //                               ],
+  //                             )),
+  //                       ],
+  //                     )),
+  //               ),
+  //             ],
+  //           );
+  // }
+}
+
+class CounsellorCardInfo extends StatelessWidget {
+  final bool isExpandedCounsellor;
+  final Function(bool) onExpandToggle;
+
+  CounsellorCardInfo({required this.isExpandedCounsellor, required this.onExpandToggle});
+
+  @override
+  Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+    double screenHeight = MediaQuery.of(context).size.height;
+
     return Column(
-              children: [
-                Row(
-                  children: [
-                    Container(
-                        margin: EdgeInsets.only(left: 22),
-                        child: Text('YOUR COUNSELLOR',
-                            style:  TextStyle(
-                                  fontWeight: FontWeight.w400,
-                                  fontSize: AdaptiveTextSize()
-                                      .getadaptiveTextSize(context, 12),
-                                  color: Colors.grey,
-                                  // fontFamily: 'SORA-BOLD'
-                                ))),
-                    Spacer(),
-                  ],
+      children: [
+        Row(
+          children: [
+            Container(
+              margin: EdgeInsets.only(left: screenWidth * 0.05),
+              child: Text(
+                'YOUR COUNSELLOR',
+                style: TextStyle(
+                  fontWeight: FontWeight.w400,
+                  fontSize: screenWidth * 0.03, // Responsive font size
+                  color: Colors.grey,
                 ),
-                SizedBox(height: 8,),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16.0,),
-                  child: Container(
-                      color: Color(0xFFFAFAFA),
-                      child: Column(
+              ),
+            ),
+            Spacer(),
+          ],
+        ),
+        SizedBox(height: screenHeight * 0.01),
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.04),
+          child: Container(
+            color: Color(0xFFFAFAFA),
+            child: Column(
+              children: [
+                Container(
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(12),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.withOpacity(0.4),
+                        spreadRadius: 1,
+                        blurRadius: 6,
+                        offset: Offset(0, 4),
+                      ),
+                    ],
+                  ),
+                  child: Column(
+                    children: [
+                      SizedBox(height: screenHeight * 0.01),
+                      Row(
                         children: [
+                          SizedBox(width: screenWidth * 0.04),
                           Container(
-                              decoration: BoxDecoration(
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: Colors.black,
+                            ),
+                            child: Padding(
+                              padding: EdgeInsets.all(screenWidth * 0.02),
+                              child: Icon(
+                                Icons.person_outlined,
+                                size: screenWidth * 0.08,
                                 color: Colors.white,
-                                borderRadius: BorderRadius.circular(12),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.grey.withOpacity(0.4),
-                                    // Shadow color
-                                    spreadRadius: 1,
-                                    // Spread radius
-                                    blurRadius: 6,
-                                    // Blur radius
-                                    offset: Offset(0, 4), // Offset in the y direction
-                                  ),
-                                ],
                               ),
-                              child: Column(
-                                children: [
-                                  SizedBox(
-                                    height: 8,
+                            ),
+                          ),
+                          SizedBox(width: screenWidth * 0.02),
+                          SizedBox(
+                            width: screenWidth * 0.6,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "Muhammad Adeel",
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.w400,
+                                    fontSize: screenWidth * 0.04,
+                                    color: Colors.black,
                                   ),
-                                  Row(
-                                    children: [
-                                      SizedBox(
-                                        width: 16,
-                                      ),
-                                      Container(
-                                        decoration: BoxDecoration(
-                                            shape: BoxShape.circle,
-                                            color: Colors.black
-                                        ),
-                                        child: Padding(
-                                          padding: const EdgeInsets.all(8.0),
-                                          child: Icon(
-                                            Icons.person_outlined,
-                                            size: 30,
-                                            color: Colors.white,
-                                          ),
-                                        ),
-                                      ),
-                                      SizedBox(width: 8,),
-                                      SizedBox(
-                                        width: Responsive.width(60, context),
-                                        child: Column(
-                                          mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                          crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                          children: [
-                                            Text("Muhammad Adeel",
-                                                style: TextStyle(
-                                                      fontWeight: FontWeight.w400,
-                                                      fontSize: AdaptiveTextSize()
-                                                          .getadaptiveTextSize(
-                                                          context, 16),
-                                                      color: Colors.black,
-                                                    )),
-                                            SizedBox(
-                                              height: 2,
-                                            ),
-                                            Text("Counsellor",
-                                                maxLines: 1,
-                                                style: TextStyle(
-                                                      fontWeight: FontWeight.normal,
-                                                      fontSize: AdaptiveTextSize()
-                                                          .getadaptiveTextSize(
-                                                          context, 14),
-                                                      color: Colors.grey,
-                                                      // fontFamily: 'SORA-BOLD'
-                                                    )),
-                                            SizedBox(
-                                              height: 2,
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                      Spacer(),
-                                      IconButton(onPressed: (){
-                                        setState(() {
-                                          isExpandedCounsellor = !isExpandedCounsellor;
-                                        });
-                                      }, icon: Icon(!isExpandedCounsellor?Icons.keyboard_arrow_down_outlined:Icons.keyboard_arrow_up_outlined)),
-
-                                    ],
+                                ),
+                                SizedBox(height: screenHeight * 0.003),
+                                Text(
+                                  "Counsellor",
+                                  maxLines: 1,
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.normal,
+                                    fontSize: screenWidth * 0.035,
+                                    color: Colors.grey,
                                   ),
-                                  SizedBox(
-                                    height: 4,
-                                  ),
-                                  Row(
-                                    children: [
-                                      SizedBox(
-                                        width: 12,
-                                      ),
-                                      Spacer(),
-                                      GestureDetector(
-                                        onTap: (){
-                                          Navigator.push(context, CupertinoPageRoute(builder: (context)=>ChatScreen()));
-                                        },
-                                        child: Icon(
-                                          Icons.question_answer,
-                                          size: 25,
-                                          color: Colors.black,
-                                        ),
-                                      ),
-                                      Spacer(),
-                                      GestureDetector(
-                                          child: Column(
-                                            children: [
-                                              Container(
-                                                height: 40.h,
-                                                alignment: Alignment.center,// Set your desired height
-                                                decoration: BoxDecoration(
-                                                  image: DecorationImage(
-                                                    image: AssetImage(
-                                                        'images/BookSessionButtonBG.png'),
-                                                    fit: BoxFit.fill,
-                                                  ),
-                                                ),
-                                                child: Padding(
-                                                  padding: const EdgeInsets.only(left: 32.0,right: 32,bottom: 6),
-                                                  child: Text('Book a Session',
-                                                      style:  TextStyle(
-                                                            fontWeight: FontWeight.normal,
-                                                            fontSize: AdaptiveTextSize()
-                                                                .getadaptiveTextSize(
-                                                                context, 14),
-                                                            color: Colors.white,
-                                                          )),
-                                                ),
-                                              ),
-
-                                            ],
-                                          ),
-                                          onTap: () async {}
-                                        //   },
-                                        // );
-                                        //   } else {
-                                        //     // Error handling
-                                        //     print(
-                                        //         'Failed to create Zoom meeting. Status code: ${response.statusCode}');
-                                        //   }
-                                        // },
-
-                                        // showModalBottomSheet(
-                                        //   context: context,
-                                        //   isScrollControlled: true,
-                                        //   backgroundColor: Colors.transparent,
-                                        //   builder: (BuildContext context) {
-                                        //     return BookSectionBottomSheet();
-                                        //     // Your custom bottom sheet widget
-                                        //   },
-                                        //);
-                                        //  },
-                                      ),
-                                      Spacer()
-                                    ],
-                                  ),
-                                  SizedBox(
-                                    height: 6,
-                                  ),
-                                  AnimatedContainer(
-                                    duration: Duration(milliseconds: 300),
-                                    height: isExpandedCounsellor ? 100.0 : 0.0,
-
-                                    // transform: Matrix4.translationValues(0.0, -14.0, 0.0),
-
-                                    // color: Colors.grey[200],
-                                    // margin: EdgeInsets.only(left: 12,right: 12),
-                                    child: Padding(
-                                      padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                                      child: Text(
-                                          'Looking  for a undergraduate Course in Software Design by December 2023 in united States',
-                                          style:  TextStyle(
-                                                fontWeight: FontWeight.normal,
-                                                fontSize:
-                                                AdaptiveTextSize().getadaptiveTextSize(context, 14),
-                                                color: Colors.black,
-                                                // fontFamily: 'SORA-BOLD'
-                                              )),
-                                    ),
-                                  ),
-                                ],
-                              )),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Spacer(),
+                          IconButton(
+                            onPressed: () => onExpandToggle(!isExpandedCounsellor),
+                            icon: Icon(
+                              isExpandedCounsellor
+                                  ? Icons.keyboard_arrow_up_outlined
+                                  : Icons.keyboard_arrow_down_outlined,
+                            ),
+                          ),
                         ],
-                      )),
+                      ),
+                      SizedBox(height: screenHeight * 0.01),
+                      Row(
+                        children: [
+                          Spacer(),
+                          GestureDetector(
+                            onTap: () {
+                              // Navigate to ChatScreen
+                            },
+                            child: Icon(
+                              Icons.question_answer,
+                              size: screenWidth * 0.06,
+                              color: Colors.black,
+                            ),
+                          ),
+                          Spacer(),
+                          GestureDetector(
+                            onTap: () async {
+                              // Add your onTap functionality here
+                            },
+                            child: Container(
+                              height: screenHeight * 0.05,
+                              alignment: Alignment.center,
+                              decoration: BoxDecoration(
+                                image: DecorationImage(
+                                  image: AssetImage(
+                                      'images/BookSessionButtonBG.png'),
+                                  fit: BoxFit.fill,
+                                ),
+                              ),
+                              child: Padding(
+                                padding: EdgeInsets.symmetric(
+                                  horizontal: screenWidth * 0.08,
+                                ),
+                                child: Text(
+                                  'Book a Session',
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.normal,
+                                    fontSize: screenWidth * 0.035,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                          Spacer(),
+                        ],
+                      ),
+                      SizedBox(height: screenHeight * 0.01),
+                      AnimatedContainer(
+                        duration: Duration(milliseconds: 300),
+                        height: isExpandedCounsellor ? screenHeight * 0.12 : 0.0,
+                        child: Padding(
+                          padding: EdgeInsets.symmetric(
+                              horizontal: screenWidth * 0.04),
+                          child: Text(
+                            'Looking for an undergraduate Course in Software Design by December 2023 in the United States',
+                            style: TextStyle(
+                              fontWeight: FontWeight.normal,
+                              fontSize: screenWidth * 0.035,
+                              color: Colors.black,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ],
-            );
+            ),
+          ),
+        ),
+      ],
+    );
   }
 }
+
+
 
 class TermsNPrivacy extends StatelessWidget {
   const TermsNPrivacy({

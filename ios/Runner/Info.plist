@@ -6,6 +6,7 @@
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
 	<string>Mecstudygroup</string>
+
 	<key>NSLocationWhenInUseUsageDescription</key>
     <string>Your location is required to show relevant data.</string>
     <key>NSLocationAlwaysUsageDescription</key>
