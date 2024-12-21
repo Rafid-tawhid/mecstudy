@@ -2,9 +2,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/material.dart';
 import 'package:mecstudygroup/Chat/ChatScreen.dart';
+import 'package:mecstudygroup/LoginAndSignupModule/SignupScreen.dart';
 import 'package:mecstudygroup/LoginAndSignupModule/login_bottom_sheet.dart';
 import 'package:mecstudygroup/Profile/DocumentsUpload.dart';
 import 'package:mecstudygroup/Utilities/Colors.dart';
+import 'package:mecstudygroup/Utilities/helper_class.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../Utilities/Constant.dart';
 import 'GiveuoFeedback.dart';
@@ -125,338 +127,144 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   Padding UserProfileInfo(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+    double screenHeight = MediaQuery.of(context).size.height;
+
     return Padding(
-           padding: const EdgeInsets.symmetric(horizontal: 16),
-           child: Container(
-                  color: Color(0xFFFAFAFA),
-                  child: Column(
+      padding: EdgeInsets.symmetric(
+        horizontal: screenWidth * 0.04, // 4% of screen width
+      ),
+      child: Container(
+        color: const Color(0xFFFAFAFA),
+        child: Column(
+          children: [
+            Container(
+              padding: EdgeInsets.symmetric(
+                vertical: screenHeight * 0.02, // 2% of screen height
+              ),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(12),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.4),
+                    spreadRadius: 1,
+                    blurRadius: 6,
+                    offset: const Offset(0, 4),
+                  ),
+                ],
+              ),
+              child: Column(
+                children: [
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
+                      SizedBox(
+                        width: screenWidth * 0.04, // Dynamic spacing
+                      ),
                       Container(
-                        padding: EdgeInsets.symmetric(vertical: 16),
                         decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(12),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.grey.withOpacity(0.4),
-                              // Shadow color
-                              spreadRadius: 1,
-                              // Spread radius
-                              blurRadius: 6,
-                              // Blur radius
-                              offset: Offset(0, 4), // Offset in the y direction
-                            ),
-                          ],
+                          shape: BoxShape.circle,
+                          color: Colors.black,
                         ),
-                        child: Column(
-                          children: [
-                            Row(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                SizedBox(
-                                  width: 16,
-                                ),
-                                Container(
-                                  decoration: BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    color: Colors.black
-                                  ),
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Icon(
-                                      Icons.person_outlined,
-                                      size: 30,
-                                      color: Colors.white,
-                                    ),
-                                  ),
-                                ),
-                                SizedBox(width: 12,),
-                                Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(AppConstant.userName.isEmpty ? "User not login": AppConstant.userName,
-                                        style:  TextStyle(
-                                          fontWeight: FontWeight.w600,
-                                          fontSize: AdaptiveTextSize().getadaptiveTextSize(context, 16),
-                                          color: Colors.black,
-                                          // fontFamily: 'SORA-BOLD'
-                                        )),
-                                    Text(AppConstant.userEmail.isEmpty ? "Dhaka North City": AppConstant.userEmail,
-                                        maxLines: 1,
-                                        style: TextStyle(
-                                          fontWeight: FontWeight.normal,
-                                          fontSize: AdaptiveTextSize()
-                                              .getadaptiveTextSize(context, 12),
-                                          color: Colors.grey,
-                                          // fontFamily: 'SORA-BOLD'
-                                        )),
-                                    Text(AppConstant.userEmail.isEmpty ? "Corporation, Bangladesh": AppConstant.userEmail,
-                                        maxLines: 1,
-                                        style: TextStyle(
-                                              fontWeight: FontWeight.normal,
-                                              fontSize: AdaptiveTextSize()
-                                                  .getadaptiveTextSize(context, 12),
-                                              color: Colors.grey,
-                                              // fontFamily: 'SORA-BOLD'
-                                            )),
-
-                                  ],
-                                ),
-                                Spacer(),
-                                IconButton(onPressed: (){
-                                  setState(() {
-                                    isExpanded = !isExpanded;
-                                  });
-                                }, icon: Icon(!isExpanded?Icons.keyboard_arrow_down_outlined:Icons.keyboard_arrow_up_outlined)),
-
-                                SizedBox(
-                                  width: 8,
-                                ),
-                              ],
-                            ),
-                            AnimatedContainer(
-                              duration: Duration(milliseconds: 300),
-                              height: isExpanded ? 100.h : 0.0,
-                              child: Column(
-                                children: [
-                                  SizedBox(height: 12,),
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(horizontal: 12.0),
-                                    child: Text(
-                                        'Looking  for a undergraduate Course in Software Design by December 2023 in united States',
-                                        style: TextStyle(
-                                          fontWeight: FontWeight.normal,
-                                          fontSize:
-                                          AdaptiveTextSize().getadaptiveTextSize(context, 14),
-                                          color: Colors.black,
-                                        )),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
+                        child: const Padding(
+                          padding: EdgeInsets.all(8.0),
+                          child: Icon(
+                            Icons.person_outlined,
+                            size: 30,
+                            color: Colors.white,
+                          ),
                         ),
                       ),
+                      SizedBox(
+                        width: screenWidth * 0.03, // Dynamic spacing
+                      ),
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            AppConstant.userName.isEmpty
+                                ? "User not login"
+                                : AppConstant.userName,
+                            style: TextStyle(
+                              fontWeight: FontWeight.w600,
+                              fontSize: screenHeight * 0.02, // 2% of screen height
+                              color: Colors.black,
+                            ),
+                          ),
+                          Text(
+                            AppConstant.userEmail.isEmpty
+                                ? "Dhaka North City"
+                                : AppConstant.userEmail,
+                            maxLines: 1,
+                            style: TextStyle(
+                              fontWeight: FontWeight.normal,
+                              fontSize: screenHeight * 0.015, // 1.5% of screen height
+                              color: Colors.grey,
+                            ),
+                          ),
+                          Text(
+                            AppConstant.userEmail.isEmpty
+                                ? "Corporation, Bangladesh"
+                                : AppConstant.userEmail,
+                            maxLines: 1,
+                            style: TextStyle(
+                              fontWeight: FontWeight.normal,
+                              fontSize: screenHeight * 0.015, // 1.5% of screen height
+                              color: Colors.grey,
+                            ),
+                          ),
+                        ],
+                      ),
+                      const Spacer(),
+                      IconButton(
+                        onPressed: () {
+                          setState(() {
+                            isExpanded = !isExpanded;
+                          });
+                        },
+                        icon: Icon(
+                          !isExpanded
+                              ? Icons.keyboard_arrow_down_outlined
+                              : Icons.keyboard_arrow_up_outlined,
+                        ),
+                      ),
+                      SizedBox(
+                        width: screenWidth * 0.02, // Dynamic spacing
+                      ),
                     ],
-                  )),
-         );
+                  ),
+                  AnimatedContainer(
+                    duration: const Duration(milliseconds: 300),
+                    height: isExpanded
+                        ? screenHeight * 0.12 // 12% of screen height
+                        : 0.0,
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: screenWidth * 0.03, // Dynamic horizontal padding
+                      ),
+                      child: Text(
+                        'Looking for an undergraduate Course in Software Design by December 2023 in United States',
+                        style: TextStyle(
+                          fontWeight: FontWeight.normal,
+                          fontSize: screenHeight * 0.018, // 1.8% of screen height
+                          color: Colors.black,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 
-  // Column CounsellorCardInfo(BuildContext context) {
-  //   return Column(
-  //             children: [
-  //               Row(
-  //                 children: [
-  //                   Container(
-  //                       margin: EdgeInsets.only(left: 22),
-  //                       child: Text('YOUR COUNSELLOR',
-  //                           style:  TextStyle(
-  //                                 fontWeight: FontWeight.w400,
-  //                                 fontSize: AdaptiveTextSize()
-  //                                     .getadaptiveTextSize(context, 12),
-  //                                 color: Colors.grey,
-  //                                 // fontFamily: 'SORA-BOLD'
-  //                               ))),
-  //                   Spacer(),
-  //                 ],
-  //               ),
-  //               SizedBox(height: 8,),
-  //               Padding(
-  //                 padding: const EdgeInsets.symmetric(horizontal: 16.0,),
-  //                 child: Container(
-  //                     color: Color(0xFFFAFAFA),
-  //                     child: Column(
-  //                       children: [
-  //                         Container(
-  //                             decoration: BoxDecoration(
-  //                               color: Colors.white,
-  //                               borderRadius: BorderRadius.circular(12),
-  //                               boxShadow: [
-  //                                 BoxShadow(
-  //                                   color: Colors.grey.withOpacity(0.4),
-  //                                   // Shadow color
-  //                                   spreadRadius: 1,
-  //                                   // Spread radius
-  //                                   blurRadius: 6,
-  //                                   // Blur radius
-  //                                   offset: Offset(0, 4), // Offset in the y direction
-  //                                 ),
-  //                               ],
-  //                             ),
-  //                             child: Column(
-  //                               children: [
-  //                                 SizedBox(
-  //                                   height: 8,
-  //                                 ),
-  //                                 Row(
-  //                                   children: [
-  //                                     SizedBox(
-  //                                       width: 16,
-  //                                     ),
-  //                                     Container(
-  //                                       decoration: BoxDecoration(
-  //                                           shape: BoxShape.circle,
-  //                                           color: Colors.black
-  //                                       ),
-  //                                       child: Padding(
-  //                                         padding: const EdgeInsets.all(8.0),
-  //                                         child: Icon(
-  //                                           Icons.person_outlined,
-  //                                           size: 30,
-  //                                           color: Colors.white,
-  //                                         ),
-  //                                       ),
-  //                                     ),
-  //                                     SizedBox(width: 8,),
-  //                                     SizedBox(
-  //                                       width: Responsive.width(60, context),
-  //                                       child: Column(
-  //                                         mainAxisAlignment:
-  //                                         MainAxisAlignment.center,
-  //                                         crossAxisAlignment:
-  //                                         CrossAxisAlignment.start,
-  //                                         children: [
-  //                                           Text("Muhammad Adeel",
-  //                                               style: TextStyle(
-  //                                                     fontWeight: FontWeight.w400,
-  //                                                     fontSize: AdaptiveTextSize()
-  //                                                         .getadaptiveTextSize(
-  //                                                         context, 16),
-  //                                                     color: Colors.black,
-  //                                                   )),
-  //                                           SizedBox(
-  //                                             height: 2,
-  //                                           ),
-  //                                           Text("Counsellor",
-  //                                               maxLines: 1,
-  //                                               style: TextStyle(
-  //                                                     fontWeight: FontWeight.normal,
-  //                                                     fontSize: AdaptiveTextSize()
-  //                                                         .getadaptiveTextSize(
-  //                                                         context, 14),
-  //                                                     color: Colors.grey,
-  //                                                     // fontFamily: 'SORA-BOLD'
-  //                                                   )),
-  //                                           SizedBox(
-  //                                             height: 2,
-  //                                           ),
-  //                                         ],
-  //                                       ),
-  //                                     ),
-  //                                     Spacer(),
-  //                                     IconButton(onPressed: (){
-  //                                       setState(() {
-  //                                         isExpandedCounsellor = !isExpandedCounsellor;
-  //                                       });
-  //                                     }, icon: Icon(!isExpandedCounsellor?Icons.keyboard_arrow_down_outlined:Icons.keyboard_arrow_up_outlined)),
-  //
-  //                                   ],
-  //                                 ),
-  //                                 SizedBox(
-  //                                   height: 4,
-  //                                 ),
-  //                                 Row(
-  //                                   children: [
-  //                                     SizedBox(
-  //                                       width: 12,
-  //                                     ),
-  //                                     Spacer(),
-  //                                     GestureDetector(
-  //                                       onTap: (){
-  //                                         Navigator.push(context, CupertinoPageRoute(builder: (context)=>ChatScreen()));
-  //                                       },
-  //                                       child: Icon(
-  //                                         Icons.question_answer,
-  //                                         size: 25,
-  //                                         color: Colors.black,
-  //                                       ),
-  //                                     ),
-  //                                     Spacer(),
-  //                                     GestureDetector(
-  //                                         child: Column(
-  //                                           children: [
-  //                                             Container(
-  //                                               height: 40.h,
-  //                                               alignment: Alignment.center,// Set your desired height
-  //                                               decoration: BoxDecoration(
-  //                                                 image: DecorationImage(
-  //                                                   image: AssetImage(
-  //                                                       'images/BookSessionButtonBG.png'),
-  //                                                   fit: BoxFit.fill,
-  //                                                 ),
-  //                                               ),
-  //                                               child: Padding(
-  //                                                 padding: const EdgeInsets.only(left: 32.0,right: 32,bottom: 6),
-  //                                                 child: Text('Book a Session',
-  //                                                     style:  TextStyle(
-  //                                                           fontWeight: FontWeight.normal,
-  //                                                           fontSize: AdaptiveTextSize()
-  //                                                               .getadaptiveTextSize(
-  //                                                               context, 14),
-  //                                                           color: Colors.white,
-  //                                                         )),
-  //                                               ),
-  //                                             ),
-  //
-  //                                           ],
-  //                                         ),
-  //                                         onTap: () async {}
-  //                                       //   },
-  //                                       // );
-  //                                       //   } else {
-  //                                       //     // Error handling
-  //                                       //     print(
-  //                                       //         'Failed to create Zoom meeting. Status code: ${response.statusCode}');
-  //                                       //   }
-  //                                       // },
-  //
-  //                                       // showModalBottomSheet(
-  //                                       //   context: context,
-  //                                       //   isScrollControlled: true,
-  //                                       //   backgroundColor: Colors.transparent,
-  //                                       //   builder: (BuildContext context) {
-  //                                       //     return BookSectionBottomSheet();
-  //                                       //     // Your custom bottom sheet widget
-  //                                       //   },
-  //                                       //);
-  //                                       //  },
-  //                                     ),
-  //                                     Spacer()
-  //                                   ],
-  //                                 ),
-  //                                 SizedBox(
-  //                                   height: 6,
-  //                                 ),
-  //                                 AnimatedContainer(
-  //                                   duration: Duration(milliseconds: 300),
-  //                                   height: isExpandedCounsellor ? 100.0 : 0.0,
-  //
-  //                                   // transform: Matrix4.translationValues(0.0, -14.0, 0.0),
-  //
-  //                                   // color: Colors.grey[200],
-  //                                   // margin: EdgeInsets.only(left: 12,right: 12),
-  //                                   child: Padding(
-  //                                     padding: const EdgeInsets.symmetric(horizontal: 16.0),
-  //                                     child: Text(
-  //                                         'Looking  for a undergraduate Course in Software Design by December 2023 in united States',
-  //                                         style:  TextStyle(
-  //                                               fontWeight: FontWeight.normal,
-  //                                               fontSize:
-  //                                               AdaptiveTextSize().getadaptiveTextSize(context, 14),
-  //                                               color: Colors.black,
-  //                                               // fontFamily: 'SORA-BOLD'
-  //                                             )),
-  //                                   ),
-  //                                 ),
-  //                               ],
-  //                             )),
-  //                       ],
-  //                     )),
-  //               ),
-  //             ],
-  //           );
-  // }
+
+
 }
 
 class CounsellorCardInfo extends StatelessWidget {
@@ -585,6 +393,7 @@ class CounsellorCardInfo extends StatelessWidget {
                           GestureDetector(
                             onTap: () async {
                               // Add your onTap functionality here
+                              Navigator.push(context, CupertinoPageRoute(builder: (context)=>SignUpScreenBottomSheet()));
                             },
                             child: Container(
                               height: screenHeight * 0.05,
@@ -600,12 +409,15 @@ class CounsellorCardInfo extends StatelessWidget {
                                 padding: EdgeInsets.symmetric(
                                   horizontal: screenWidth * 0.08,
                                 ),
-                                child: Text(
-                                  'Book a Session',
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.normal,
-                                    fontSize: screenWidth * 0.035,
-                                    color: Colors.white,
+                                child: Padding(
+                                  padding: const EdgeInsets.only(bottom: 4.0),
+                                  child: Text(
+                                    'Book a Session',
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.normal,
+                                      fontSize: screenWidth * 0.035,
+                                      color: Colors.white,
+                                    ),
                                   ),
                                 ),
                               ),
@@ -652,50 +464,97 @@ class TermsNPrivacy extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final double screenWidth = MediaQuery.of(context).size.width;
+    final double screenHeight = MediaQuery.of(context).size.height;
+
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+      padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.04), // 4% of screen width
       child: Container(
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(12),
-
         ),
         child: Column(
           children: [
-            SizedBox(height: 8,),
+            SizedBox(height: screenHeight * 0.01), // 1% of screen height
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 12.0),
-              child: Row(
-                children: [
-                  Icon(Icons.file_copy_outlined),
-                  Expanded(child: Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 8.0,horizontal: 16),
-                    child: Text('Terms Of Service'),
-                  )),
-                  IconButton(onPressed: (){}, icon: Icon(Icons.arrow_forward_ios,color: Colors.black,size: 16,))
-                ],
+              padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.03), // 3% of screen width
+              child: InkWell(
+                onTap: (){
+                  HelperClass.showToast('Not available now');
+                },
+                child: Row(
+                  children: [
+                    Icon(Icons.file_copy_outlined, size: screenHeight * 0.03), // Responsive icon size
+                    Expanded(
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(
+                          vertical: screenHeight * 0.01, // 1% of screen height
+                          horizontal: screenWidth * 0.04, // 4% of screen width
+                        ),
+                        child: Text(
+                          'Terms Of Service',
+                          style: TextStyle(
+                            fontSize: screenHeight * 0.02, // 2% of screen height
+                          ),
+                        ),
+                      ),
+                    ),
+                    IconButton(
+                      onPressed: () {},
+                      icon: Icon(
+                        Icons.arrow_forward_ios,
+                        color: Colors.black,
+                        size: screenHeight * 0.02, // Responsive icon size
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 12.0),
-              child: Row(
-                children: [
-                  Icon(Icons.file_copy_outlined),
-                  Expanded(child: Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 8.0,horizontal: 16),
-                    child: Text('Privacy Policy',),
-                  )),
-                  IconButton(onPressed: (){}, icon: Icon(Icons.arrow_forward_ios,color: Colors.black,size: 16,))
-                ],
+              padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.03), // 3% of screen width
+              child: InkWell(
+                onTap: (){
+                  HelperClass.showToast('Not available now');
+                },
+                child: Row(
+                  children: [
+                    Icon(Icons.file_copy_outlined, size: screenHeight * 0.03), // Responsive icon size
+                    Expanded(
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(
+                          vertical: screenHeight * 0.01, // 1% of screen height
+                          horizontal: screenWidth * 0.04, // 4% of screen width
+                        ),
+                        child: Text(
+                          'Privacy Policy',
+                          style: TextStyle(
+                            fontSize: screenHeight * 0.02, // 2% of screen height
+                          ),
+                        ),
+                      ),
+                    ),
+                    IconButton(
+                      onPressed: () {},
+                      icon: Icon(
+                        Icons.arrow_forward_ios,
+                        color: Colors.black,
+                        size: screenHeight * 0.02, // Responsive icon size
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
-            SizedBox(height: 8,),
+            SizedBox(height: screenHeight * 0.01), // 1% of screen height
           ],
         ),
       ),
     );
   }
 }
+
 
 class SettingsInfo extends StatelessWidget {
   const SettingsInfo({
@@ -704,70 +563,105 @@ class SettingsInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final double screenWidth = MediaQuery.of(context).size.width;
+    final double screenHeight = MediaQuery.of(context).size.height;
+
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+      padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.04), // 4% of screen width
       child: Container(
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(12),
-
         ),
         child: Column(
           children: [
-            SizedBox(height: 8,),
+            SizedBox(height: screenHeight * 0.01), // 1% of screen height
             GestureDetector(
-              onTap: (){
+              onTap: () {
                 Navigator.of(context).push(
-                    CupertinoPageRoute(
-                      builder: (context) => GiveusFeedback(),
-                    ));
+                  CupertinoPageRoute(
+                    builder: (context) => GiveusFeedback(),
+                  ),
+                );
               },
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.03), // 3% of screen width
                 child: Row(
                   children: [
-                    Icon(Icons.message_outlined),
-                    Expanded(child: Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 8.0,horizontal: 16),
-                      child: Text('Give us feedback'),
-                    )),
-                    IconButton(onPressed: (){
-
-                    }, icon: Icon(Icons.arrow_forward_ios,color: Colors.black,size: 16,))
+                    Icon(Icons.message_outlined, size: screenHeight * 0.03), // Icon size responsive
+                    Expanded(
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(
+                          vertical: screenHeight * 0.01, // 1% of screen height
+                          horizontal: screenWidth * 0.04, // 4% of screen width
+                        ),
+                        child: Text(
+                          'Give us feedback',
+                          style: TextStyle(
+                            fontSize: screenHeight * 0.02, // 2% of screen height
+                          ),
+                        ),
+                      ),
+                    ),
+                    IconButton(
+                      onPressed: () {},
+                      icon: Icon(
+                        Icons.arrow_forward_ios,
+                        color: Colors.black,
+                        size: screenHeight * 0.02, // Responsive icon size
+                      ),
+                    ),
                   ],
                 ),
               ),
             ),
             GestureDetector(
-              onTap: (){
+              onTap: () {
                 Navigator.of(context).push(
-                    CupertinoPageRoute(
-                      builder: (context) => SettingScreen(),
-                    ));
+                  CupertinoPageRoute(
+                    builder: (context) => SettingScreen(),
+                  ),
+                );
               },
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.03), // 3% of screen width
                 child: Row(
                   children: [
-                    Icon(Icons.settings),
-                    Expanded(child: Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 8.0,horizontal: 16),
-                      child: Text('Settings',),
-                    )),
-                    IconButton(onPressed: (){
-
-                    }, icon: Icon(Icons.arrow_forward_ios,color: Colors.black,size: 16,))
+                    Icon(Icons.settings, size: screenHeight * 0.03), // Icon size responsive
+                    Expanded(
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(
+                          vertical: screenHeight * 0.01, // 1% of screen height
+                          horizontal: screenWidth * 0.04, // 4% of screen width
+                        ),
+                        child: Text(
+                          'Settings',
+                          style: TextStyle(
+                            fontSize: screenHeight * 0.02, // 2% of screen height
+                          ),
+                        ),
+                      ),
+                    ),
+                    IconButton(
+                      onPressed: () {},
+                      icon: Icon(
+                        Icons.arrow_forward_ios,
+                        color: Colors.black,
+                        size: screenHeight * 0.02, // Responsive icon size
+                      ),
+                    ),
                   ],
                 ),
               ),
             ),
-            SizedBox(height: 8,),
+            SizedBox(height: screenHeight * 0.01), // 1% of screen height
           ],
         ),
       ),
     );
   }
 }
+
 
 class DocumentsAll extends StatelessWidget {
   const DocumentsAll({
@@ -776,8 +670,11 @@ class DocumentsAll extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final double screenWidth = MediaQuery.of(context).size.width;
+    final double screenHeight = MediaQuery.of(context).size.height;
+
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+      padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.04), // 4% of screen width
       child: Container(
         decoration: BoxDecoration(
           color: Colors.white,
@@ -785,79 +682,141 @@ class DocumentsAll extends StatelessWidget {
         ),
         child: Column(
           children: [
-            SizedBox(height: 8,),
+            SizedBox(height: screenHeight * 0.01), // 1% of screen height
             GestureDetector(
-              onTap: (){
+              onTap: () {
                 Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (context) => DocumentsUpload(),
-                    ));
+                  MaterialPageRoute(
+                    builder: (context) => DocumentsUpload(),
+                  ),
+                );
               },
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.03), // 3% of screen width
                 child: Row(
                   children: [
-                    Icon(Icons.file_copy_sharp),
-                    Expanded(child: Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 8.0,horizontal: 16),
-                      child: Text('Documents'),
-                    )),
-                    IconButton(onPressed: (){
-
-                    }, icon: Icon(Icons.arrow_forward_ios,color: Colors.black,size: 16,))
+                    Icon(Icons.file_copy_sharp, size: screenHeight * 0.03), // Icon size responsive
+                    Expanded(
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(
+                          vertical: screenHeight * 0.01, // 1% of screen height
+                          horizontal: screenWidth * 0.04, // 4% of screen width
+                        ),
+                        child: Text(
+                          'Documents',
+                          style: TextStyle(
+                            fontSize: screenHeight * 0.02, // 2% of screen height
+                          ),
+                        ),
+                      ),
+                    ),
+                    IconButton(
+                      onPressed: () {},
+                      icon: Icon(
+                        Icons.arrow_forward_ios,
+                        color: Colors.black,
+                        size: screenHeight * 0.02, // Responsive icon size
+                      ),
+                    ),
                   ],
                 ),
               ),
             ),
             GestureDetector(
-              onTap: (){
+              onTap: () {
                 Navigator.of(context).push(
-                    CupertinoPageRoute(
-                      builder: (context) => ShortList(),
-                    ));
+                  CupertinoPageRoute(
+                    builder: (context) => ShortList(),
+                  ),
+                );
               },
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.03), // 3% of screen width
                 child: Row(
                   children: [
-                    Icon(Icons.favorite_border),
-                    Expanded(child: Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 8.0,horizontal: 16),
-                      child: Text('Shortlist',),
-                    )),
-                    IconButton(onPressed: (){
-
-                    }, icon: Icon(Icons.arrow_forward_ios,color: Colors.black,size: 16,))
+                    Icon(Icons.favorite_border, size: screenHeight * 0.03), // Icon size responsive
+                    Expanded(
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(
+                          vertical: screenHeight * 0.01, // 1% of screen height
+                          horizontal: screenWidth * 0.04, // 4% of screen width
+                        ),
+                        child: Text(
+                          'Shortlist',
+                          style: TextStyle(
+                            fontSize: screenHeight * 0.02, // 2% of screen height
+                          ),
+                        ),
+                      ),
+                    ),
+                    IconButton(
+                      onPressed: () {},
+                      icon: Icon(
+                        Icons.arrow_forward_ios,
+                        color: Colors.black,
+                        size: screenHeight * 0.02, // Responsive icon size
+                      ),
+                    ),
                   ],
                 ),
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 12.0),
-              child: Row(
-                children: [
-                  Icon(Icons.qr_code,color: Colors.orange,),
-                  Expanded(child: Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 8.0,horizontal: 16),
-                    child: Text('Refer Now',style: TextStyle(color: Colors.orange),),
-                  )),
-                  Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
-                      color: Colors.orangeAccent.shade200
+            InkWell(
+              onTap: (){
+                HelperClass.showToast('Not available now');
+              },
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.03), // 3% of screen width
+                child: Row(
+                  children: [
+                    Icon(
+                      Icons.qr_code,
+                      color: Colors.orange,
+                      size: screenHeight * 0.03, // Icon size responsive
                     ),
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 4.0,horizontal: 16),
-                      child: Text('New',style: TextStyle(color: Colors.white),),
+                    Expanded(
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(
+                          vertical: screenHeight * 0.01, // 1% of screen height
+                          horizontal: screenWidth * 0.04, // 4% of screen width
+                        ),
+                        child: Text(
+                          'Refer Now',
+                          style: TextStyle(
+                            fontSize: screenHeight * 0.02, // 2% of screen height
+                            color: Colors.orange,
+                          ),
+                        ),
+                      ),
                     ),
-                  )
-                ],
+                    Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                        color: Colors.orangeAccent.shade200,
+                      ),
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(
+                          vertical: screenHeight * 0.005, // 0.5% of screen height
+                          horizontal: screenWidth * 0.04, // 4% of screen width
+                        ),
+                        child: Text(
+                          'New',
+                          style: TextStyle(
+                            fontSize: screenHeight * 0.018, // 1.8% of screen height
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
-            SizedBox(height: 8,),
+            SizedBox(height: screenHeight * 0.01), // 1% of screen height
           ],
         ),
       ),
     );
   }
 }
+
