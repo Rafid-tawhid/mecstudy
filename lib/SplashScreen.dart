@@ -6,6 +6,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mecstudygroup/BottomMenu/BottomMenuScreen.dart';
 import 'package:mecstudygroup/LoginAndSignupModule/login_bottom_sheet.dart';
 import 'package:mecstudygroup/Utilities/helper_class.dart';
+import 'package:mecstudygroup/providers/course_provider.dart';
 import 'package:mecstudygroup/providers/home_provider.dart';
 import 'package:mecstudygroup/providers/user_provider.dart';
 import 'package:provider/provider.dart';
@@ -31,6 +32,7 @@ class MySplashScreen extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(create: (context)=>HomeProvider()),
         ChangeNotifierProvider(create: (context)=>UserProvider()),
+        ChangeNotifierProvider(create: (context)=>CourseProvider()),
       ],
       child: MaterialApp(
         title: 'Flutter Demo',

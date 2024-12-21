@@ -4,7 +4,9 @@ import 'package:provider/provider.dart';
 
 import '../Application/widgets/course_card.dart';
 import '../Model/course_model.dart';
+import '../Utilities/helper_class.dart';
 import '../Widgets/courses_details_bottomsheet.dart';
+import '../providers/course_provider.dart';
 import '../providers/home_provider.dart';
 
 class SeeAllCourseScreen extends StatefulWidget {
@@ -125,15 +127,22 @@ class AllCourseShowWidgetForSearch extends StatelessWidget {
             courseTitle: course.coursetitle ?? '',
             universityName: course.universityname ?? '',
             price: course.tuituionfee ?? '',
-            onTap: () {
-              showModalBottomSheet(
-                context: context,
-                isScrollControlled: true,
-                backgroundColor: Colors.transparent,
-                builder: (BuildContext context) {
-                  return CoursesScreenBottomSheet(course);
-                },
-              );
+            onTap: () async {
+              var cp= context.read<CourseProvider>();
+              var courseData = await cp.getCourseDataWithId(course.id);
+              if(courseData!=null){
+                showModalBottomSheet(
+                  context: context,
+                  isScrollControlled: true,
+                  backgroundColor: Colors.transparent,
+                  builder: (BuildContext context) {
+                    return CoursesScreenBottomSheet(courseData);
+                  },
+                );
+              }
+              else {
+                HelperClass.showToast('No Data Found');
+              }
             },
           ),
         );

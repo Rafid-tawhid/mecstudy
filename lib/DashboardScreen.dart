@@ -6,6 +6,7 @@ import 'package:mecstudygroup/Destinations/widgets/destination_bottom_sheet.dart
 import 'package:mecstudygroup/LoginAndSignupModule/login_bottom_sheet.dart';
 import 'package:mecstudygroup/Utilities/Colors.dart';
 import 'package:mecstudygroup/Utilities/helper_class.dart';
+import 'package:mecstudygroup/providers/course_provider.dart';
 import 'package:mecstudygroup/providers/home_provider.dart';
 import 'package:mecstudygroup/search/search_screen.dart';
 import 'package:provider/provider.dart';
@@ -668,15 +669,21 @@ class CourseCard extends StatelessWidget {
         padding: const EdgeInsets.all(8.0),
         child: InkWell(
           onTap: () async {
-            showModalBottomSheet(
-              context: context,
-              isScrollControlled: true,
-              backgroundColor: Colors.transparent,
-              builder: (BuildContext context) {
-                return CoursesScreenBottomSheet(
-                    provider.courseList[index]); // Use the new widget here
-              },
-            );
+            var cp= context.read<CourseProvider>();
+            var course = await cp.getCourseDataWithId(provider.courseList[index].id);
+            if(course!=null){
+              showModalBottomSheet(
+                context: context,
+                isScrollControlled: true,
+                backgroundColor: Colors.transparent,
+                builder: (BuildContext context) {
+                  return CoursesScreenBottomSheet(course);
+                },
+              );
+            }
+            else {
+              HelperClass.showToast('No Data Found');
+            }
           },
           child: Container(
             width: 260.w,

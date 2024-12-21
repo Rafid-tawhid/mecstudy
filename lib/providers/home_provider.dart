@@ -301,4 +301,6 @@ class HomeProvider extends ChangeNotifier {
     combinedList=[...allInstitutesInfoList,...allCoursesInfoList];
     notifyListeners();
   }
+
+
 }

@@ -4,6 +4,7 @@ import 'package:mecstudygroup/Application/widgets/course_card.dart';
 import 'package:mecstudygroup/Application/widgets/institute_card.dart';
 import 'package:mecstudygroup/Application/widgets/results_tab1.dart';
 import 'package:mecstudygroup/Utilities/helper_class.dart';
+import 'package:mecstudygroup/providers/course_provider.dart';
 import 'package:mecstudygroup/providers/home_provider.dart';
 import 'package:provider/provider.dart';
 import '../Utilities/Constant.dart';
@@ -353,16 +354,23 @@ class AllCourseShowWidget extends StatelessWidget {
                   universityName:
                       pro.allCoursesInfoList[index].universityname ?? '',
                   price: pro.allCoursesInfoList[index].tuituionfee ?? '',
-                  onTap: () {
-                    showModalBottomSheet(
-                      context: context,
-                      isScrollControlled: true,
-                      backgroundColor: Colors.transparent,
-                      builder: (BuildContext context) {
-                        return CoursesScreenBottomSheet(
-                            pro.allCoursesInfoList[index]);
-                      },
-                    );
+                  onTap: () async {
+                    var cp= context.read<CourseProvider>();
+                    var course = await cp.getCourseDataWithId(pro.allCoursesInfoList[index].id);
+                    if(course!=null){
+                      showModalBottomSheet(
+                        context: context,
+                        isScrollControlled: true,
+                        backgroundColor: Colors.transparent,
+                        builder: (BuildContext context) {
+                          return CoursesScreenBottomSheet(course,);
+                        },
+                      );
+                    }
+                    else {
+                      HelperClass.showToast('No Data Found');
+                    }
+
                   },
                 ),
               ),

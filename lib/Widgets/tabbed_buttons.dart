@@ -12,9 +12,9 @@ class _SelectableButtonListState extends State<SelectableButtonList> {
 
   final List<String> buttonLabels = ["About", "Scholarships", "Requirements"];
   final List<String> bottomTexts = [
-    "Text for Button About",
-    "Text for Button Scholarships",
-    "Text for Button Requirements"
+    "",
+    "",
+    ""
   ];
 
   @override
@@ -55,11 +55,11 @@ class _SelectableButtonListState extends State<SelectableButtonList> {
             }),
           ),
         ),
-        SizedBox(height: 20),
-        Text(
-          bottomTexts[_selectedIndex],
-          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-        ),
+        // SizedBox(height: 20),
+        // Text(
+        //   bottomTexts[_selectedIndex],
+        //   style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+        // ),
       ],
     );
   }

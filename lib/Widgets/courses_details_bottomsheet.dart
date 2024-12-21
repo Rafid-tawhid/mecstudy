@@ -1,15 +1,19 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:mecstudygroup/Utilities/Constant.dart';
+import 'package:mecstudygroup/Utilities/helper_class.dart';
 import 'package:mecstudygroup/Widgets/see_more_text.dart';
 import 'package:mecstudygroup/Widgets/tabbed_buttons.dart';
 
+import '../Model/course_details_model.dart';
 import '../Model/course_model.dart';
 import 'drop_down.dart';
 
 
 class CoursesScreenBottomSheet extends StatelessWidget {
 
-  final CourseModel singleCourse;
+  final CourseDetailsModel singleCourse;
 
 
   const CoursesScreenBottomSheet(this.singleCourse, {super.key});
@@ -41,45 +45,69 @@ class CoursesScreenBottomSheet extends StatelessWidget {
                 children: [
                   Image.asset('images/Logo.png',height: 60,width: 60,),
                   SizedBox(height: 8,),
-                  Text('${singleCourse.coursetitle}',style: customText(20, Colors.black, FontWeight.bold),textAlign: TextAlign.center,),
+                  Text('${singleCourse.courseTitle}',style: customText(20, Colors.black, FontWeight.bold),textAlign: TextAlign.center,),
                   SizedBox(height: 12,),
-                  Text(singleCourse.universityname??'',style: customText(20, Colors.black54, FontWeight.w500,),),
+                  Text('${singleCourse.courseLevel}',style: customText(20, Colors.black54, FontWeight.w500,),),
                   SizedBox(height: 20,),
-                  ExpandableText(text: '${singleCourse.coursetitle}${singleCourse.coursetitle}${singleCourse.coursetitle}${singleCourse.coursetitle}',),
+                  ExpandableText(text: '${singleCourse.overview}',isHtml: true,),
                   Container(
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(12),
                       color: Colors.white
                     ),
-                    child: ListView.builder(
-                      itemCount: 4,
-                      shrinkWrap: true,
-                      physics: NeverScrollableScrollPhysics(),
-                      itemBuilder: (context,index)=>ListTile(
-                        leading: Icon(Icons.money_sharp,color: Colors.orange,),
-                        title: Text('GBP 26,000 Per year',style: customText(16, Colors.black, FontWeight.w600),),
-                        subtitle: Text('International student tutions fee',style: customText(15, Colors.black, FontWeight.w400),),
-                      ),
+                    child: Column(
+                      children: [
+                        ListTile(
+                          leading: Icon(Icons.money_sharp,color: Colors.orange,),
+                          title: Text('Tuition Fee : ${singleCourse.tuituionFee}',style: customText(16, Colors.black, FontWeight.w600),),
+                          subtitle: Text('International student tuition fee',style: customText(15, Colors.black, FontWeight.w400),),
+                        ),
+                        ListTile(
+                          leading: Icon(Icons.calendar_month,color: Colors.orange,),
+                          title: Text('${HelperClass.convertDate(singleCourse.startDate)}',style: customText(16, Colors.black, FontWeight.w600),),
+                          subtitle: Text('Start Date',style: customText(15, Colors.black, FontWeight.w400),),
+                        ),
+                        ListTile(
+                          leading: Icon(Icons.timer_sharp,color: Colors.orange,),
+                          title: Text('${HelperClass.convertDate(singleCourse.applicationDeadline)}',style: customText(16, Colors.black, FontWeight.w600),),
+                          subtitle: Text('Application Deadline',style: customText(15, Colors.black, FontWeight.w400),),
+                        ),
+                        ListTile(
+                          leading: Icon(Icons.star,color: Colors.orange,),
+                          title: Text('${singleCourse.duration}',style: customText(16, Colors.black, FontWeight.w600),),
+                          subtitle: Text('Duration',style: customText(15, Colors.black, FontWeight.w400),),
+                        ),
+
+                      ],
                     ),
                   ),
                   SizedBox(height: 16,),
                   Row(
                     children: [
-                      Icon(Icons.telegram),
+                      Icon(Icons.folder_copy_outlined),
                       SizedBox(width: 8,),
-                      Text('Edvoy Express',style: customText(20, Colors.black, FontWeight.w600,),),
+                      Text('Document Requirement',style: customText(20, Colors.black, FontWeight.w600,),),
 
                     ],
                   ),
                   SizedBox(height: 12,),
-                  Container(
+                  if(singleCourse.docRequired!=null||singleCourse.docRequired!.isNotEmpty)Container(
                     decoration: BoxDecoration(
                       color: Colors.orange.shade200,
                       borderRadius: BorderRadius.circular(12),
                     ),
                     child: Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 16.0,horizontal: 12),
-                      child: Text('''They has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. '''),
+                      padding: const EdgeInsets.all(12.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: singleCourse.docRequired!.split(', ').map((e)=>Row(
+                          children: [
+                            Icon(Icons.arrow_forward,size: 16,),
+                            SizedBox(width: 8,),
+                            Text(e,style: customText(14, Colors.black, FontWeight.w500),),
+                          ],
+                        )).toList(),
+                      ),
                     ),
                   ),
                   SizedBox(height: 16,),
@@ -87,49 +115,16 @@ class CoursesScreenBottomSheet extends StatelessWidget {
                     child: SelectableButtonList(),
                   ),
                   SizedBox(height: 24,),
-                  Row(
-                    children: [
-                      Icon(Icons.calendar_month),
-                      SizedBox(width: 8,),
-                      Text('Upcoming intakes ',style: customText(20, Colors.black, FontWeight.w600,),),
 
-                    ],
-                  ),
-                  SizedBox(height: 12,),
-                  Row(
-                    children: [
-                      SizedBox(width: 10,),
-                      Container(
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(20),
-                          border: Border.all(color: Colors.grey,width: 1)
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 8.0,horizontal: 12),
-                          child: Text('Sept 2025'),
-                        ),
-                      ),
-                      SizedBox(width: 12,),
-                      Container(
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(20),
-                          border: Border.all(color: Colors.grey,width: 1)
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 8.0,horizontal: 12),
-                          child: Text('Sept 2026'),
-                        ),
-                      ),
-                    ],
-                  ),
+
+                  UpComingIntakes(singleCourse.upcomingIntakes??''),
+
                   SizedBox(height: 24,),
                   Row(
                     children: [
                       Icon(Icons.library_books),
                       SizedBox(width: 8,),
-                      Text('Mode of Study ',style: customText(20, Colors.black, FontWeight.w600,),),
+                      Text('Mode of Study',style: customText(20, Colors.black, FontWeight.w600,),),
 
                     ],
                   ),
@@ -145,7 +140,7 @@ class CoursesScreenBottomSheet extends StatelessWidget {
                         ),
                         child: Padding(
                           padding: const EdgeInsets.symmetric(vertical: 8.0,horizontal: 12),
-                          child: Text('Full Time'),
+                          child: Text('${singleCourse.modeOfStudy}'),
                         ),
                       ),
 
@@ -168,6 +163,64 @@ class CoursesScreenBottomSheet extends StatelessWidget {
             ),
         );
       },
+    );
+  }
+}
+
+class UpComingIntakes extends StatelessWidget {
+
+  final String intakeList;
+
+  UpComingIntakes(this.intakeList);
+
+  @override
+  Widget build(BuildContext context) {
+    // Example input string
+
+    // Convert the string to a list using json.decode
+    List<String> data = List<String>.from(json.decode(intakeList));
+
+    return Column(
+      children: [
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(top: 2.0),
+              child: Icon(Icons.calendar_month),
+            ),
+            SizedBox(width: 8,),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text('Upcoming Intakes',style: customText(20, Colors.black, FontWeight.bold),)
+              ],
+            ),
+          ],
+        ),
+        SizedBox(height: 12,),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            ...data.map((val) {
+            return Padding(
+              padding: const EdgeInsets.all(4.0),
+              child: Container(
+                decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(20),
+                    border: Border.all(color: Colors.grey,width: 1)
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 8.0,horizontal: 12),
+                  child: Text(val),
+                ),
+              ),
+            );
+          }).toList(),
+          ]
+        ),
+      ],
     );
   }
 }

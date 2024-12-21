@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart' as intl;
+import 'package:intl/intl.dart';
 import 'package:mailer/mailer.dart';
 import 'package:mailer/smtp_server/gmail.dart';
 import 'package:mecstudygroup/Model/user_profile_model.dart';
@@ -260,6 +261,21 @@ class HelperClass {
         print('Problem: ${p.code}: ${p.msg}');
       }
     }
+
+  }
+
+  static convertDate(String? startDate) {
+
+      try {
+        // Parse the ISO 8601 date string into a DateTime object
+        DateTime date = DateTime.parse(startDate??'');
+
+        // Format the DateTime object into the desired format using DateFormat
+        String formattedDate = DateFormat('MMM yyyy').format(date);
+        return formattedDate;
+      } catch (e) {
+        return 'Invalid date format';
+      }
 
   }
 }

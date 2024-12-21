@@ -7,6 +7,7 @@ import 'package:provider/provider.dart';
 import '../Model/course_model.dart';
 import '../Utilities/helper_class.dart';
 import '../Widgets/courses_details_bottomsheet.dart';
+import '../providers/course_provider.dart';
 import '../university_details/university_dts_bottom_sheet.dart';
 
 class SearchScreen extends StatefulWidget {
@@ -152,15 +153,21 @@ class _SearchScreenState extends State<SearchScreen> {
   Future<void> handleItemClick(dynamic item) async {
     if (item is CourseModel) {
       // Handle CourseModel click
-      debugPrint("Clicked Course: ${item.coursetitle}");
-      showModalBottomSheet(
-        context: context,
-        isScrollControlled: true,
-        backgroundColor: Colors.transparent,
-        builder: (BuildContext context) {
-          return CoursesScreenBottomSheet(item);
-        },
-      );
+      var cp= context.read<CourseProvider>();
+      var course = await cp.getCourseDataWithId(item.id);
+      if(course!=null){
+        showModalBottomSheet(
+          context: context,
+          isScrollControlled: true,
+          backgroundColor: Colors.transparent,
+          builder: (BuildContext context) {
+            return CoursesScreenBottomSheet(course);
+          },
+        );
+      }
+      else {
+        HelperClass.showToast('No Data Found');
+      }
 
     } else if (item is UniversityModel) {
       // Handle UniversityModel click

@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_html/flutter_html.dart';
 
 import '../Utilities/Constant.dart';
 
+import 'package:flutter/material.dart';
+import 'package:flutter_html/flutter_html.dart';
+
 class ExpandableText extends StatefulWidget {
   final String text;
+  final bool? isHtml;
 
-  const ExpandableText({super.key, required this.text});
+  const ExpandableText({super.key, required this.text, this.isHtml});
 
   @override
   _ExpandableTextState createState() => _ExpandableTextState();
@@ -19,10 +24,23 @@ class _ExpandableTextState extends State<ExpandableText> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
+        // Check if the content is HTML or regular text
+        widget.isHtml == true
+            ? Html(
+          data: widget.text,
+          style: {
+            // You can customize HTML text styling here, e.g. text color, font size
+          },
+        )
+            : Text(
           widget.text,
-          maxLines: _isExpanded ? null : 3,  // Show all lines if expanded, otherwise 2 lines
-            style: customText(14, Colors.black54, FontWeight.w500,)
+          maxLines: _isExpanded ? null : 3, // Expandable behavior
+          overflow: TextOverflow.ellipsis, // Add ellipsis if text overflows
+          style: TextStyle(
+            fontSize: 14,
+            color: Colors.black54,
+            fontWeight: FontWeight.w500,
+          ),
         ),
         Align(
           alignment: Alignment.bottomRight,
@@ -42,3 +60,4 @@ class _ExpandableTextState extends State<ExpandableText> {
     );
   }
 }
+
