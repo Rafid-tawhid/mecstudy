@@ -1,11 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 
-import '../Utilities/Constant.dart';
-
-import 'package:flutter/material.dart';
-import 'package:flutter_html/flutter_html.dart';
-
 class ExpandableText extends StatefulWidget {
   final String text;
   final bool? isHtml;
@@ -26,22 +21,8 @@ class _ExpandableTextState extends State<ExpandableText> {
       children: [
         // Check if the content is HTML or regular text
         widget.isHtml == true
-            ? Html(
-          data: widget.text,
-          style: {
-            // You can customize HTML text styling here, e.g. text color, font size
-          },
-        )
-            : Text(
-          widget.text,
-          maxLines: _isExpanded ? null : 3, // Expandable behavior
-          overflow: TextOverflow.ellipsis, // Add ellipsis if text overflows
-          style: TextStyle(
-            fontSize: 14,
-            color: Colors.black54,
-            fontWeight: FontWeight.w500,
-          ),
-        ),
+            ? _buildExpandableHtmlContent()
+            : _buildExpandablePlainText(),
         Align(
           alignment: Alignment.bottomRight,
           child: TextButton(
@@ -59,5 +40,49 @@ class _ExpandableTextState extends State<ExpandableText> {
       ],
     );
   }
-}
 
+  // Method to handle expandable HTML content
+  Widget _buildExpandableHtmlContent() {
+    return AnimatedSize(
+      duration: Duration(milliseconds: 300),
+      curve: Curves.easeInOut,
+      child: ConstrainedBox(
+        constraints: BoxConstraints(
+          maxHeight: _isExpanded ? double.infinity : 200.0, // Control height
+        ),
+        child: Html(
+          data: widget.text,
+          style: {
+            "body": Style(
+              fontSize: FontSize(14),
+              color: Colors.black54,
+            ),
+          },
+        ),
+      ),
+    );
+  }
+
+  // Method to handle expandable plain text content
+  Widget _buildExpandablePlainText() {
+    return AnimatedSize(
+      duration: Duration(milliseconds: 300),
+      curve: Curves.easeInOut,
+      child: ConstrainedBox(
+        constraints: BoxConstraints(
+          maxHeight: _isExpanded ? double.infinity : 100.0, // Control height
+        ),
+        child: Text(
+          widget.text,
+          maxLines: _isExpanded ? null : 3,  // Expandable behavior
+          overflow: TextOverflow.ellipsis,    // Add ellipsis if text overflows
+          style: TextStyle(
+            fontSize: 14,
+            color: Colors.black54,
+            fontWeight: FontWeight.w500,
+          ),
+        ),
+      ),
+    );
+  }
+}
