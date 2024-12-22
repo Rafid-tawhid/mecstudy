@@ -5,6 +5,8 @@ import 'package:mecstudygroup/Chat/ChatScreen.dart';
 import 'package:mecstudygroup/LoginAndSignupModule/SignupScreen.dart';
 import 'package:mecstudygroup/LoginAndSignupModule/login_bottom_sheet.dart';
 import 'package:mecstudygroup/Profile/DocumentsUpload.dart';
+import 'package:mecstudygroup/Profile/privacy_policy.dart';
+import 'package:mecstudygroup/Profile/terms_and_conditions.dart';
 import 'package:mecstudygroup/Utilities/Colors.dart';
 import 'package:mecstudygroup/Utilities/helper_class.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -485,7 +487,7 @@ class TermsNPrivacy extends StatelessWidget {
               padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.03), // 3% of screen width
               child: InkWell(
                 onTap: (){
-                  HelperClass.showToast('Not available now');
+                 Navigator.push(context, CupertinoPageRoute(builder: (context)=>TermsAndConditionsScreen()));
                 },
                 child: Row(
                   children: [
@@ -520,7 +522,8 @@ class TermsNPrivacy extends StatelessWidget {
               padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.03), // 3% of screen width
               child: InkWell(
                 onTap: (){
-                  HelperClass.showToast('Not available now');
+
+                  Navigator.push(context, CupertinoPageRoute(builder: (context)=>PrivacyPolicyScreen()));
                 },
                 child: Row(
                   children: [
