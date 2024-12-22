@@ -172,7 +172,7 @@ class _SignUpScreenBottomSheet extends State<SignUpScreenBottomSheet> {
                                 padding: const EdgeInsets.symmetric(horizontal: 12.0),
                                 child: CustomDropdownNew<Country>(
                                   items: up.countriesModelList,
-                                  hintText: 'Select an option',
+                                  hintText: 'Select Country',
                                   selectedValue: _country,
                                   onChanged: (value) {
 
@@ -200,7 +200,7 @@ class _SignUpScreenBottomSheet extends State<SignUpScreenBottomSheet> {
                                 padding: const EdgeInsets.symmetric(horizontal: 12.0),
                                 child: CustomDropdownNew<City>(
                                   items: up.citiesModelList,
-                                  hintText: 'Select an option',
+                                  hintText: 'Select city',
                                   selectedValue: _city,
                                   onChanged: (value) {
                                     if(value!=null){

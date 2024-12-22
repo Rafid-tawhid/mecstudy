@@ -1,5 +1,8 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_html/flutter_html.dart';
 import 'package:mecstudygroup/BookSession/widgets/buttons.dart';
 import 'package:mecstudygroup/Chat/ChatScreen.dart';
 import 'package:mecstudygroup/Utilities/Constant.dart';
@@ -7,6 +10,7 @@ import 'package:mecstudygroup/Utilities/helper_class.dart';
 import 'package:mecstudygroup/university_details/expanded_text.dart';
 import 'package:provider/provider.dart';
 
+import '../../Model/destination_info_model.dart';
 import '../../Model/top_countries_model.dart';
 import '../../courses/see_all_course_screen.dart';
 import '../../providers/home_provider.dart';
@@ -14,7 +18,7 @@ import 'gridview.dart';
 
 class DestinationBottomSheet extends StatelessWidget {
 
-  final TopCountriesModel countriesModel;
+  final DestinationInfoModel countriesModel;
 
 
   DestinationBottomSheet(this.countriesModel, {super.key});
@@ -63,10 +67,10 @@ class DestinationBottomSheet extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      UniversityInformation(),
-                      TrendingSubjectSection(),
-                      CountryGuideSection(),
-                      CityStudySection(),
+                      UniversityInformation(countriesModel),
+                      TrendingSubjectSection(countriesModel),
+                       BasicRequirementSection(countriesModel),
+                      // CityStudySection(countriesModel),
                     ],
                   ),
                 ),
@@ -170,13 +174,20 @@ class CityStudySection extends StatelessWidget {
   }
 }
 
-class CountryGuideSection extends StatelessWidget {
-  const CountryGuideSection({
-    super.key,
-  });
+class BasicRequirementSection extends StatelessWidget {
+  final DestinationInfoModel destinationInfoModel;
+
+
+  BasicRequirementSection(this.destinationInfoModel);
 
   @override
   Widget build(BuildContext context) {
+    return Padding(padding: EdgeInsets.symmetric(horizontal: 12),child: Column(
+      children: [
+        Html(data: destinationInfoModel.basicRequirements),
+        Html(data: destinationInfoModel.studentVisa),
+      ],
+    ),);
     return Column(
       children: [
         SizedBox(height: 10,),
@@ -244,12 +255,18 @@ class CountryGuideSection extends StatelessWidget {
 }
 
 class TrendingSubjectSection extends StatelessWidget {
-  const TrendingSubjectSection({
-    super.key,
-  });
+  final DestinationInfoModel destinationInfoModel;
+  const TrendingSubjectSection(this.destinationInfoModel, {super.key});
+
 
   @override
   Widget build(BuildContext context) {
+    List<String> itemList = destinationInfoModel.popularPrograms!
+        .replaceAll('[', '') // Remove the opening bracket
+        .replaceAll(']', '') // Remove the closing bracket
+        .split(',') // Split by commas
+        .map((item) => item.trim()) // Trim any extra whitespace
+        .toList();
     return Column(
       children: [
         Padding(
@@ -283,7 +300,7 @@ class TrendingSubjectSection extends StatelessWidget {
           child:SizedBox(
             height: 40,
             child: ListView.builder(
-              itemCount: subjects.length,
+              itemCount: itemList.length,
               scrollDirection: Axis.horizontal,
               itemBuilder: (context,index)=>Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 4.0),
@@ -303,42 +320,55 @@ class TrendingSubjectSection extends StatelessWidget {
                   ),
                   padding: const EdgeInsets.symmetric(
                       vertical: 6.0, horizontal: 16.0),
-                  child: Text(subjects[index]??'',style: customText(14, Colors.black, FontWeight.w500),
+                  child: Text(itemList[index]??'',style: customText(14, Colors.black, FontWeight.w500),
                   ),
                 ),
               ),
             ),
           ),
         ),
-        SizedBox(
-          height: 10,
-        ),
+        
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 12.0),
+          child: Html(data: destinationInfoModel.bestUniversities),
+        )
       ],
     );
   }
 }
 
 class UniversityInformation extends StatelessWidget {
-  const UniversityInformation({
-    super.key,
-  });
+
+  final DestinationInfoModel destinationInfoModel;
+  UniversityInformation(this.destinationInfoModel);
 
   @override
   Widget build(BuildContext context) {
+    List<String> itemList=[];
+    if (destinationInfoModel.studyLevels!=null){
+      itemList = destinationInfoModel.studyLevels!
+          .replaceAll('[', '') // Remove the opening bracket
+          .replaceAll(']', '') // Remove the closing bracket
+          .split(',') // Split by commas
+          .map((item) => item.trim()) // Trim any extra whitespace
+          .toList();
+    }
+
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16.0),
           child: ClipRRect(
             borderRadius: BorderRadius.all(Radius.circular(8)),
             child: Image.network(
-              'https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/Westerkerk_Amsterdam.jpg/220px-Westerkerk_Amsterdam.jpg',
+              destinationInfoModel.bannerImage??'',
               width: double.infinity, // Set your width here
               height: 180, // Set your height here
               fit: BoxFit.cover,
               loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
                 if (loadingProgress == null) {
-                  return child; // If the image is loaded, show it
+                  return Image.network(destinationInfoModel.bannerImage??''); // If the image is loaded, show it
                 } else {
                   return Center(
                     child: CircularProgressIndicator(
@@ -363,7 +393,12 @@ class UniversityInformation extends StatelessWidget {
         ),
         ExpendedText(
             bgColor: Colors.white.withOpacity(0.2),
-            information: '''Thisis simply dummy text of the printing and typesetting industry. This been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing and more recently with desktop publishing software like Aldus PageMaker including versions of MEC.'''),
+            information: destinationInfoModel.description??''),
+
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 12.0,horizontal: 12),
+          child: Text('Study Level',style: customText(16, Colors.black, FontWeight.w500),),
+        ),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16.0),
           child: SizedBox(
@@ -374,19 +409,32 @@ class UniversityInformation extends StatelessWidget {
                 crossAxisCount: 2, // Number of items in a row
                 crossAxisSpacing: 8, // Horizontal spacing between items
                 mainAxisSpacing: 8, // Vertical spacing between items
-                childAspectRatio: 1.6, // Width to height ratio of each grid item
+                childAspectRatio: 2, // Width to height ratio of each grid item
               ),
-              itemCount: items.length,
+              itemCount: itemList.length,
               itemBuilder: (context, index) {
-                final item = items[index];
+                final item = itemList[index];
                 return GridItem(
-                  icon: item['icon'],
-                  title: HelperClass.cutTheLongText(item['title'],12),
-                  rate: item['rate'],
+                  icon: items[index]['icon'],
+                  title: item,
                 );
               },
             ),
           ),
+        ),
+        SizedBox(height: 12,),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 12),
+          child: Text('Accept English Test',style: customText(18, Colors.black, FontWeight.bold),),
+        ),
+        SizedBox(height: 8,),
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 12.0,horizontal: 12),
+          child: Text(destinationInfoModel.acceptedEnglishTest??'',style: customText(16, Colors.black, FontWeight.w500),),
+        ),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 12.0),
+          child: Html(data: destinationInfoModel.bestUniversities),
         ),
         SizedBox(height: 12,),
       ],

@@ -46,15 +46,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
           //crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             UserProfileInfo(context),
-            SizedBox(height: 20,),
-            CounsellorCardInfo(
-              isExpandedCounsellor: isExpandedCounsellor,
-              onExpandToggle: (value) {
-                setState(() {
-                  isExpandedCounsellor = value;
-                });
-              },
-            ),
+            // SizedBox(height: 20,),
+            // CounsellorCardInfo(
+            //   isExpandedCounsellor: isExpandedCounsellor,
+            //   onExpandToggle: (value) {
+            //     setState(() {
+            //       isExpandedCounsellor = value;
+            //     });
+            //   },
+            // ),
             SizedBox(height: 20,),
             DocumentsAll(),
             SizedBox(height: 20,),
@@ -193,28 +193,32 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               color: Colors.black,
                             ),
                           ),
-                          Text(
-                            AppConstant.userEmail.isEmpty
-                                ? "Dhaka North City"
-                                : AppConstant.userEmail,
-                            maxLines: 1,
-                            style: TextStyle(
-                              fontWeight: FontWeight.normal,
-                              fontSize: screenHeight * 0.015, // 1.5% of screen height
-                              color: Colors.grey,
-                            ),
-                          ),
-                          Text(
-                            AppConstant.userEmail.isEmpty
-                                ? "Corporation, Bangladesh"
-                                : AppConstant.userEmail,
-                            maxLines: 1,
-                            style: TextStyle(
-                              fontWeight: FontWeight.normal,
-                              fontSize: screenHeight * 0.015, // 1.5% of screen height
-                              color: Colors.grey,
-                            ),
-                          ),
+                        if(AppConstant.userEmail.isNotEmpty) Column(
+                           children: [
+                             Text(
+                               AppConstant.userEmail.isEmpty
+                                   ? ""
+                                   : AppConstant.userEmail,
+                               maxLines: 1,
+                               style: TextStyle(
+                                 fontWeight: FontWeight.normal,
+                                 fontSize: screenHeight * 0.015, // 1.5% of screen height
+                                 color: Colors.grey,
+                               ),
+                             ),
+                             Text(
+                               AppConstant.userEmail.isEmpty
+                                   ? ""
+                                   : AppConstant.userCountry,
+                               maxLines: 1,
+                               style: TextStyle(
+                                 fontWeight: FontWeight.normal,
+                                 fontSize: screenHeight * 0.015, // 1.5% of screen height
+                                 color: Colors.grey,
+                               ),
+                             ),
+                           ],
+                         )
                         ],
                       ),
                       const Spacer(),
@@ -722,96 +726,96 @@ class DocumentsAll extends StatelessWidget {
                 ),
               ),
             ),
-            GestureDetector(
-              onTap: () {
-                Navigator.of(context).push(
-                  CupertinoPageRoute(
-                    builder: (context) => ShortList(),
-                  ),
-                );
-              },
-              child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.03), // 3% of screen width
-                child: Row(
-                  children: [
-                    Icon(Icons.favorite_border, size: screenHeight * 0.03), // Icon size responsive
-                    Expanded(
-                      child: Padding(
-                        padding: EdgeInsets.symmetric(
-                          vertical: screenHeight * 0.01, // 1% of screen height
-                          horizontal: screenWidth * 0.04, // 4% of screen width
-                        ),
-                        child: Text(
-                          'Shortlist',
-                          style: TextStyle(
-                            fontSize: screenHeight * 0.02, // 2% of screen height
-                          ),
-                        ),
-                      ),
-                    ),
-                    IconButton(
-                      onPressed: () {},
-                      icon: Icon(
-                        Icons.arrow_forward_ios,
-                        color: Colors.black,
-                        size: screenHeight * 0.02, // Responsive icon size
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            InkWell(
-              onTap: (){
-                HelperClass.showToast('Not available now');
-              },
-              child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.03), // 3% of screen width
-                child: Row(
-                  children: [
-                    Icon(
-                      Icons.qr_code,
-                      color: Colors.orange,
-                      size: screenHeight * 0.03, // Icon size responsive
-                    ),
-                    Expanded(
-                      child: Padding(
-                        padding: EdgeInsets.symmetric(
-                          vertical: screenHeight * 0.01, // 1% of screen height
-                          horizontal: screenWidth * 0.04, // 4% of screen width
-                        ),
-                        child: Text(
-                          'Refer Now',
-                          style: TextStyle(
-                            fontSize: screenHeight * 0.02, // 2% of screen height
-                            color: Colors.orange,
-                          ),
-                        ),
-                      ),
-                    ),
-                    Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                        color: Colors.orangeAccent.shade200,
-                      ),
-                      child: Padding(
-                        padding: EdgeInsets.symmetric(
-                          vertical: screenHeight * 0.005, // 0.5% of screen height
-                          horizontal: screenWidth * 0.04, // 4% of screen width
-                        ),
-                        child: Text(
-                          'New',
-                          style: TextStyle(
-                            fontSize: screenHeight * 0.018, // 1.8% of screen height
-                            color: Colors.white,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
+            // GestureDetector(
+            //   onTap: () {
+            //     Navigator.of(context).push(
+            //       CupertinoPageRoute(
+            //         builder: (context) => ShortList(),
+            //       ),
+            //     );
+            //   },
+            //   child: Padding(
+            //     padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.03), // 3% of screen width
+            //     child: Row(
+            //       children: [
+            //         Icon(Icons.favorite_border, size: screenHeight * 0.03), // Icon size responsive
+            //         Expanded(
+            //           child: Padding(
+            //             padding: EdgeInsets.symmetric(
+            //               vertical: screenHeight * 0.01, // 1% of screen height
+            //               horizontal: screenWidth * 0.04, // 4% of screen width
+            //             ),
+            //             child: Text(
+            //               'Shortlist',
+            //               style: TextStyle(
+            //                 fontSize: screenHeight * 0.02, // 2% of screen height
+            //               ),
+            //             ),
+            //           ),
+            //         ),
+            //         IconButton(
+            //           onPressed: () {},
+            //           icon: Icon(
+            //             Icons.arrow_forward_ios,
+            //             color: Colors.black,
+            //             size: screenHeight * 0.02, // Responsive icon size
+            //           ),
+            //         ),
+            //       ],
+            //     ),
+            //   ),
+            // ),
+            // InkWell(
+            //   onTap: (){
+            //     HelperClass.showToast('Not available now');
+            //   },
+            //   child: Padding(
+            //     padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.03), // 3% of screen width
+            //     child: Row(
+            //       children: [
+            //         Icon(
+            //           Icons.qr_code,
+            //           color: Colors.orange,
+            //           size: screenHeight * 0.03, // Icon size responsive
+            //         ),
+            //         Expanded(
+            //           child: Padding(
+            //             padding: EdgeInsets.symmetric(
+            //               vertical: screenHeight * 0.01, // 1% of screen height
+            //               horizontal: screenWidth * 0.04, // 4% of screen width
+            //             ),
+            //             child: Text(
+            //               'Refer Now',
+            //               style: TextStyle(
+            //                 fontSize: screenHeight * 0.02, // 2% of screen height
+            //                 color: Colors.orange,
+            //               ),
+            //             ),
+            //           ),
+            //         ),
+            //         Container(
+            //           decoration: BoxDecoration(
+            //             borderRadius: BorderRadius.circular(20),
+            //             color: Colors.orangeAccent.shade200,
+            //           ),
+            //           child: Padding(
+            //             padding: EdgeInsets.symmetric(
+            //               vertical: screenHeight * 0.005, // 0.5% of screen height
+            //               horizontal: screenWidth * 0.04, // 4% of screen width
+            //             ),
+            //             child: Text(
+            //               'New',
+            //               style: TextStyle(
+            //                 fontSize: screenHeight * 0.018, // 1.8% of screen height
+            //                 color: Colors.white,
+            //               ),
+            //             ),
+            //           ),
+            //         ),
+            //       ],
+            //     ),
+            //   ),
+            // ),
             SizedBox(height: screenHeight * 0.01), // 1% of screen height
           ],
         ),

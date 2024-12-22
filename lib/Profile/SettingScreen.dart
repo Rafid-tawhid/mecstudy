@@ -90,7 +90,7 @@ class _SettingScreenState extends State<SettingScreen> {
                 height: Responsive.height(2, context),
               ),
               Text(
-                  "  You'll get email from Edvoy about new \n  Institutions & Courses",
+                  "  You'll get email from Us about new \n  Institutions & Courses",
                   maxLines: 2,
                   textAlign: TextAlign.start,
                   style: TextStyle(

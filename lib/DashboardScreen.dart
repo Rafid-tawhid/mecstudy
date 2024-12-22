@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/material.dart';
 import 'package:mecstudygroup/Destinations/widgets/destination_bottom_sheet.dart';
 import 'package:mecstudygroup/LoginAndSignupModule/login_bottom_sheet.dart';
+import 'package:mecstudygroup/Model/destination_info_model.dart';
 import 'package:mecstudygroup/Utilities/Colors.dart';
 import 'package:mecstudygroup/Utilities/helper_class.dart';
 import 'package:mecstudygroup/providers/course_provider.dart';
@@ -371,15 +372,21 @@ class _HomeScreenState extends State<HomeScreen> {
                             child: Column(
                               children: [
                                 GestureDetector(
-                                  onTap: (){
-                                    showModalBottomSheet(
-                                      context: context,
-                                      isScrollControlled: true,
-                                      backgroundColor: Colors.transparent,
-                                      builder: (BuildContext context) {
-                                        return DestinationBottomSheet(pro.topCountriesModelList[index]); // Use the new widget here
-                                      },
-                                    );
+                                  onTap: () async {
+                                   var cp= context.read<CourseProvider>();
+                                    DestinationInfoModel? destination=await cp.getDestinationDetails(pro.topCountriesModelList[index].countryID);
+                                    if(destination!=null){
+                                      showModalBottomSheet(
+                                        context: context,
+                                        isScrollControlled: true,
+                                        backgroundColor: Colors.transparent,
+                                        builder: (BuildContext context) {
+                                          return DestinationBottomSheet(destination); // Use the new widget here
+                                        },
+                                      );
+                                    }
+
+
                                   },
                                   child: Container(
                                     height: 250.h,

@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 final List<Map<String, dynamic>> items = [
   {"icon": Icons.star, "title": "Cost of Living", "rate": 4.5},
   {"icon": Icons.favorite, "title": "International study", "rate": 4.7},
-  {"icon": Icons.home, "title": "Average anual salary", "rate": 4.2},
-  {"icon": Icons.person, "title": "Item 4", "rate": 4.9},
+  {"icon": Icons.home, "title": "Average salary", "rate": 4.2},
+  {"icon": Icons.person, "title": "Accommodation", "rate": 4.9},
 ];
 List<String> subjects = [
   "Mathematics",
@@ -22,13 +22,12 @@ List<String> subjects = [
 class GridItem extends StatelessWidget {
   final IconData icon;
   final String title;
-  final double rate;
+
 
   const GridItem({
     Key? key,
     required this.icon,
     required this.title,
-    required this.rate,
   }) : super(key: key);
 
   @override
@@ -52,14 +51,18 @@ class GridItem extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Icon(icon, size: 30, color: Colors.blue),
-          Text(
-            title,
-            style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+          SizedBox(height: 8,),
+          Expanded(
+            child: Text(
+              title,
+              overflow: TextOverflow.ellipsis,
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+            ),
           ),
-          Text(
-            "Rate: $rate",
-            style: TextStyle(fontSize: 14, color: Colors.grey[600]),
-          ),
+          // Text(
+          //   "Rate: $rate",
+          //   style: TextStyle(fontSize: 14, color: Colors.grey[600]),
+          // ),
         ],
       ),
     );

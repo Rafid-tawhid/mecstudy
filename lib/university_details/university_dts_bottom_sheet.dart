@@ -569,13 +569,14 @@ class OverviewWidget extends StatelessWidget {
                         SizedBox(
                           height: 8,
                         ),
-                       if(fromRankingJsonList(university.ranking).length>1) Text(fromRankingJsonList(university.ranking)[1].rank??'',
+                       fromRankingJsonList(university.ranking).length>1? Text(fromRankingJsonList(university.ranking)[1].rank??'',
                             style: customText(
-                                14, Colors.grey.shade600, FontWeight.w400)),
+                                14, Colors.grey.shade600, FontWeight.w400)):Text('N/A',style: customText(
+                           14, Colors.grey.shade600, FontWeight.w400)),
                         SizedBox(
                           height: 6,
                         ),
-                       Text(fromRankingJsonList(university.ranking).length>1?fromRankingJsonList(university.ranking)[1].source:'Nothing',
+                       Text(fromRankingJsonList(university.ranking).length>1?fromRankingJsonList(university.ranking)[1].source:'',
                             style: customText(
                                 14, Colors.grey.shade600, FontWeight.w400))
                       ],
