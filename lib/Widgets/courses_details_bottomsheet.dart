@@ -147,16 +147,16 @@ class CoursesScreenBottomSheet extends StatelessWidget {
                     ],
                   ),
                   SizedBox(height: 24,),
-                  Row(
-                    children: [
-                      Icon(Icons.book_sharp),
-                      SizedBox(width: 8,),
-                      Text('Modules ',style: customText(20, Colors.black, FontWeight.w600,),),
-
-                    ],
-                  ),
-                  SizedBox(height: 12,),
-                  CustomDropdown(),
+                  // Row(
+                  //   children: [
+                  //     Icon(Icons.book_sharp),
+                  //     SizedBox(width: 8,),
+                  //     Text('Modules ',style: customText(20, Colors.black, FontWeight.w600,),),
+                  //
+                  //   ],
+                  // ),
+                  // SizedBox(height: 12,),
+                  // CustomDropdown(),
                   SizedBox(height: 100,)
                 ],
               ),

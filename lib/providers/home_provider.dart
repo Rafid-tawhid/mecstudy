@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
+import 'package:mecstudygroup/Model/destination_info_model.dart';
 import 'package:mecstudygroup/Utilities/interceptor_class.dart';
 import '../DashboardScreen.dart';
 import '../Model/Universities.dart';
@@ -28,7 +29,7 @@ class HomeProvider extends ChangeNotifier {
   List<UniversityModel> allInstitutesInfoList=[];
   List<UniversityModel> topUniversityList=[];
   List<TrendingSubjectModel> trendingSubjectList=[];
-  List<TopCountriesModel> topCountriesModelList=[];
+  List<DestinationInfoModel> topCountriesModelList=[];
   List<dynamic> combinedList = [];
 
   Future<bool> getLogin({String? email, String? password}) async {
@@ -212,7 +213,7 @@ class HomeProvider extends ChangeNotifier {
         trendingSubjectList.add(TrendingSubjectModel.fromJson(i));
       }
       for(Map i in table3){
-        topCountriesModelList.add(TopCountriesModel.fromJson(i));
+        topCountriesModelList.add(DestinationInfoModel.fromJson(i));
       }
 
         debugPrint('courseList ${courseList.length}');

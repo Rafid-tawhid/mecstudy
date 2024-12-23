@@ -31,10 +31,6 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
 
-  List<DashboardBottomModel> items = DashboardBottomModel.sampleData();
-
-  List<University> universities = [];
-  late Future<List<University>> futureUniversity;
 
   @override
   void initState() {
@@ -393,19 +389,59 @@ class _HomeScreenState extends State<HomeScreen> {
                                     width: 180.w,
                                     alignment: Alignment.bottomCenter,
                                     decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(12),
-                                        image: DecorationImage(
-                                            image: NetworkImage(
-                                              'https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/Westerkerk_Amsterdam.jpg/220px-Westerkerk_Amsterdam.jpg',
+                                      borderRadius: BorderRadius.circular(12),
+                                    ),
+                                    child: Stack(
+                                      children: [
+                                        // Network Image with Placeholder and Error Handling
+                                        ClipRRect(
+                                          borderRadius: BorderRadius.circular(12),
+                                          child: Image.network(
+                                            pro.topCountriesModelList[index].bannerImage??'',
+                                            fit: BoxFit.cover,
+                                            height: 250.h,
+                                            width: 180.w,
+                                            loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
+                                              if (loadingProgress == null) {
+                                                return child; // Image loaded successfully
+                                              }
+                                              return Center(
+                                                child: CircularProgressIndicator(
+                                                  value: loadingProgress.expectedTotalBytes != null
+                                                      ? loadingProgress.cumulativeBytesLoaded / (loadingProgress.expectedTotalBytes ?? 1)
+                                                      : null,
+                                                ),
+                                              );
+                                            },
+                                            errorBuilder: (BuildContext context, Object error, StackTrace? stackTrace) {
+                                              return Container(
+                                                height: 250.h,
+                                                width: 180.w,
+                                                decoration: BoxDecoration(
+                                                  borderRadius: BorderRadius.circular(12),
+                                                  color: Colors.grey.shade200,
+                                                ),
+                                                child: Icon(
+                                                  Icons.broken_image,
+                                                  color: Colors.grey,
+                                                  size: 50,
+                                                ),
+                                              );
+                                            },
+                                          ),
+                                        ),
+                                        // Text Overlay
+                                        Align(
+                                          alignment: Alignment.bottomCenter,
+                                          child: Padding(
+                                            padding: EdgeInsets.only(bottom: 16.h),
+                                            child: Text(
+                                              pro.topCountriesModelList[index].name ?? '',
+                                              style: customText(16, Colors.white, FontWeight.w500),
                                             ),
-                                            fit: BoxFit.fitHeight)),
-                                    child: Padding(
-                                      padding: EdgeInsets.only(bottom: 16.h),
-                                      child: Text(
-                                        pro.topCountriesModelList[index].name??'',
-                                        style: customText(
-                                            16, Colors.white, FontWeight.w500),
-                                      ),
+                                          ),
+                                        ),
+                                      ],
                                     ),
                                   ),
                                 ),

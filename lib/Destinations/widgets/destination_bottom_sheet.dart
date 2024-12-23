@@ -430,7 +430,26 @@ class UniversityInformation extends StatelessWidget {
         SizedBox(height: 8,),
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 12.0,horizontal: 12),
-          child: Text(destinationInfoModel.acceptedEnglishTest??'',style: customText(16, Colors.black, FontWeight.w500),),
+         child: Column(
+           crossAxisAlignment: CrossAxisAlignment.start,
+           children: destinationInfoModel.acceptedEnglishTest!.replaceAll('[', ' ').replaceAll(']', '').split(',').map((test) {
+             return Padding(
+               padding: const EdgeInsets.symmetric(vertical: 4.0),
+               child: Row(
+                 crossAxisAlignment: CrossAxisAlignment.center,
+                 children: [
+                   Icon(Icons.circle,size: 10,),
+                   SizedBox(width: 8,),
+                   Text(
+                     test,
+                     style: customText(16, Colors.black, FontWeight.w500),
+                   ),
+                 ],
+               ),
+             );
+           }).toList(),
+         ),
+         // child: Text(destinationInfoModel.acceptedEnglishTest??'',style: customText(16, Colors.black, FontWeight.w500),),
         ),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 12.0),
