@@ -10,9 +10,8 @@ import 'ApplicationDocummentUpload.dart';
 
   class StartApplicationStepper extends StatefulWidget {
     List<String> requiredDocuments;
-    CourseDetail universityDetialModel;
 
-    StartApplicationStepper({super.key, required this.requiredDocuments,required this.universityDetialModel});
+    StartApplicationStepper({super.key, required this.requiredDocuments});
   @override
   _StartApplicationStepperState createState() => _StartApplicationStepperState();
   }
@@ -213,7 +212,7 @@ import 'ApplicationDocummentUpload.dart';
                             SizedBox(
                               width: MediaQuery.of(context).size.width * 0.75, // Adjust width eeded
                               child: Text(
-                                widget.universityDetialModel.courseTitle,
+                                'widget.universityDetialModel.courseTitle',
                                 textAlign: TextAlign.left,
                                 maxLines: 2,
                                 style: TextStyle(
@@ -269,7 +268,7 @@ import 'ApplicationDocummentUpload.dart';
                                   ),
                                   SizedBox(width: 4,),
                                   Text(
-                                    widget.universityDetialModel.tuitionFee.toString(),
+                                    'widget.universityDetialModel.tuitionFee.toString()',
                                     textAlign: TextAlign.left,
                                     style: TextStyle(
                                         fontWeight: FontWeight.w400,
@@ -280,7 +279,7 @@ import 'ApplicationDocummentUpload.dart';
                                   ),
                                   Spacer(),
                                   Text(
-                                    formatDate(widget.universityDetialModel.startDate),
+                                    'Date',
                                     textAlign: TextAlign.left,
                                     style:TextStyle(
                                         fontWeight: FontWeight.w600,
@@ -442,17 +441,17 @@ import 'ApplicationDocummentUpload.dart';
 //               state: _currentStep == 0 ? StepState.editing : StepState.complete,
 // // Whether the step is active or not
 //             ),
-                  Step(
-                    title: Text('Submit Documents'),
-                    content: SizedBox(
-                      height: Responsive.height(95, context),
-                      //width: Responsive.width(100, context),
-                      child: ApplicationDocumentsUpload(requiredDocuments: widget.requiredDocuments,universityDetialModel: widget.universityDetialModel,),
-                    ),
-                    isActive: true, // Whether the step is active or not
-                    state: _currentStep == 0 ? StepState.indexed : StepState.complete,
-
-                  ),
+//                   Step(
+//                     title: Text('Submit Documents'),
+//                     content: SizedBox(
+//                       height: Responsive.height(95, context),
+//                       //width: Responsive.width(100, context),
+//                       child: ApplicationDocumentsUpload(requiredDocuments: widget.requiredDocuments,universityDetialModel: widget.universityDetialModel,),
+//                     ),
+//                     isActive: true, // Whether the step is active or not
+//                     state: _currentStep == 0 ? StepState.indexed : StepState.complete,
+//
+//                   ),
                   Step(
                     title: Text('Apply'),
                     content: Text(''),

@@ -6,6 +6,8 @@ import 'package:mecstudygroup/Utilities/helper_class.dart';
 import 'package:mecstudygroup/Widgets/see_more_text.dart';
 import 'package:mecstudygroup/Widgets/tabbed_buttons.dart';
 
+import '../Application/ApplicationStepperPage.dart';
+import '../Application/StartApplicationDetailPage.dart';
 import '../Model/course_details_model.dart';
 import '../Model/course_model.dart';
 import 'drop_down.dart';
@@ -156,7 +158,11 @@ class CoursesScreenBottomSheet extends StatelessWidget {
                   //   ],
                   // ),
                   // SizedBox(height: 12,),
-                  // CustomDropdown(),
+                  // CustomDropdown(),x
+                  ElevatedButton(onPressed: (){
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=>StartApplicationStepper(requiredDocuments: singleCourse.docRequired!.split(', ') )));
+                  }, child: Text('Apply For this Course')),
+
                   SizedBox(height: 100,)
                 ],
               ),
@@ -220,6 +226,7 @@ class UpComingIntakes extends StatelessWidget {
           }).toList(),
           ]
         ),
+
       ],
     );
   }

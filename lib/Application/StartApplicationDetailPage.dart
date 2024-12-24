@@ -1288,7 +1288,7 @@ class _StartApplicationBottomSheet extends State<StartApplicationBottomSheet> {
                         // if (_isChecked == true) {
                         print("Continue document load");
                         Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => StartApplicationStepper(requiredDocuments: universityDetialModel.docRequired.split(", ") ,universityDetialModel: universityDetialModel,),
+                          builder: (context) => StartApplicationStepper(requiredDocuments: universityDetialModel.docRequired.split(", ")),
                         ));
                         // }
                         // else {
