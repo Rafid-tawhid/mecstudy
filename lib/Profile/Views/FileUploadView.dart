@@ -198,7 +198,6 @@ class _FileUploadViewWidgetState extends State<FileUploadView> {
     //      // contentType: MediaType('image', 'jpeg'), // Adjust if needed
     //     ),
    //   );
-
     var response = await request.send();
 
     if (response.statusCode == 200) {
@@ -499,7 +498,7 @@ class _FileUploadViewWidgetState extends State<FileUploadView> {
   Future<void> uploadFile() async {
     print(AppConstant.userEmail);
 
-    String url = 'http://137.135.119.97/api/Document/UploadDocument'; // Replace with your API endpoint
+    String url = 'http://137.135.119.97/api/Document/ UploadDocument'; // Replace with your API endpoint
     Uri uri = Uri.parse(url);
 
     File file = File(_pickedFile!.path!);

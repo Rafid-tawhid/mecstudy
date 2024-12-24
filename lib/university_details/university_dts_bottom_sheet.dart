@@ -514,78 +514,7 @@ class OverviewWidget extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 16),
       child: Column(
         children: [
-          Row(
-            children: [
-              Expanded(
-                child: Container(
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(8),
-                          bottomLeft: Radius.circular(8)),
-                      color: Colors.grey.shade200),
-                  child: Padding(
-                    padding: const EdgeInsets.all(12.0),
-                    child: Column(
-                      children: [
-                        Icon(
-                          Icons.change_circle_outlined,
-                          color: Colors.grey,
-                        ),
-                        SizedBox(
-                          height: 8,
-                        ),
-                        Text(fromRankingJsonList(university.ranking.toString())[0].rank,
-                            style: customText(
-                                14, Colors.grey.shade600, FontWeight.w400)),
-                        SizedBox(
-                          height: 6,
-                        ),
-                        Text(fromRankingJsonList(university.ranking.toString())[0].source,
-                            style: customText(
-                                14, Colors.grey.shade600, FontWeight.w400))
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-              SizedBox(
-                width: 2,
-              ),
-              Expanded(
-                child: Container(
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(8),
-                          bottomLeft: Radius.circular(8)),
-                      color: Colors.grey.shade200),
-                  child: Padding(
-                    padding: const EdgeInsets.all(12.0),
-                    child: Column(
-                      children: [
-                        Icon(
-                          Icons.change_circle_outlined,
-                          color: Colors.grey,
-                        ),
-                        SizedBox(
-                          height: 8,
-                        ),
-                       fromRankingJsonList(university.ranking).length>1? Text(fromRankingJsonList(university.ranking)[1].rank??'',
-                            style: customText(
-                                14, Colors.grey.shade600, FontWeight.w400)):Text('N/A',style: customText(
-                           14, Colors.grey.shade600, FontWeight.w400)),
-                        SizedBox(
-                          height: 6,
-                        ),
-                       Text(fromRankingJsonList(university.ranking).length>1?fromRankingJsonList(university.ranking)[1].source:'',
-                            style: customText(
-                                14, Colors.grey.shade600, FontWeight.w400))
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
+          Text('Ranking',style: customText(18, Colors.black, FontWeight.bold),),
           SizedBox(height: 20,),
           ExpendedText(information: university.universityInformation,),
           SizedBox(
@@ -598,6 +527,83 @@ class OverviewWidget extends StatelessWidget {
     );
   }
 }
+
+
+class RankingGridView extends StatelessWidget {
+  final University university;
+
+  RankingGridView(this.university);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('GridView Example'),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: GridView.builder(
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 2, // Number of columns
+            mainAxisSpacing: 8, // Spacing between rows
+            crossAxisSpacing: 8, // Spacing between columns
+            childAspectRatio: 1, // Adjust the aspect ratio for desired size
+          ),
+          itemCount: fromRankingJsonList(university.ranking).length,
+          itemBuilder: (context, index) {
+            var data = fromRankingJsonList(university.ranking)[index];
+            return Expanded(
+              child: Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(8),
+                    bottomLeft: Radius.circular(8),
+                  ),
+                  color: Colors.grey.shade200,
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(12.0),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(
+                        Icons.change_circle_outlined,
+                        color: Colors.grey,
+                      ),
+                      SizedBox(
+                        height: 8,
+                      ),
+                      Text(
+                        data.rank,
+                        style: customText(14, Colors.grey.shade600, FontWeight.w400),
+                      ),
+                      SizedBox(
+                        height: 6,
+                      ),
+                      Text(
+                        data.source,
+                        style: customText(14, Colors.grey.shade600, FontWeight.w400),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            );
+          },
+        ),
+      ),
+    );
+  }
+
+  TextStyle customText(double size, Color color, FontWeight weight) {
+    return TextStyle(
+      fontSize: size,
+      color: color,
+      fontWeight: weight,
+    );
+  }
+}
+
 
 class CourseWidgete extends StatefulWidget {
 
