@@ -3,6 +3,7 @@ import 'package:mecstudygroup/providers/course_provider.dart';
 import 'package:provider/provider.dart';
 
 import '../Model/trending_subject_model.dart';
+import '../Utilities/Constant.dart';
 
 
 class ShowAllCoursesBySelectedSubject extends StatefulWidget {
@@ -47,9 +48,10 @@ class _ShowAllCoursesBySelectedSubjectState
     var courses = provider.courseAllCoursesBySubject; // Assuming this is the list of courses
 
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
-        title: Text(widget.subjectModel.subjectName ?? 'Courses'),
-        backgroundColor: Colors.deepPurple,
+        title: Text(widget.subjectModel.subjectName ?? 'Courses',style: customText(18, Colors.white, FontWeight.bold),),
+        backgroundColor: Colors.orangeAccent,
       ),
       body: isLoading
           ? Center(child: CircularProgressIndicator())
@@ -69,13 +71,13 @@ class _ShowAllCoursesBySelectedSubjectState
         ),
       )
           : Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
-            padding: const EdgeInsets.all(16.0),
+            padding:  EdgeInsets.all(16.0),
             child: Text(
               'All courses related to ${widget.subjectModel.subjectName}',
-              style: TextStyle(
-                  fontSize: 20, fontWeight: FontWeight.bold),
+              style: customText(14, Colors.grey, FontWeight.w500),
             ),
           ),
           Expanded(
@@ -84,33 +86,55 @@ class _ShowAllCoursesBySelectedSubjectState
               itemBuilder: (context, index) {
                 final course = courses[index];
                 return Card(
-                  margin: EdgeInsets.symmetric(
-                      horizontal: 16, vertical: 8),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  elevation: 4,
-                  child: ListTile(
-                    contentPadding: EdgeInsets.all(16),
-                    title: Text(
-                      course.courseTitle ?? 'Untitled Course',
-                      style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold),
+                  child: Container(
+                    width: double.infinity,
+                    height: 100,
+                    padding: EdgeInsets.all(12),
+                    decoration: BoxDecoration(
+                        color: Colors.white, borderRadius: BorderRadius.circular(8)),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(left: 8.0),
+                          child: Text(
+                            course.courseTitle ?? '',
+                            maxLines: 2,
+                            overflow: TextOverflow.fade,
+                            style:
+                            customText(16, Colors.grey.shade700, FontWeight.w500),
+                          ),
+                        ),
+                        Spacer(),
+                        Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Container(
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(50),
+                                    color: Colors.white),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(4.0),
+                                  child: Icon(
+                                    Icons.send,
+                                    color: Colors.purple,
+                                    size: 20,
+                                  ),
+                                )),
+                            Expanded(
+                                child: Text(
+                                  'University: ${course.universityID.toString()}',
+                                  style: customText(14, Colors.grey, FontWeight.w500),
+                                )),
+                            Text(
+                              'Fee: ${course.tuituionFee}',
+                              style: customText(14, Colors.purple, FontWeight.w500),
+                            )
+                          ],
+                        )
+                      ],
                     ),
-                    subtitle: Text(
-                      'University: ${course.universityID ?? 'Unknown'}\n'
-                          'Fee: ${course.tuituionFee ?? 'N/A'}',
-                      style: TextStyle(fontSize: 14),
-                    ),
-                    trailing: Icon(
-                      Icons.arrow_forward_ios,
-                      size: 16,
-                      color: Colors.deepPurple,
-                    ),
-                    onTap: () {
-                      // Navigate to course details screen
-                    },
                   ),
                 );
               },
