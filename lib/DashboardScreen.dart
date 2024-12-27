@@ -17,6 +17,7 @@ import 'LoginAndSignupModule/SignupScreen.dart';
 import 'Model/Universities.dart';
 import 'Utilities/Constant.dart';
 import 'Widgets/courses_details_bottomsheet.dart';
+import 'courses/show_all_courses_by_selected_subject.dart';
 import 'university_details/university_dts_bottom_sheet.dart';
 import 'courses/see_all_course_screen.dart';
 
@@ -488,7 +489,8 @@ class _HomeScreenState extends State<HomeScreen> {
                         pro.trendingSubjectList.length,
                             (index) => InkWell(
                           onTap: () async {
-                            Navigator.push(context, CupertinoPageRoute(builder: (context)=>ExploreCoursesAndInstitutions(hideTopTitle: true,selectedIndex: 1,)));
+                          //  Navigator.push(context, CupertinoPageRoute(builder: (context)=>ExploreCoursesAndInstitutions(hideTopTitle: true,selectedIndex: 1,)));
+                            Navigator.push(context, CupertinoPageRoute(builder: (context)=>ShowAllCoursesBySelectedSubject(pro.trendingSubjectList[index])));
                           },
                           child: Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 4.0),

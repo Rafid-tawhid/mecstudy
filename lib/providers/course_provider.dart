@@ -10,9 +10,11 @@ class CourseProvider extends ChangeNotifier{
   ApiService apiService=ApiService();
 
   final List<CourseDetailsModel> _courseDetailsModel=[];
+  final List<CourseDetailsModel> _courseAllCoursesBySubject=[];
 
 
   CourseDetailsModel get courseDetailsModel => _courseDetailsModel[0];
+  List<CourseDetailsModel> get courseAllCoursesBySubject => _courseAllCoursesBySubject;
 
   Future<CourseDetailsModel?> getCourseDataWithId(num? id) async {
 
@@ -52,6 +54,25 @@ class CourseProvider extends ChangeNotifier{
     else{
      // HelperClass.showToast('No Data Found');
       return null;
+    }
+  }
+
+  Future<bool> getAllRelatedCoursesBySubject(num? subID) async {
+    ApiService apiService=ApiService();
+    var data=await apiService.postData('/Datasource/GetDataByDataSourceID',{"DataSourceID": "27","whereclause":"AND sub_id = $subID"},mainHeader: MainHeaders.updatedHeader);
+    if(data!=null){
+      debugPrint('resultData ${data.toString()}');
+      List<dynamic> table = data['Model']['Table'];
+      _courseAllCoursesBySubject.clear();
+      for(Map i in table){
+        _courseAllCoursesBySubject.add(CourseDetailsModel.fromJson(i));
+      }
+      debugPrint('_courseAllCoursesBySubject ${_courseAllCoursesBySubject.length}');
+      return true;
+    }
+    else{
+      // HelperClass.showToast('No Data Found');
+      return false;
     }
   }
 }
