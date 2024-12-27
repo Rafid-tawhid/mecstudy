@@ -5,11 +5,11 @@ import 'package:provider/provider.dart';
 import '../Model/trending_subject_model.dart';
 import '../Utilities/Constant.dart';
 
-
 class ShowAllCoursesBySelectedSubject extends StatefulWidget {
   final TrendingSubjectModel subjectModel;
 
-  const ShowAllCoursesBySelectedSubject(this.subjectModel, {Key? key}) : super(key: key);
+  const ShowAllCoursesBySelectedSubject(this.subjectModel, {Key? key})
+      : super(key: key);
 
   @override
   State<ShowAllCoursesBySelectedSubject> createState() =>
@@ -20,6 +20,10 @@ class _ShowAllCoursesBySelectedSubjectState
     extends State<ShowAllCoursesBySelectedSubject> {
   bool isLoading = true;
   String? errorMessage;
+  String searchQuery = '';
+  bool isSearching = false;
+
+  TextEditingController searchController = TextEditingController();
 
   @override
   void initState() {
@@ -28,30 +32,75 @@ class _ShowAllCoursesBySelectedSubjectState
   }
 
   Future<void> fetchCourses() async {
-    try {
-      var provider = context.read<CourseProvider>();
-      await provider.getAllRelatedCoursesBySubject(widget.subjectModel.subID);
-    } catch (e) {
+    var provider = context.read<CourseProvider>();
+    var response=await provider.getAllRelatedCoursesBySubject(widget.subjectModel.subID);
+    if(response!=true){
+      setState(() {
+        isLoading = false;
+      });
       setState(() {
         errorMessage = 'Failed to load courses. Please try again.';
       });
-    } finally {
+    }
+    else {
       setState(() {
         isLoading = false;
       });
     }
+
   }
 
   @override
   Widget build(BuildContext context) {
     var provider = context.watch<CourseProvider>();
-    var courses = provider.courseAllCoursesBySubject; // Assuming this is the list of courses
+    var courses = provider.courseAllCoursesBySubject;
+
+    // Filter courses based on search query
+    var filteredCourses = courses.where((course) {
+      return course.courseTitle
+          ?.toLowerCase()
+          .contains(searchQuery.toLowerCase()) ??
+          false;
+    }).toList();
 
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        title: Text(widget.subjectModel.subjectName ?? 'Courses',style: customText(18, Colors.white, FontWeight.bold),),
+        title: isSearching
+            ? TextField(
+          controller: searchController,
+          autofocus: true,
+          decoration: InputDecoration(
+            hintText: 'Search courses...',
+            border: InputBorder.none,
+            hintStyle: TextStyle(color: Colors.white70),
+          ),
+          style: TextStyle(color: Colors.white),
+          onChanged: (value) {
+            setState(() {
+              searchQuery = value;
+            });
+          },
+        )
+            : Text(
+          widget.subjectModel.subjectName ?? 'Courses',
+          style: customText(18, Colors.white, FontWeight.bold),
+        ),
         backgroundColor: Colors.orangeAccent,
+        actions: [
+          IconButton(
+            icon: Icon(isSearching ? Icons.close : Icons.search),
+            onPressed: () {
+              setState(() {
+                if (isSearching) {
+                  searchQuery = '';
+                  searchController.clear();
+                }
+                isSearching = !isSearching;
+              });
+            },
+          ),
+        ],
       ),
       body: isLoading
           ? Center(child: CircularProgressIndicator())
@@ -62,10 +111,12 @@ class _ShowAllCoursesBySelectedSubjectState
           style: TextStyle(color: Colors.red, fontSize: 16),
         ),
       )
-          : courses.isEmpty
+          : filteredCourses.isEmpty
           ? Center(
         child: Text(
-          'No courses found for "${widget.subjectModel.subjectName}"',
+          searchQuery.isEmpty
+              ? 'No courses found for "${widget.subjectModel.subjectName}"'
+              : 'No results found for "$searchQuery"',
           textAlign: TextAlign.center,
           style: TextStyle(fontSize: 18),
         ),
@@ -74,7 +125,7 @@ class _ShowAllCoursesBySelectedSubjectState
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
-            padding:  EdgeInsets.all(16.0),
+            padding: EdgeInsets.all(16.0),
             child: Text(
               'All courses related to ${widget.subjectModel.subjectName}',
               style: customText(14, Colors.grey, FontWeight.w500),
@@ -82,28 +133,33 @@ class _ShowAllCoursesBySelectedSubjectState
           ),
           Expanded(
             child: ListView.builder(
-              itemCount: courses.length,
+              itemCount: filteredCourses.length,
               itemBuilder: (context, index) {
-                final course = courses[index];
+                final course = filteredCourses[index];
                 return Card(
                   child: Container(
                     width: double.infinity,
                     height: 100,
                     padding: EdgeInsets.all(12),
                     decoration: BoxDecoration(
-                        color: Colors.white, borderRadius: BorderRadius.circular(8)),
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(8)),
                     child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                      crossAxisAlignment:
+                      CrossAxisAlignment.start,
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         Padding(
-                          padding: const EdgeInsets.only(left: 8.0),
+                          padding:
+                          const EdgeInsets.only(left: 8.0),
                           child: Text(
                             course.courseTitle ?? '',
                             maxLines: 2,
                             overflow: TextOverflow.fade,
-                            style:
-                            customText(16, Colors.grey.shade700, FontWeight.w500),
+                            style: customText(
+                                16,
+                                Colors.grey.shade700,
+                                FontWeight.w500),
                           ),
                         ),
                         Spacer(),
@@ -112,10 +168,12 @@ class _ShowAllCoursesBySelectedSubjectState
                           children: [
                             Container(
                                 decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(50),
+                                    borderRadius:
+                                    BorderRadius.circular(50),
                                     color: Colors.white),
                                 child: Padding(
-                                  padding: const EdgeInsets.all(4.0),
+                                  padding:
+                                  const EdgeInsets.all(4.0),
                                   child: Icon(
                                     Icons.send,
                                     color: Colors.purple,
@@ -125,11 +183,13 @@ class _ShowAllCoursesBySelectedSubjectState
                             Expanded(
                                 child: Text(
                                   'University: ${course.universityID.toString()}',
-                                  style: customText(14, Colors.grey, FontWeight.w500),
+                                  style: customText(14, Colors.grey,
+                                      FontWeight.w500),
                                 )),
                             Text(
                               'Fee: ${course.tuituionFee}',
-                              style: customText(14, Colors.purple, FontWeight.w500),
+                              style: customText(14, Colors.purple,
+                                  FontWeight.w500),
                             )
                           ],
                         )
@@ -145,5 +205,6 @@ class _ShowAllCoursesBySelectedSubjectState
     );
   }
 }
+
 
 
