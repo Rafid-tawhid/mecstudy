@@ -17,8 +17,7 @@ class StartApplicationDetailPage extends StatefulWidget {
 class _StartApplicationDetailPageState
     extends State<StartApplicationDetailPage> {
   bool isExpanded = false;
-  String longText =
-      "This Master's level course aims to prepare you to managerail roles across the emerging global borderless economy, upon sucessfull completion, through given you the opportunity to gain a comprehensive understanding of international bussiness challanges, together with the skill and expertise required to negotiate them sucessfully \n \n This Master's level course aims to prepare you to managerail roles across the emerging global borderless economy, upon sucessfull completion, through given you the opportunity to gain a comprehensive understanding of international bussiness challanges, together with the skill and expertise required to negotiate them sucessfully ";
+  String longText = "This Master's level course aims to prepare you to managerail roles across the emerging global borderless economy, upon sucessfull completion, through given you the opportunity to gain a comprehensive understanding of international bussiness challanges, together with the skill and expertise required to negotiate them sucessfully \n \n This Master's level course aims to prepare you to managerail roles across the emerging global borderless economy, upon sucessfull completion, through given you the opportunity to gain a comprehensive understanding of international bussiness challanges, together with the skill and expertise required to negotiate them sucessfully ";
   List<String> ListData = [
     "GBP 20050 per year",
     "May 2024",

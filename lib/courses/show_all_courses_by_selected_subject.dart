@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 
 import '../Model/trending_subject_model.dart';
 import '../Utilities/Constant.dart';
+import '../Widgets/courses_details_bottomsheet.dart';
 
 class ShowAllCoursesBySelectedSubject extends StatefulWidget {
   final TrendingSubjectModel subjectModel;
@@ -144,56 +145,68 @@ class _ShowAllCoursesBySelectedSubjectState
                     decoration: BoxDecoration(
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(8)),
-                    child: Column(
-                      crossAxisAlignment:
-                      CrossAxisAlignment.start,
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Padding(
-                          padding:
-                          const EdgeInsets.only(left: 8.0),
-                          child: Text(
-                            course.courseTitle ?? '',
-                            maxLines: 2,
-                            overflow: TextOverflow.fade,
-                            style: customText(
-                                16,
-                                Colors.grey.shade700,
-                                FontWeight.w500),
-                          ),
-                        ),
-                        Spacer(),
-                        Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Container(
-                                decoration: BoxDecoration(
-                                    borderRadius:
-                                    BorderRadius.circular(50),
-                                    color: Colors.white),
-                                child: Padding(
-                                  padding:
-                                  const EdgeInsets.all(4.0),
-                                  child: Icon(
-                                    Icons.send,
-                                    color: Colors.purple,
-                                    size: 20,
-                                  ),
-                                )),
-                            Expanded(
-                                child: Text(
-                                  'University: ${course.universityID.toString()}',
-                                  style: customText(14, Colors.grey,
-                                      FontWeight.w500),
-                                )),
-                            Text(
-                              'Fee: ${course.tuituionFee}',
-                              style: customText(14, Colors.purple,
+                    child: InkWell(
+                      onTap: (){
+                        showModalBottomSheet(
+                          context: context,
+                          isScrollControlled: true,
+                          backgroundColor: Colors.transparent,
+                          builder: (BuildContext context) {
+                            return CoursesScreenBottomSheet(course);
+                          },
+                        );
+                      },
+                      child: Column(
+                        crossAxisAlignment:
+                        CrossAxisAlignment.start,
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Padding(
+                            padding:
+                            const EdgeInsets.only(left: 8.0),
+                            child: Text(
+                              course.courseTitle ?? '',
+                              maxLines: 2,
+                              overflow: TextOverflow.fade,
+                              style: customText(
+                                  16,
+                                  Colors.grey.shade700,
                                   FontWeight.w500),
-                            )
-                          ],
-                        )
-                      ],
+                            ),
+                          ),
+                          Spacer(),
+                          Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Container(
+                                  decoration: BoxDecoration(
+                                      borderRadius:
+                                      BorderRadius.circular(50),
+                                      color: Colors.white),
+                                  child: Padding(
+                                    padding:
+                                    const EdgeInsets.all(4.0),
+                                    child: Icon(
+                                      Icons.send,
+                                      color: Colors.purple,
+                                      size: 20,
+                                    ),
+                                  )),
+                              Expanded(
+                                  child: Text(
+                                    'University: ${course.universityID.toString()}',
+                                    style: customText(14, Colors.grey,
+                                        FontWeight.w500),
+                                  )),
+                              Text(
+                                'Fee: ${course.tuituionFee}',
+                                style: customText(14, Colors.purple,
+                                    FontWeight.w500),
+                              )
+                            ],
+                          )
+                        ],
+                      ),
                     ),
                   ),
                 );
