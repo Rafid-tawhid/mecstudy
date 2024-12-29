@@ -164,7 +164,7 @@ class _SignUpScreenBottomSheet extends State<SignUpScreenBottomSheet> {
                                 isPassword: true),
                             SizedBox(height: 16),
                             buildTextField(phoneNoController, 'Phone',
-                                isPassword: true,
+                                isPassword: false,
                                 keyboardType: TextInputType.phone),
                             SizedBox(height: 16),
                             Consumer<UserProvider>(
@@ -325,7 +325,7 @@ class _SignUpScreenBottomSheet extends State<SignUpScreenBottomSheet> {
               SizedBox(
                 height: 46,
               ),
-              ContactWidget(email: 'Mecstudy7@gmail.com'),
+              //ContactWidget(email: 'Mecstudy7@gmail.com'),
               SizedBox(
                 height: 100,
               ),

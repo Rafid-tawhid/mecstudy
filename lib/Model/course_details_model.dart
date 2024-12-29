@@ -14,7 +14,24 @@ class CourseDetailsModel {
       this.docRequired, 
       this.statusID, 
       this.userID, 
-      this.subID,});
+      this.subID, 
+      this.id1, 
+      this.universityName, 
+      this.countryID, 
+      this.degreeID, 
+      this.trendingSubjectsID, 
+      this.ranking, 
+      this.scholarships, 
+      this.facilities, 
+      this.employabilityDetails, 
+      this.alumni, 
+      this.fAQs, 
+      this.bannerImageURL, 
+      this.universityInformation, 
+      this.moreAboutUniversity, 
+      this.flagURL, 
+      this.statusId1, 
+      this.userId1,});
 
   CourseDetailsModel.fromJson(dynamic json) {
     id = json['ID'];
@@ -32,6 +49,23 @@ class CourseDetailsModel {
     statusID = json['StatusID'];
     userID = json['UserID'];
     subID = json['Sub_ID'];
+    id1 = json['ID1'];
+    universityName = json['University_name'];
+    countryID = json['CountryID'];
+    degreeID = json['DegreeID'];
+    trendingSubjectsID = json['TrendingSubjectsID'];
+    ranking = json['Ranking'];
+    scholarships = json['Scholarships'];
+    facilities = json['Facilities'];
+    employabilityDetails = json['Employability_Details'];
+    alumni = json['Alumni'];
+    fAQs = json['FAQs'];
+    bannerImageURL = json['Banner_Image_URL'];
+    universityInformation = json['University_Information'];
+    moreAboutUniversity = json['More_About_University'];
+    flagURL = json['Flag_URL'];
+    statusId1 = json['StatusId1'];
+    userId1 = json['UserId1'];
   }
   num? id;
   String? courseTitle;
@@ -47,7 +81,24 @@ class CourseDetailsModel {
   String? docRequired;
   num? statusID;
   num? userID;
-  dynamic subID;
+  num? subID;
+  num? id1;
+  String? universityName;
+  num? countryID;
+  String? degreeID;
+  String? trendingSubjectsID;
+  String? ranking;
+  String? scholarships;
+  String? facilities;
+  String? employabilityDetails;
+  String? alumni;
+  String? fAQs;
+  String? bannerImageURL;
+  String? universityInformation;
+  String? moreAboutUniversity;
+  String? flagURL;
+  num? statusId1;
+  num? userId1;
 CourseDetailsModel copyWith({  num? id,
   String? courseTitle,
   num? universityID,
@@ -62,7 +113,24 @@ CourseDetailsModel copyWith({  num? id,
   String? docRequired,
   num? statusID,
   num? userID,
-  dynamic subID,
+  num? subID,
+  num? id1,
+  String? universityName,
+  num? countryID,
+  String? degreeID,
+  String? trendingSubjectsID,
+  String? ranking,
+  String? scholarships,
+  String? facilities,
+  String? employabilityDetails,
+  String? alumni,
+  String? fAQs,
+  String? bannerImageURL,
+  String? universityInformation,
+  String? moreAboutUniversity,
+  String? flagURL,
+  num? statusId1,
+  num? userId1,
 }) => CourseDetailsModel(  id: id ?? this.id,
   courseTitle: courseTitle ?? this.courseTitle,
   universityID: universityID ?? this.universityID,
@@ -78,6 +146,23 @@ CourseDetailsModel copyWith({  num? id,
   statusID: statusID ?? this.statusID,
   userID: userID ?? this.userID,
   subID: subID ?? this.subID,
+  id1: id1 ?? this.id1,
+  universityName: universityName ?? this.universityName,
+  countryID: countryID ?? this.countryID,
+  degreeID: degreeID ?? this.degreeID,
+  trendingSubjectsID: trendingSubjectsID ?? this.trendingSubjectsID,
+  ranking: ranking ?? this.ranking,
+  scholarships: scholarships ?? this.scholarships,
+  facilities: facilities ?? this.facilities,
+  employabilityDetails: employabilityDetails ?? this.employabilityDetails,
+  alumni: alumni ?? this.alumni,
+  fAQs: fAQs ?? this.fAQs,
+  bannerImageURL: bannerImageURL ?? this.bannerImageURL,
+  universityInformation: universityInformation ?? this.universityInformation,
+  moreAboutUniversity: moreAboutUniversity ?? this.moreAboutUniversity,
+  flagURL: flagURL ?? this.flagURL,
+  statusId1: statusId1 ?? this.statusId1,
+  userId1: userId1 ?? this.userId1,
 );
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
@@ -96,6 +181,23 @@ CourseDetailsModel copyWith({  num? id,
     map['StatusID'] = statusID;
     map['UserID'] = userID;
     map['Sub_ID'] = subID;
+    map['ID1'] = id1;
+    map['University_name'] = universityName;
+    map['CountryID'] = countryID;
+    map['DegreeID'] = degreeID;
+    map['TrendingSubjectsID'] = trendingSubjectsID;
+    map['Ranking'] = ranking;
+    map['Scholarships'] = scholarships;
+    map['Facilities'] = facilities;
+    map['Employability_Details'] = employabilityDetails;
+    map['Alumni'] = alumni;
+    map['FAQs'] = fAQs;
+    map['Banner_Image_URL'] = bannerImageURL;
+    map['University_Information'] = universityInformation;
+    map['More_About_University'] = moreAboutUniversity;
+    map['Flag_URL'] = flagURL;
+    map['StatusId1'] = statusId1;
+    map['UserId1'] = userId1;
     return map;
   }
 

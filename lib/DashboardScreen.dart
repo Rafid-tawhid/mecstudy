@@ -53,7 +53,7 @@ class _HomeScreenState extends State<HomeScreen> {
           children: [
             Container(
               height: Responsive.height(30, context),
-              padding: EdgeInsets.only(top: 20),
+              padding: EdgeInsets.only(top: 10),
               width: MediaQuery.sizeOf(context).width,
               decoration: BoxDecoration(
                 image: DecorationImage(

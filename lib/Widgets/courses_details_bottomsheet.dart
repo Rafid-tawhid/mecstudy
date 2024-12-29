@@ -49,7 +49,7 @@ class CoursesScreenBottomSheet extends StatelessWidget {
                   SizedBox(height: 8,),
                   Text('${singleCourse.courseTitle}',style: customText(20, Colors.black, FontWeight.bold),textAlign: TextAlign.center,),
                   SizedBox(height: 12,),
-                  Text('${singleCourse.courseLevel}',style: customText(20, Colors.black54, FontWeight.w500,),),
+                  Text('${singleCourse.universityName}',style: customText(20, Colors.black54, FontWeight.w500,),),
                   SizedBox(height: 20,),
                   ExpandableText(text: '${singleCourse.overview}',isHtml: true,),
                   Container(
@@ -82,6 +82,37 @@ class CoursesScreenBottomSheet extends StatelessWidget {
 
                       ],
                     ),
+                  ),
+                  SizedBox(height: 12,),
+                  Row(
+                    children: [
+                      Icon(Icons.account_balance),
+                      SizedBox(width: 8,),
+                      Text('Degree ',style: customText(20, Colors.black, FontWeight.w600,),),
+
+                    ],
+                  ),
+                  SizedBox(height: 8,),
+                  SizedBox(
+                    height: 60,
+                    child:SelectableButtonList(
+                      buttonLabels: HelperClass.parseDegreeID(singleCourse.degreeID??'').toList(),
+                    )
+                  ),
+                  SizedBox(height: 12,),
+                  Row(
+                    children: [
+                      Icon(Icons.subject),
+                      SizedBox(width: 8,),
+                      Text('Trending Subject ',style: customText(20, Colors.black, FontWeight.w600,),),
+                    ],
+                  ),
+                  SizedBox(height: 8,),
+                  SizedBox(
+                      height: 60,
+                      child:SelectableButtonList(
+                        buttonLabels: HelperClass.parseDegreeID(singleCourse.trendingSubjectsID??'').toList(),
+                      )
                   ),
                   SizedBox(height: 16,),
                   Row(

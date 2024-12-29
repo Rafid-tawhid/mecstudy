@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
 class SelectableButtonList extends StatefulWidget {
-  const SelectableButtonList({super.key});
+  final List<String>? buttonLabels;
+
+  const SelectableButtonList({Key? key, this.buttonLabels}) : super(key: key);
 
   @override
   _SelectableButtonListState createState() => _SelectableButtonListState();
@@ -10,15 +12,14 @@ class SelectableButtonList extends StatefulWidget {
 class _SelectableButtonListState extends State<SelectableButtonList> {
   int _selectedIndex = 0;
 
-  final List<String> buttonLabels = ["About", "Scholarships", "Requirements"];
-  final List<String> bottomTexts = [
-    "",
-    "",
-    ""
-  ];
+  // Default labels if none are provided
+  final List<String> defaultButtonLabels = ["About", "Scholarships", "Requirements"];
 
   @override
   Widget build(BuildContext context) {
+    // Use provided labels or fallback to default
+    final buttonLabels = widget.buttonLabels ?? defaultButtonLabels;
+
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -55,12 +56,8 @@ class _SelectableButtonListState extends State<SelectableButtonList> {
             }),
           ),
         ),
-        // SizedBox(height: 20),
-        // Text(
-        //   bottomTexts[_selectedIndex],
-        //   style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-        // ),
       ],
     );
   }
 }
+
