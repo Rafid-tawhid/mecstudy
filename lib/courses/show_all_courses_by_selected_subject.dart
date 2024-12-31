@@ -140,7 +140,7 @@ class _ShowAllCoursesBySelectedSubjectState
                 return Card(
                   child: Container(
                     width: double.infinity,
-                    height: 100,
+                    height: 120,
                     padding: EdgeInsets.all(12),
                     decoration: BoxDecoration(
                         color: Colors.white,
@@ -194,7 +194,7 @@ class _ShowAllCoursesBySelectedSubjectState
                                   )),
                               Expanded(
                                   child: Text(
-                                    'University: ${course.universityID.toString()}',
+                                    'University: ${course.universityName.toString()}',
                                     style: customText(14, Colors.grey,
                                         FontWeight.w500),
                                   )),

@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:fl_country_code_picker/fl_country_code_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mailer/mailer.dart';
@@ -43,16 +44,17 @@ class _SignUpScreenBottomSheet extends State<SignUpScreenBottomSheet> {
   final TextEditingController confirmPasswordController =
   TextEditingController();
   final TextEditingController addressController = TextEditingController();
-  String initialCountry = 'NG';
+  String initialCountry = '+234';
+  String initialCountryFlag = 'images/ng_flag.png';
   String _selectedCountry = '';
   Country? _country ;
   City? _city ;
-  String _selectedCountryID = '';
   String _selectedCity = '';
   List<String> countries = [];
   List<String> countriesID = [];
   List<String> fetchCities = [];
   List<String> citiesID = [];
+  final countryPicker = const  FlCountryCodePicker();
 
   bool isCourseDetailLoading = false;
 
@@ -165,6 +167,20 @@ class _SignUpScreenBottomSheet extends State<SignUpScreenBottomSheet> {
                             SizedBox(height: 16),
                             buildTextField(phoneNoController, 'Phone',
                                 isPassword: false,
+                                prefixText: initialCountry,
+                                prefixFlag: initialCountryFlag,
+                                onPrefixTap: () async {
+                                  final picked= await countryPicker.showPicker(context: context);
+                                  // Null check
+                                  if (picked!= null){
+                                    setState(() {
+                                      initialCountry=picked.dialCode;
+                                      initialCountryFlag=picked.flagUri;
+                                      debugPrint('initialCountry $initialCountry');
+                                      debugPrint('initialCountryFlag $initialCountryFlag');
+                                    });
+                                  }
+                                },
                                 keyboardType: TextInputType.phone),
                             SizedBox(height: 16),
                             Consumer<UserProvider>(
@@ -288,7 +304,7 @@ class _SignUpScreenBottomSheet extends State<SignUpScreenBottomSheet> {
                               address: addressController.text,
                               cityID: _city!.ID.toString(),
                               countryID: _country!.countryID.toString(),
-                              mobile: phoneNoController.text,
+                              mobile: initialCountry+ phoneNoController.text,
                               phone: phoneNoController.text,
                               gender: _selectedGender == "Male" ? "1" : "2",
                               email: emailAddressController.text,

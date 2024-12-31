@@ -11,6 +11,7 @@ import '../Application/ApplicationStepperPage.dart';
 import '../Application/StartApplicationDetailPage.dart';
 import '../Model/course_details_model.dart';
 import '../Model/course_model.dart';
+import '../university_details/university_dts_bottom_sheet.dart';
 import 'drop_down.dart';
 
 
@@ -116,39 +117,11 @@ class CoursesScreenBottomSheet extends StatelessWidget {
                         buttonLabels: HelperClass.parseDegreeID(singleCourse.trendingSubjectsID??'').toList(),
                       )
                   ),
-                  SizedBox(height: 16,),
-                  Row(
-                    children: [
-                      Icon(Icons.folder_copy_outlined),
-                      SizedBox(width: 8,),
-                      Text('Document Requirement',style: customText(20, Colors.black, FontWeight.w600,),),
 
-                    ],
-                  ),
-                  SizedBox(height: 12,),
-                  if(singleCourse.docRequired!=null||singleCourse.docRequired!.isNotEmpty)Container(
-                    decoration: BoxDecoration(
-                      color: Colors.orange.shade200,
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(12.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: singleCourse.docRequired!.split(', ').map((e)=>Row(
-                          children: [
-                            Icon(Icons.arrow_forward,size: 16,),
-                            SizedBox(width: 8,),
-                            Text(e,style: customText(14, Colors.black, FontWeight.w500),),
-                          ],
-                        )).toList(),
-                      ),
-                    ),
-                  ),
+
                   SizedBox(height: 16,),
                   SelectableHorozontalList(singleCourse,),
                   SizedBox(height: 24,),
-
 
                   UpComingIntakes(singleCourse.upcomingIntakes??''),
 
@@ -180,6 +153,7 @@ class CoursesScreenBottomSheet extends StatelessWidget {
                     ],
                   ),
                   Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       SizedBox(height: 10,),
                       Row(
@@ -220,7 +194,25 @@ class CoursesScreenBottomSheet extends StatelessWidget {
 
                         ),
                       ),
-
+                      SizedBox(height: 10,),
+                      Container(
+                        padding: EdgeInsets.all(12),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Alumni',
+                              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600, color: Colors.black),
+                            ),
+                            SizedBox(height: 12,),
+                            PeopleListScreen(singleCourse.alumni??'')
+                          ],
+                        ),
+                      )
 
 
 
@@ -301,7 +293,7 @@ class UpComingIntakes extends StatelessWidget {
                 ),
               ),
             );
-          }).toList(),
+          }),
           ]
         ),
 
@@ -365,7 +357,27 @@ class _SelectableHorozontalListState extends State<SelectableHorozontalList> {
           }),
         ),
         SizedBox(height: 10),
-        Html(data: texts[selectedIndex],),
+        selectedIndex==2?
+        Container(
+          decoration: BoxDecoration(
+            color: Colors.orange.shade200,
+            borderRadius: BorderRadius.circular(12),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(12.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: widget.courseDetailsModel.docRequired!.split(', ').map((e)=>Row(
+                children: [
+                  Icon(Icons.arrow_forward,size: 16,),
+                  SizedBox(width: 8,),
+                  Text(e,style: customText(14, Colors.black, FontWeight.w500),),
+                ],
+              )).toList(),
+            ),
+          ),
+        ):
+          Html(data: texts[selectedIndex],),
       ],
     );
   }

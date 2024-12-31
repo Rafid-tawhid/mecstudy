@@ -513,8 +513,53 @@ class OverviewWidget extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 16),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text('Ranking',style: customText(18, Colors.black, FontWeight.bold),),
+          SizedBox(height: 10,),
+          ListView.builder(
+            itemCount: json.decode(university.ranking).length,
+            shrinkWrap: true,
+            physics: NeverScrollableScrollPhysics(),
+            itemBuilder: (context, index) {
+              final item = json.decode(university.ranking)[index];
+              return Padding(
+                padding: const EdgeInsets.all(2.0),
+                child: Container(
+                  padding: EdgeInsets.symmetric(vertical: 8,horizontal: 12),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(8)
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Icon(Icons.arrow_forward,size: 18,),
+                          Text(
+                            ' By ${item['rank']}',
+                            style: TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        ],
+                      ),
+                      Text(
+                        '${item['source']}th',
+                        style: TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              );
+            },
+          ),
           SizedBox(height: 20,),
           ExpendedText(information: university.universityInformation,),
           SizedBox(
@@ -528,82 +573,6 @@ class OverviewWidget extends StatelessWidget {
   }
 }
 
-
-class RankingGridView extends StatelessWidget {
-  final University university;
-
-  RankingGridView(this.university);
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('GridView Example'),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: GridView.builder(
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2, // Number of columns
-            mainAxisSpacing: 8, // Spacing between rows
-            crossAxisSpacing: 8, // Spacing between columns
-            childAspectRatio: 1, // Adjust the aspect ratio for desired size
-          ),
-          itemCount: fromRankingJsonList(university.ranking).length,
-          itemBuilder: (context, index) {
-            var data = fromRankingJsonList(university.ranking)[index];
-            return Expanded(
-              child: Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(8),
-                    bottomLeft: Radius.circular(8),
-                  ),
-                  color: Colors.grey.shade200,
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.all(12.0),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(
-                        Icons.change_circle_outlined,
-                        color: Colors.grey,
-                      ),
-                      SizedBox(
-                        height: 8,
-                      ),
-                      Text(
-                        data.rank,
-                        style: customText(14, Colors.grey.shade600, FontWeight.w400),
-                      ),
-                      SizedBox(
-                        height: 6,
-                      ),
-                      //hello
-                      Text(
-                        data.source,
-                        style: customText(14, Colors.grey.shade600, FontWeight.w400),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            );
-          },
-        ),
-      ),
-    );
-  }
-
-  TextStyle customText(double size, Color color, FontWeight weight) {
-    return TextStyle(
-      fontSize: size,
-      color: color,
-      fontWeight: weight,
-    );
-  }
-}
 
 
 class CourseWidgete extends StatefulWidget {

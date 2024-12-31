@@ -18,7 +18,7 @@ class CourseProvider extends ChangeNotifier{
 
   Future<CourseDetailsModel?> getCourseDataWithId(num? id) async {
 
-    var resultData = await apiService.postData('/Datasource/GetDataByDataSourceID', {'DataSourceID': '27',"whereclause":"AND ID = $id"},mainHeader: MainHeaders.updatedHeader);
+    var resultData = await apiService.postData('/Datasource/GetDataByDataSourceID', {'DataSourceID': '27',"whereclause":"AND C.ID = $id"},mainHeader: MainHeaders.updatedHeader);
     if(resultData!=null){
       debugPrint('resultData ${resultData.toString()}');
       List<dynamic> table = resultData['Model']['Table'];
