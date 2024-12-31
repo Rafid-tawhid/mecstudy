@@ -1,3 +1,7 @@
+import 'dart:convert';
+
+import 'Universities.dart';
+
 class CourseDetailsModel {
   CourseDetailsModel({
       this.id, 
@@ -34,6 +38,10 @@ class CourseDetailsModel {
       this.userId1,});
 
   CourseDetailsModel.fromJson(dynamic json) {
+
+    var faqsFromJson = jsonDecode(json['FAQs']) as List;
+    List<Faq> faqsList = faqsFromJson.map((i) => Faq.fromJson(i)).toList();
+
     id = json['ID'];
     courseTitle = json['Course_Title'];
     universityID = json['University_ID'];
@@ -59,7 +67,7 @@ class CourseDetailsModel {
     facilities = json['Facilities'];
     employabilityDetails = json['Employability_Details'];
     alumni = json['Alumni'];
-    fAQs = json['FAQs'];
+    fAQs = faqsList;
     bannerImageURL = json['Banner_Image_URL'];
     universityInformation = json['University_Information'];
     moreAboutUniversity = json['More_About_University'];
@@ -92,7 +100,7 @@ class CourseDetailsModel {
   String? facilities;
   String? employabilityDetails;
   String? alumni;
-  String? fAQs;
+  List<Faq>? fAQs;
   String? bannerImageURL;
   String? universityInformation;
   String? moreAboutUniversity;
@@ -124,7 +132,7 @@ CourseDetailsModel copyWith({  num? id,
   String? facilities,
   String? employabilityDetails,
   String? alumni,
-  String? fAQs,
+  List<Faq>? fAQs,
   String? bannerImageURL,
   String? universityInformation,
   String? moreAboutUniversity,
@@ -200,5 +208,8 @@ CourseDetailsModel copyWith({  num? id,
     map['UserId1'] = userId1;
     return map;
   }
+
+
+
 
 }

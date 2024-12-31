@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_html/flutter_html.dart';
 import 'package:mecstudygroup/Utilities/Constant.dart';
 import 'package:mecstudygroup/Utilities/helper_class.dart';
 import 'package:mecstudygroup/Widgets/see_more_text.dart';
@@ -99,6 +100,7 @@ class CoursesScreenBottomSheet extends StatelessWidget {
                       buttonLabels: HelperClass.parseDegreeID(singleCourse.degreeID??'').toList(),
                     )
                   ),
+
                   SizedBox(height: 12,),
                   Row(
                     children: [
@@ -144,9 +146,7 @@ class CoursesScreenBottomSheet extends StatelessWidget {
                     ),
                   ),
                   SizedBox(height: 16,),
-                  SizedBox(
-                    child: SelectableButtonList(),
-                  ),
+                  SelectableHorozontalList(singleCourse,),
                   SizedBox(height: 24,),
 
 
@@ -176,6 +176,53 @@ class CoursesScreenBottomSheet extends StatelessWidget {
                           child: Text('${singleCourse.modeOfStudy}'),
                         ),
                       ),
+
+                    ],
+                  ),
+                  Column(
+                    children: [
+                      SizedBox(height: 10,),
+                      Row(
+                        children: [
+                          SizedBox(width: 8,),
+                          Icon(Icons.question_mark),
+                          SizedBox(width: 4,),
+                          Text(
+                            'FAQ',
+                            style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black),
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 10,),
+                      Container(
+                        padding: EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(16),
+                          color: Colors.white,
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: singleCourse.fAQs!.map((e)=>Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                mainAxisSize: MainAxisSize.min,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Icon(Icons.arrow_forward_sharp,size: 16,),
+                                  Expanded(child: Html(data: e.question)),
+                                ],
+                              ),
+                              Html(data: e.answer)
+                            ],
+                          )).toList(),
+
+
+                        ),
+                      ),
+
+
+
 
                     ],
                   ),
@@ -258,6 +305,67 @@ class UpComingIntakes extends StatelessWidget {
           ]
         ),
 
+      ],
+    );
+  }
+}
+
+
+class SelectableHorozontalList extends StatefulWidget {
+
+  final CourseDetailsModel courseDetailsModel;
+
+
+  SelectableHorozontalList(this.courseDetailsModel);
+
+  @override
+  State<SelectableHorozontalList> createState() => _SelectableHorozontalListState();
+}
+
+class _SelectableHorozontalListState extends State<SelectableHorozontalList> {
+  int selectedIndex = 0; // Tracks the selected item
+  final List<String> texts = [];
+  final List<String> buttons = ['About','Scholarship','Details'];
+
+
+  @override
+  Widget build(BuildContext context) {
+
+    texts.add(widget.courseDetailsModel.moreAboutUniversity??'');
+    texts.add(widget.courseDetailsModel.scholarships??'');
+    texts.add(widget.courseDetailsModel.employabilityDetails??'');
+
+    return Column(
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: List.generate(3, (index) {
+            return Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 4.0),
+              child: ElevatedButton(
+                onPressed: () {
+                  setState(() {
+                    selectedIndex = index; // Update the selected index
+                  });
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: selectedIndex == index
+                      ? Colors.blue
+                      : Colors.grey, // Change color based on selection
+                ),
+                child: Text(
+                  buttons[index],
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+            );
+          }),
+        ),
+        SizedBox(height: 10),
+        Html(data: texts[selectedIndex],),
       ],
     );
   }
