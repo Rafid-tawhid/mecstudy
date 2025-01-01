@@ -34,6 +34,44 @@ class HelperClass {
     return result;
   }
 
+  static List<String> parsJsonToList(String jsonString) {
+    debugPrint('jsonString $jsonString');
+    try {
+      // Attempt to decode the JSON string into a List<String>
+      final List<dynamic> parsedList = json.decode(jsonString);
+      debugPrint('parsedList $parsedList');
+      if (parsedList is List<String>) {
+        debugPrint('parsedList $parsedList');
+        return parsedList; // Return the parsed list if it's valid
+      } else {
+        return []; // Return an empty list if the decoded data is not a List<String>
+      }
+
+    } catch (e) {
+      // Return an empty list if parsing fails
+      print("Parsing error: $e");
+      return [];
+    }
+  }
+
+  static List<String> convertToList(String rawString) {
+    try {
+      // Remove square brackets and trim spaces
+      String cleanedString = rawString.replaceAll('[', '').replaceAll(']', '').trim();
+
+      // Split the string by comma and trim each item
+      List<String> result = cleanedString.split(',').map((item) => item.trim()).toList();
+
+      return result.map((item) => item.replaceAll('"', '')).toList();
+    } catch (e) {
+      // Return an empty list if parsing fails
+      print("Conversion error: $e");
+      return [];
+    }
+  }
+
+
+
   static String cutTheLongText(String value, int length) {
     if (value.length > length) {
       return "${value.substring(0, length)}...";

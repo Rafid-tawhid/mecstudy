@@ -1,6 +1,9 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:mecstudygroup/Utilities/Colors.dart';
+import 'package:mecstudygroup/Utilities/helper_class.dart';
 import '../Model/CourseModel.dart';
 import '../Model/course_details_model.dart';
 import '../Utilities/Constant.dart';
@@ -82,7 +85,7 @@ class _StartApplicationBottomSheetState
                   onToggle: () {
                     setState(() => _isJoinByOpen = !_isJoinByOpen);
                   },
-                  options: ["January 2024", "May 2024", "September 2024"],
+                  options: HelperClass.convertToList(widget.courseDetailsModel.upcomingIntakes??''),
                   onSelect: (value) {
                     setState(() {
                       _joinByValue = value;
@@ -92,7 +95,6 @@ class _StartApplicationBottomSheetState
                 ),
 
                 SizedBox(height: 16),
-
                 // Dropdown Section for Duration
                 _buildDropdownTile(
                   title: "Duration",
@@ -101,7 +103,7 @@ class _StartApplicationBottomSheetState
                   onToggle: () {
                     setState(() => _isDurationOpen = !_isDurationOpen);
                   },
-                  options: ["1 Year", "2 Years", "4 Years"],
+                  options: [widget.courseDetailsModel.duration??''],
                   onSelect: (value) {
                     setState(() {
                       _durationValue = value;
@@ -120,7 +122,7 @@ class _StartApplicationBottomSheetState
                   onToggle: () {
                     setState(() => _isModeOfStudyOpen = !_isModeOfStudyOpen);
                   },
-                  options: ["Online", "On-Campus", "Hybrid"],
+                  options: [widget.courseDetailsModel.modeOfStudy??''],
                   onSelect: (value) {
                     setState(() {
                       _modeOfStudyValue = value;
@@ -149,7 +151,7 @@ class _StartApplicationBottomSheetState
                     ),
                     ElevatedButton(
                       onPressed: () {
-                        print("Application started");
+                        Navigator.push(context, MaterialPageRoute(builder: (context)=>StartApplicationStepper(courseDetailsModel: widget.courseDetailsModel,)));
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.orange,
