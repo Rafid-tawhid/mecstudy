@@ -40,7 +40,7 @@ class _DocumentsUploadState extends State<DocumentsUpload> {
         ],
         backgroundColor: Color(0xFFFAFAFA),
       ),
-      // ),
+
       body:
       SingleChildScrollView(
         padding: EdgeInsets.only(left: 14, right: 12),

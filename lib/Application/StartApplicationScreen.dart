@@ -1,17 +1,9 @@
-import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
-import 'package:mecstudygroup/Utilities/Colors.dart';
 import 'package:mecstudygroup/Utilities/helper_class.dart';
-import '../Model/CourseModel.dart';
 import '../Model/course_details_model.dart';
-import '../Utilities/Constant.dart';
-import '../Widgets/DynamicChipViewWidget.dart';
 import 'ApplicationStepperPage.dart';
 
-
-import 'package:flutter/material.dart';
 
 class StartApplicationBottomSheet extends StatefulWidget {
   CourseDetailsModel courseDetailsModel;

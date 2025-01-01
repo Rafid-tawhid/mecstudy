@@ -11,6 +11,7 @@ import 'package:mecstudygroup/Utilities/Colors.dart';
 import 'package:mecstudygroup/Utilities/helper_class.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../Utilities/Constant.dart';
+import '../Application/ApplicationStepperPage.dart';
 import 'GiveuoFeedback.dart';
 import 'SettingScreen.dart';
 import 'ShortList.dart';
@@ -731,7 +732,7 @@ class DocumentsAll extends StatelessWidget {
               onTap: () {
                 Navigator.of(context).push(
                   MaterialPageRoute(
-                    builder: (context) => DocumentsUpload(),
+                    builder: (context) => StartApplicationStepper(),
                   ),
                 );
               },

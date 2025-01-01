@@ -228,11 +228,39 @@ class CoursesScreenBottomSheet extends StatelessWidget {
                   //   ],
                   // ),
                   // SizedBox(height: 12,),
-                  // CustomDropdown(),x
-                  ElevatedButton(onPressed: (){
-                   // Navigator.push(context, MaterialPageRoute(builder: (context)=>StartApplicationStepper(requiredDocuments: singleCourse.docRequired!.split(', ') )));
-                    Navigator.push(context, MaterialPageRoute(builder: (context)=>StartApplicationBottomSheet(singleCourse,)));
-                  }, child: Text('Apply For this Course')),
+                  // CustomDropdown(),
+                  Container(
+                    width: double.infinity, // Full width of the parent container
+                    height: 50, // Adjust the height as needed
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        colors: [Colors.orange, Colors.deepOrange],
+                        begin: Alignment.centerLeft,
+                        end: Alignment.centerRight,
+                      ),
+                      borderRadius: BorderRadius.circular(25), // Rounded corners
+                    ),
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.transparent,
+                        shadowColor: Colors.transparent,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(25),
+                        ),
+                      ),
+                      onPressed: (){
+                        Navigator.push(context, MaterialPageRoute(builder: (context)=>StartApplicationBottomSheet(singleCourse,)));
+                      },
+                      child: Text(
+                        "Apply For this Course",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16,
+                        ),
+                      ),
+                    ),
+                  ),
 
                   SizedBox(height: 100,)
                 ],

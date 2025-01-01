@@ -10,11 +10,13 @@ import 'ApplicationDocummentUpload.dart';
 
 
 
+import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
+
 class StartApplicationStepper extends StatefulWidget {
-  CourseDetailsModel courseDetailsModel;
+  final CourseDetailsModel? courseDetailsModel;
 
-
-  StartApplicationStepper({required this.courseDetailsModel});
+  StartApplicationStepper({this.courseDetailsModel});
 
   @override
   _StartApplicationStepperState createState() => _StartApplicationStepperState();
@@ -40,6 +42,7 @@ class _StartApplicationStepperState extends State<StartApplicationStepper> {
   };
 
   final ImagePicker _picker = ImagePicker();
+  int _currentStep = 0;
 
   Future<void> pickImage(String document) async {
     final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
@@ -51,85 +54,39 @@ class _StartApplicationStepperState extends State<StartApplicationStepper> {
     }
   }
 
-  Widget buildDocumentItem(String title) {
-    bool isSubmitted = documentStatus[title]!;
-    String filePath = documentFiles[title]?.name ?? "";
+  List<Step> _buildSteps() {
+    return documentStatus.keys.map((document) {
+      bool isSubmitted = documentStatus[document]!;
+      String filePath = documentFiles[document]?.name ?? "";
 
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 8.0),
-      child: Container(
-        padding: EdgeInsets.symmetric(vertical: 12,horizontal: 10),
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(8),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.grey.withOpacity(0.2),
-              // Shadow color
-              spreadRadius: 2,
-              // Spread radius
-              blurRadius: 4,
-              // Blur radius
-              offset: Offset(0, 1), // Offset in the y direction
-            ),
-          ]
+      return Step(
+        title: Text(
+          document,
+          style: TextStyle(
+            fontSize: 16,
+            fontWeight: FontWeight.w500,
+            color: isSubmitted ? Colors.green : Colors.black,
+          ),
         ),
-        child: Row(
-          children: [
-            SizedBox(
-              width: 12,
-            ),
-            Icon(
-              Icons.upload_file,
-              size: 26,
-            ),
-            SizedBox(
-              width: 4,
-            ),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  title,
-                  style: TextStyle(
-                    fontWeight: FontWeight.w400,
-                    fontSize: 13,
-                    color: Color(0xFF484D54),
-                  ),
-                ),
-                SizedBox(height: filePath != "" ? 2 : 0),
-                filePath != ""
-                    ? Text(
-                  "Submitted",
-                  textAlign: TextAlign.start,
-                  style: TextStyle(
-                    fontWeight: FontWeight.normal,
-                    fontSize: 11,
-                    color: Colors.green,
-                  ),
-                )
-                    : SizedBox(height: 0),
-              ],
-            ),
-            Spacer(),
-            Icon(
-              Icons.cloud_upload,
-              color: isSubmitted ? Colors.green : Colors.black,
-            ),
-            SizedBox(
-              width: 12,
-            ),
-          ],
+        subtitle: isSubmitted
+            ? Text(
+          "Submitted",
+          style: TextStyle(color: Colors.green),
+        )
+            : null,
+        content: Text(
+          "Tap to upload your $document.",
+          style: TextStyle(fontSize: 14),
         ),
-      ),
-    );
+        isActive: true,
+        state: isSubmitted ? StepState.complete : StepState.indexed,
+      );
+    }).toList();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
       appBar: AppBar(
         title: Text('Submit Documents'),
         backgroundColor: Colors.orangeAccent,
@@ -137,30 +94,33 @@ class _StartApplicationStepperState extends State<StartApplicationStepper> {
       body: Column(
         children: [
           Expanded(
-            child: ListView(
-              children: documentStatus.keys.map((document) {
-                return GestureDetector(
-                  onTap: () => pickImage(document),
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 8.0),
-                    child: buildDocumentItem(document),
-                  ),
-                );
-              }).toList(),
+            child: Stepper(
+              currentStep: _currentStep,
+              onStepTapped: (index) {
+                setState(() {
+                  _currentStep = index;
+                });
+                String selectedDocument = documentStatus.keys.toList()[index];
+                pickImage(selectedDocument);
+              },
+              steps: _buildSteps(),
+              controlsBuilder: (BuildContext context, ControlsDetails details) {
+                return SizedBox.shrink(); // Hide default stepper buttons
+              },
             ),
           ),
           Padding(
-            padding: const EdgeInsets.only(bottom: 32.0,left: 16,right: 16),
+            padding: const EdgeInsets.only(bottom: 16.0, left: 16, right: 16),
             child: Container(
-              width: double.infinity, // Full width of the parent container
-              height: 50, // Adjust the height as needed
+              width: double.infinity,
+              height: 50,
               decoration: BoxDecoration(
                 gradient: LinearGradient(
                   colors: [Colors.orange, Colors.deepOrange],
                   begin: Alignment.centerLeft,
                   end: Alignment.centerRight,
                 ),
-                borderRadius: BorderRadius.circular(25), // Rounded corners
+                borderRadius: BorderRadius.circular(25),
               ),
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
@@ -170,8 +130,9 @@ class _StartApplicationStepperState extends State<StartApplicationStepper> {
                     borderRadius: BorderRadius.circular(25),
                   ),
                 ),
-                onPressed: (){
-
+                onPressed: () {
+                  // Handle the upload of all documents
+                  print("Uploading all documents");
                 },
                 child: Text(
                   "Upload Documents",
@@ -186,8 +147,10 @@ class _StartApplicationStepperState extends State<StartApplicationStepper> {
           )
         ],
       ),
-
     );
   }
 }
+
+
+
 
