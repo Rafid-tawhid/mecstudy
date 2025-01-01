@@ -8,7 +8,7 @@ import 'package:mecstudygroup/Widgets/see_more_text.dart';
 import 'package:mecstudygroup/Widgets/tabbed_buttons.dart';
 
 import '../Application/ApplicationStepperPage.dart';
-import '../Application/StartApplicationDetailPage.dart';
+import '../Application/StartApplicationScreen.dart';
 import '../Model/course_details_model.dart';
 import '../Model/course_model.dart';
 import '../university_details/university_dts_bottom_sheet.dart';
@@ -230,7 +230,8 @@ class CoursesScreenBottomSheet extends StatelessWidget {
                   // SizedBox(height: 12,),
                   // CustomDropdown(),x
                   ElevatedButton(onPressed: (){
-                    Navigator.push(context, MaterialPageRoute(builder: (context)=>StartApplicationStepper(requiredDocuments: singleCourse.docRequired!.split(', ') )));
+                   // Navigator.push(context, MaterialPageRoute(builder: (context)=>StartApplicationStepper(requiredDocuments: singleCourse.docRequired!.split(', ') )));
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=>StartApplicationBottomSheet(singleCourse,)));
                   }, child: Text('Apply For this Course')),
 
                   SizedBox(height: 100,)
