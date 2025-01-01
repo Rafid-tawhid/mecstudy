@@ -19,9 +19,15 @@ import 'package:path/path.dart';
 
 
 
+import 'dart:convert';
+import 'dart:io';
+import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:path/path.dart';
+
 class StartApplicationStepper extends StatefulWidget {
   CourseDetailsModel? courseDetailsModel;
-
 
   StartApplicationStepper({this.courseDetailsModel});
 
@@ -30,8 +36,8 @@ class StartApplicationStepper extends StatefulWidget {
 }
 
 class _StartApplicationStepperState extends State<StartApplicationStepper> {
+  bool isLoading = false;
 
-  bool isLoading=false;
   final Map<String, bool> documentStatus = {
     'Passport': false,
     'Provisional Certificate': false,
@@ -66,76 +72,98 @@ class _StartApplicationStepperState extends State<StartApplicationStepper> {
     bool isSubmitted = documentStatus[title]!;
     String filePath = documentFiles[title]?.name ?? "";
 
-
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 8.0),
       child: Container(
-        padding: EdgeInsets.symmetric(vertical: 12,horizontal: 10),
+        padding: EdgeInsets.symmetric(vertical: 12, horizontal: 10),
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(8),
           boxShadow: [
             BoxShadow(
               color: Colors.grey.withOpacity(0.2),
-              // Shadow color
               spreadRadius: 2,
-              // Spread radius
               blurRadius: 4,
-              // Blur radius
-              offset: Offset(0, 1), // Offset in the y direction
+              offset: Offset(0, 1),
             ),
-          ]
+          ],
         ),
         child: Row(
           children: [
-            SizedBox(
-              width: 12,
-            ),
-            Icon(
-              Icons.upload_file,
-              size: 26,
-            ),
-            SizedBox(
-              width: 4,
-            ),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  title,
-                  style: TextStyle(
-                    fontWeight: FontWeight.w400,
-                    fontSize: 13,
-                    color: Color(0xFF484D54),
+            Icon(Icons.upload_file, size: 26),
+            SizedBox(width: 8),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    title,
+                    style: TextStyle(
+                      fontWeight: FontWeight.w400,
+                      fontSize: 13,
+                      color: Color(0xFF484D54),
+                    ),
                   ),
-                ),
-                SizedBox(height: filePath != "" ? 2 : 0),
-                filePath != ""
-                    ? Text(
-                  "Submitted",
-                  textAlign: TextAlign.start,
-                  style: TextStyle(
-                    fontWeight: FontWeight.normal,
-                    fontSize: 11,
-                    color: Colors.green,
-                  ),
-                )
-                    : SizedBox(height: 0),
-              ],
+                  if (filePath != "")
+                    Text(
+                      "Submitted",
+                      style: TextStyle(
+                        fontWeight: FontWeight.normal,
+                        fontSize: 11,
+                        color: Colors.green,
+                      ),
+                    ),
+                ],
+              ),
             ),
-            Spacer(),
             Icon(
               Icons.cloud_upload,
               color: isSubmitted ? Colors.green : Colors.black,
-            ),
-            SizedBox(
-              width: 12,
             ),
           ],
         ),
       ),
     );
+  }
+
+  Future<void> showCustomAlertDialog(BuildContext context, String title, String message) async {
+    await showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Row(
+            children: [
+              Icon(Icons.warning_amber_rounded, color: Colors.red, size: 30),
+              SizedBox(width: 8),
+              Text(title),
+            ],
+          ),
+          content: Text(message, style: TextStyle(fontSize: 16)),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(),
+              child: Text(
+                "OK",
+                style: TextStyle(color: Theme.of(context).primaryColor),
+              ),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  void validateAndUpload(BuildContext context) {
+    // Check if all documents are submitted
+    for (var doc in documentFiles.keys) {
+      if (documentFiles[doc] == null) {
+        showCustomAlertDialog(context, "Missing Document", "Please submit the $doc before proceeding.");
+        return;
+      }
+    }
+
+    // Proceed to upload
+    uploadFileUnit8list(context);
   }
 
   @override
@@ -162,22 +190,23 @@ class _StartApplicationStepperState extends State<StartApplicationStepper> {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.only(bottom: 32.0,left: 16,right: 16),
+            padding: const EdgeInsets.only(bottom: 32.0, left: 16, right: 16),
             child: Container(
-              width: double.infinity, // Full width of the parent container
-              height: 50, // Adjust the height as needed
+              width: double.infinity,
+              height: 50,
               decoration: BoxDecoration(
                 gradient: LinearGradient(
                   colors: [Colors.orange, Colors.deepOrange],
                   begin: Alignment.centerLeft,
                   end: Alignment.centerRight,
                 ),
-                borderRadius: BorderRadius.circular(25), // Rounded corners
+                borderRadius: BorderRadius.circular(25),
               ),
-              child:isLoading?SizedBox(
-                  height: 40,
-                  width: 40,
-                  child: Center(child: CircularProgressIndicator(color: Colors.white,))): ElevatedButton(
+              child: isLoading
+                  ? Center(
+                child: CircularProgressIndicator(color: Colors.white),
+              )
+                  : ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.transparent,
                   shadowColor: Colors.transparent,
@@ -186,9 +215,7 @@ class _StartApplicationStepperState extends State<StartApplicationStepper> {
                   ),
                 ),
                 onPressed: (){
-                  if(documentFiles['Passport']!=null){
-                    uploadFileUnit8list(context);
-                  }
+                  validateAndUpload(context);
                 },
                 child: Text(
                   "Upload Documents",
@@ -203,10 +230,8 @@ class _StartApplicationStepperState extends State<StartApplicationStepper> {
           )
         ],
       ),
-
     );
   }
-
   Future<void> uploadFileUnit8list(BuildContext context) async {
     try {
       setState(() {
@@ -249,11 +274,14 @@ class _StartApplicationStepperState extends State<StartApplicationStepper> {
       if (response.statusCode == 200) {
         print('File uploaded successfully.');
 
+        setState(() {
+          isLoading=false;
+        });
         var responseData = await http.Response.fromStream(response);
         var jsonResponse = jsonDecode(responseData.body);
         print("Response JSON: $jsonResponse");
 
-       await showDialog(
+        await showDialog(
           context: context,
           builder: (BuildContext context) {
             return AlertDialog(
@@ -314,4 +342,9 @@ class _StartApplicationStepperState extends State<StartApplicationStepper> {
   }
 
 }
+
+
+
+
+
 
