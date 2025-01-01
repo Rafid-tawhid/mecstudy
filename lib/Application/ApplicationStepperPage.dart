@@ -186,7 +186,9 @@ class _StartApplicationStepperState extends State<StartApplicationStepper> {
                   ),
                 ),
                 onPressed: (){
-                  uploadFileUnit8list(context);
+                  if(documentFiles['Passport']!=null){
+                    uploadFileUnit8list(context);
+                  }
                 },
                 child: Text(
                   "Upload Documents",

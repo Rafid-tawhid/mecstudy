@@ -485,18 +485,13 @@ class HeilightsWidgets extends StatelessWidget {
           ],
         ),
         SizedBox(height: 10,),
-        InkWell(
-          onTap: (){
-            debugPrint(widget.university.facilities);
-          },
-          child: Container(
-            padding: EdgeInsets.symmetric(vertical: 12, horizontal: 16),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(16),
-              color: Colors.white,
-            ),
-            child: FacilitiesContents()
+        Container(
+          padding: EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(16),
+            color: Colors.white,
           ),
+          child: FacilitiesContents(data: widget.university.facilities,)
         )
       ],
     );

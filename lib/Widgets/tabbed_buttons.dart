@@ -32,7 +32,7 @@ class _SelectableButtonListState extends State<SelectableButtonList> {
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
                     backgroundColor: _selectedIndex == index
-                        ? Colors.grey
+                        ? Colors.white
                         : Colors.white,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(20.0),
@@ -47,7 +47,7 @@ class _SelectableButtonListState extends State<SelectableButtonList> {
                     buttonLabels[index],
                     style: TextStyle(
                       color: _selectedIndex == index
-                          ? Colors.white
+                          ? Colors.black
                           : Colors.black,
                     ),
                   ),

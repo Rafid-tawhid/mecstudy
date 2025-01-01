@@ -216,14 +216,27 @@ class _StartApplicationBottomSheetState
               ),
               if (isOpen)
                 Column(
-                  children: options
-                      .map(
+                  children: [
+                    SizedBox(height: 10,),
+                    ...options.map(
                         (option) => ListTile(
-                      title: Text(option),
+                      title: Row(
+                        children: [
+                          Container(
+                              padding: EdgeInsets.symmetric(vertical: 4,horizontal: 12),
+                              decoration: BoxDecoration(
+                                  color: value==option?Colors.purple.shade50:Colors.grey.shade200,
+                                  borderRadius: BorderRadius.circular(20)
+                              ),
+                              child: Text(option,style: TextStyle(fontWeight: FontWeight.bold,color:value==option?Colors.purple: Colors.black),)),
+                          Expanded(child: Text(''))
+                        ],
+                      ),
                       onTap: () => onSelect(option),
                     ),
                   )
                       .toList(),
+                  ]
                 ),
             ],
           ),

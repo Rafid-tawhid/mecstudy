@@ -346,7 +346,7 @@ class SelectableHorozontalList extends StatefulWidget {
 class _SelectableHorozontalListState extends State<SelectableHorozontalList> {
   int selectedIndex = 0; // Tracks the selected item
   final List<String> texts = [];
-  final List<String> buttons = ['About','Scholarship','Details'];
+  final List<String> buttons = ['About','Scholarship','Documents'];
 
 
   @override
@@ -361,24 +361,29 @@ class _SelectableHorozontalListState extends State<SelectableHorozontalList> {
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: List.generate(3, (index) {
-            return Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 4.0),
-              child: ElevatedButton(
-                onPressed: () {
-                  setState(() {
-                    selectedIndex = index; // Update the selected index
-                  });
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: selectedIndex == index
-                      ? Colors.blue
-                      : Colors.grey, // Change color based on selection
-                ),
-                child: Text(
-                  buttons[index],
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
+            return Expanded(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 4.0),
+                child: ElevatedButton(
+                  onPressed: () {
+                    debugPrint(widget.courseDetailsModel.moreAboutUniversity);
+                    setState(() {
+                      selectedIndex = index; // Update the selected index
+                    });
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: selectedIndex == index
+                        ? Colors.blue
+                        : Colors.grey, // Change color based on selection
+                  ),
+                  child: FittedBox(
+                    child: Text(
+                      buttons[index],
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
                   ),
                 ),
               ),
@@ -386,10 +391,10 @@ class _SelectableHorozontalListState extends State<SelectableHorozontalList> {
           }),
         ),
         SizedBox(height: 10),
-        selectedIndex==2?
-        Container(
+        selectedIndex==0?DynamicContentWidget(texts[selectedIndex]):
+        selectedIndex==2?Container(
           decoration: BoxDecoration(
-            color: Colors.orange.shade200,
+            color: Colors.white,
             borderRadius: BorderRadius.circular(12),
           ),
           child: Padding(
@@ -406,8 +411,79 @@ class _SelectableHorozontalListState extends State<SelectableHorozontalList> {
             ),
           ),
         ):
-          Html(data: texts[selectedIndex],),
+        Html(data: widget.courseDetailsModel.employabilityDetails??'',),
       ],
     );
   }
 }
+
+
+class DynamicContentWidget extends StatefulWidget {
+  final String info;
+
+  DynamicContentWidget(this.info);
+
+  @override
+  _DynamicContentWidgetState createState() => _DynamicContentWidgetState();
+}
+
+class _DynamicContentWidgetState extends State<DynamicContentWidget> {
+  late List<Map<String, dynamic>> data;
+  String? selectedContent;
+  int selectedIndex = 0; // Track the selected button index
+
+  @override
+  void initState() {
+    super.initState();
+    // Parse the input string into a List of Maps
+    data = List<Map<String, dynamic>>.from(jsonDecode(widget.info));
+    selectedContent = data[0]['content']; // Default content
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        SizedBox(
+          height: 40,
+          child: ListView.builder(
+            scrollDirection: Axis.horizontal,
+            itemCount: data.length,
+            itemBuilder: (context, index) {
+              bool isSelected = index == selectedIndex; // Check if the button is selected
+              return Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 4.0),
+                child: InkWell(
+                  onTap: () {
+                    setState(() {
+                      selectedIndex = index;
+                      selectedContent = data[index]['content'];
+                    });
+                  },
+                  child: Container(
+                    alignment: Alignment.center,
+                    padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 4.0),
+                    decoration: BoxDecoration(
+                      color: isSelected ? Colors.purple.shade50 : Colors.grey[200], // Change background color
+                      borderRadius: BorderRadius.circular(20.0),
+                    ),
+                    child: Text(
+                      data[index]['button'],
+                      style: TextStyle(
+                        color: isSelected ? Colors.purple : Colors.black, // Change text color
+                        fontWeight: isSelected ? FontWeight.bold : FontWeight.normal, // Change text weight
+                      ),
+                    ),
+                  ),
+                ),
+              );
+            },
+          ),
+        ),
+        Html(data: selectedContent),
+      ],
+    );
+  }
+}
+
+
