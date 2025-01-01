@@ -54,9 +54,6 @@ class _FileUploadViewWidgetState extends State<FileUploadView> {
 
   Future<String> fetchUserDetiall(
       {required String userID,}) async {
-
-
-
     // setState(() {
     //   isUniCourseLoading = true;
     // });
@@ -580,7 +577,6 @@ class _FileUploadViewWidgetState extends State<FileUploadView> {
                           )):SizedBox(height: 0,),
                 ],
               ),
-
               Spacer(),
               Icon(Icons.cloud_upload,color: _filePath != ""? Colors.green:Colors.black,),
               SizedBox(

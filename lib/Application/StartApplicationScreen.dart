@@ -15,8 +15,6 @@ import 'package:flutter/material.dart';
 
 class StartApplicationBottomSheet extends StatefulWidget {
   CourseDetailsModel courseDetailsModel;
-
-
   StartApplicationBottomSheet(this.courseDetailsModel, {super.key});
 
   @override

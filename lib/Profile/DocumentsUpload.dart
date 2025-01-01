@@ -64,7 +64,7 @@ class _DocumentsUploadState extends State<DocumentsUpload> {
               SizedBox(
                 height: Responsive.height(1, context),
               ),
-              Text("Submit a calid ID proof to enroll  in Courses",
+              Text("Submit a valid ID proof to enroll  in Courses",
                   maxLines: 1,
                   textAlign: TextAlign.start,
                   style: TextStyle(
@@ -94,7 +94,7 @@ class _DocumentsUploadState extends State<DocumentsUpload> {
               SizedBox(
                 height: Responsive.height(1, context),
               ),
-              Text("Secure admission to your best-matching courses by submiting acurate and comprehensive documents",
+              Text("Secure admission to your best-matching courses by submitting accurate and comprehensive documents",
                   maxLines: 3,
                   textAlign: TextAlign.start,
                   style: TextStyle(
