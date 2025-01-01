@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:mecstudygroup/Utilities/Constant.dart';
 
@@ -59,6 +60,31 @@ import 'ApplicationDocummentUpload.dart';
         backgroundColor: Colors.orange,
         elevation: 4,
       ),
+      body: ListView(
+        children: documentStatus.keys.map((document) {
+          return ListTile(
+            leading: Icon(
+              Icons.insert_drive_file,
+              color: documentStatus[document]! ? Colors.green : Colors.grey,
+            ),
+            title: Text(document),
+            trailing: Icon(
+              Icons.check_circle,
+              color: documentStatus[document]! ? Colors.green : Colors.grey,
+            ),
+            onTap: () {
+              pickImage(document);
+            },
+          );
+        }).toList(),
+      ),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            // Handle submission logic, e.g., upload documentFiles
+          },
+          child: Icon(Icons.upload),
+          backgroundColor: Colors.blue,
+        ),
       );
   }
 

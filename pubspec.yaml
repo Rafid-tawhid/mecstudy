@@ -53,6 +53,7 @@ dependencies:
   path_provider: ^2.1.5
   shared_preferences: ^2.0.6
   fl_country_code_picker: ^0.1.9+1
+  image_picker: ^1.1.2
 
 
 
