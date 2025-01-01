@@ -1,13 +1,17 @@
 
+import 'dart:convert';
 import 'dart:io';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:mecstudygroup/Utilities/Constant.dart';
 
+import '../BottomMenu/BottomMenuScreen.dart';
 import '../DashboardScreen.dart';
 import '../Model/course_details_model.dart';
+import '../Utilities/Colors.dart';
 import '../Utilities/helper_class.dart';
 import 'ApplicationDocummentUpload.dart';
 import 'package:http/http.dart' as http;
@@ -26,6 +30,8 @@ class StartApplicationStepper extends StatefulWidget {
 }
 
 class _StartApplicationStepperState extends State<StartApplicationStepper> {
+
+  bool isLoading=false;
   final Map<String, bool> documentStatus = {
     'Passport': false,
     'Provisional Certificate': false,
@@ -168,7 +174,10 @@ class _StartApplicationStepperState extends State<StartApplicationStepper> {
                 ),
                 borderRadius: BorderRadius.circular(25), // Rounded corners
               ),
-              child: ElevatedButton(
+              child:isLoading?SizedBox(
+                  height: 40,
+                  width: 40,
+                  child: Center(child: CircularProgressIndicator(color: Colors.white,))): ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.transparent,
                   shadowColor: Colors.transparent,
@@ -177,7 +186,7 @@ class _StartApplicationStepperState extends State<StartApplicationStepper> {
                   ),
                 ),
                 onPressed: (){
-
+                  uploadFileUnit8list(context);
                 },
                 child: Text(
                   "Upload Documents",
@@ -196,81 +205,111 @@ class _StartApplicationStepperState extends State<StartApplicationStepper> {
     );
   }
 
-  Future<void> uploadFileUnit8list() async {
-    File file = File(documentFiles['Passport']!.path);
-
-    String url = 'http://137.135.119.97/api/Document/UploadDocument'; // Replace with your API endpoint
-    Uri uri = Uri.parse(url);
-    print("_filePath");
-    print(file.path);
-
-    var request = http.MultipartRequest('POST', uri);
-    request.headers.addAll(MainHeaders.updatedHeader);
-    request.files.add(await http.MultipartFile.fromPath(
-      'File', // The name of the parameter in the API
-      file.path,
-      filename: basename(file.path), // Get the file name
-    ));
-    request.fields['DocumentFor'] = '1';
-    request.fields['StudentID'] = '${HelperClass.userProfileModel!.id}';
-    // var request = http.MultipartRequest('POST', uri)
-    //   ..fields['DocumentFor'] = '1' // Add other fields if needed
-    //   ..fields['StudentID'] = '123' // Add other fields if needed
-    //   ..files.add(await http.MultipartFile.fromPath(
-    //       'File',// The name of the parameter in the API
-    //       file.path,
-    //     contentType: MediaType('image', 'jpg',), // Adjust if needed
-    //     //  filename: basename(file.path),
-    //      // contentType: MediaType('image', 'jpeg'), // Adjust if needed
-    //     ),
-    //   );
-    var response = await request.send();
-
-    if (response.statusCode == 200) {
-      print('File uploaded successfully.');
-      print(widget.title);
-      print(title);
-
-      if (widget.title == "Letter of Reference"){
-        print("please cal api docuamnt upload");
-        print(AppConstant.userEmail);
-        print(AppConstant.userName);
-        print(widget.courseName);
-        print(widget.universityName);
-
-
-        sentEmail(userName: AppConstant.userName, userEmail: AppConstant.userEmail, contactNumber: "0345242663", courseName: widget.courseName, universityName: widget.universityName, context: _context);
-
-        // showDialog(
-        //     context: context,
-        //     builder: (BuildContext context) {
-        //       return AlertDialog(
-        //         title: Text(''),
-        //         content: Text('Your document sucessfully uploaded'),
-        //         actions: [
-        //           TextButton(
-        //             onPressed: () {
-        //               // Close the dialog
-        //               Navigator.of(context).pop();
-        //             },
-        //             child: Text(
-        //               'OK',
-        //               style: TextStyle(
-        //                   color: AppColors.themeMaincolor),
-        //             ),
-        //           ),
-        //         ],
-        //       );
-        //     });
-      }{
-        print(widget.title);
+  Future<void> uploadFileUnit8list(BuildContext context) async {
+    try {
+      setState(() {
+        isLoading=true;
+      });
+      if (documentFiles['Passport'] == null) {
+        throw Exception('No file selected for Passport.');
       }
-      var responseData = await http.Response.fromStream(response);
-      var jsonResponse = jsonDecode(responseData.body);
-      print(jsonResponse);
-    } else {
-      print('File upload failed with status: ${response.statusCode}');
+
+      File file = File(documentFiles['Passport']!.path);
+      String url = 'http://137.135.119.97/api/Document/UploadDocument'; // Replace with your API endpoint
+      Uri uri = Uri.parse(url);
+      print("Uploading file:");
+      print("File path: ${file.path}");
+      print("File name: ${basename(file.path)}");
+
+      var request = http.MultipartRequest('POST', uri);
+
+      // Add headers
+      request.headers.addAll(MainHeaders.updatedHeader);
+      print("Headers: ${request.headers}");
+
+      // Add file
+      request.files.add(await http.MultipartFile.fromPath(
+        'File', // API parameter name
+        file.path,
+        filename: basename(file.path),
+      ));
+
+      // Add additional fields
+      request.fields['DocumentFor'] = '1';
+      request.fields['StudentID'] = '${HelperClass.userProfileModel!.id}';
+
+      print("Request fields: ${request.fields}");
+
+      // Send the request
+      var response = await request.send();
+
+      // Handle the response
+      if (response.statusCode == 200) {
+        print('File uploaded successfully.');
+
+        var responseData = await http.Response.fromStream(response);
+        var jsonResponse = jsonDecode(responseData.body);
+        print("Response JSON: $jsonResponse");
+
+       await showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: Text('Success'),
+              content: Text('Your document was successfully uploaded.'),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                    Navigator.push(context, CupertinoPageRoute(builder: (context)=>BottomMenuScreen()));// Close the dialog
+                  },
+                  child: Text(
+                    'OK',
+                    style: TextStyle(color: AppColors.themeMaincolor),
+                  ),
+                ),
+              ],
+            );
+          },
+        );
+
+      } else {
+        var responseData = await http.Response.fromStream(response);
+        print('File upload failed with status: ${response.statusCode}');
+        print('Response body: ${responseData.body}');
+        throw Exception(
+            'File upload failed with status: ${response.statusCode}');
+      }
+    } catch (e) {
+      print("Error during file upload: $e");
+
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('Error'),
+            content: Text('Failed to upload document: $e'),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop(); // Close the dialog
+                },
+                child: Text(
+                  'OK',
+                  style: TextStyle(color: AppColors.themeMaincolor),
+                ),
+              ),
+            ],
+          );
+        },
+      );
+    }
+    finally{
+      setState(() {
+        isLoading=false;
+      });
     }
   }
+
 }
 
