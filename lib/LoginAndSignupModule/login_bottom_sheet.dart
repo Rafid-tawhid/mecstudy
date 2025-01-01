@@ -73,6 +73,7 @@ class LoginBottomSheet extends StatelessWidget {
                       padding: const EdgeInsets.symmetric(horizontal: 24.0),
                       child: TextFormField(
                         controller: passwordController,
+                        obscureText: true,
                         decoration: InputDecoration(
                           hintText: 'Password',
                           border: OutlineInputBorder(), // No border

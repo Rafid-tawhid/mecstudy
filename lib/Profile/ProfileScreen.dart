@@ -181,7 +181,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       SizedBox(
                         width: screenWidth * 0.03, // Dynamic spacing
                       ),
-                      Column(
+                      HelperClass.userProfileModel==null? Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -222,20 +222,57 @@ class _ProfileScreenState extends State<ProfileScreen> {
                            ],
                          )
                         ],
+                      ):
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            '${HelperClass.userProfileModel!.firstName} ${HelperClass.userProfileModel!.lastName}',
+                            style: TextStyle(
+                              fontWeight: FontWeight.w600,
+                              fontSize: screenHeight * 0.02, // 2% of screen height
+                              color: Colors.black,
+                            ),
+                          ),
+                       Column(
+                         crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                '${HelperClass.userProfileModel!.email}',
+                                maxLines: 1,
+                                style: TextStyle(
+                                  fontWeight: FontWeight.normal,
+                                  fontSize: screenHeight * 0.015, // 1.5% of screen height
+                                  color: Colors.grey,
+                                ),
+                              ),
+                              Text(
+                                '${HelperClass.userProfileModel!.address1}',
+                                maxLines: 1,
+                                style: TextStyle(
+                                  fontWeight: FontWeight.normal,
+                                  fontSize: screenHeight * 0.015, // 1.5% of screen height
+                                  color: Colors.grey,
+                                ),
+                              ),
+                            ],
+                          )
+                        ],
                       ),
                       const Spacer(),
-                      IconButton(
-                        onPressed: () {
-                          setState(() {
-                            isExpanded = !isExpanded;
-                          });
-                        },
-                        icon: Icon(
-                          !isExpanded
-                              ? Icons.keyboard_arrow_down_outlined
-                              : Icons.keyboard_arrow_up_outlined,
-                        ),
-                      ),
+                      // IconButton(
+                      //   onPressed: () {
+                      //     setState(() {
+                      //       isExpanded = !isExpanded;
+                      //     });
+                      //   },
+                      //   icon: Icon(
+                      //     !isExpanded
+                      //         ? Icons.keyboard_arrow_down_outlined
+                      //         : Icons.keyboard_arrow_up_outlined,
+                      //   ),
+                      // ),
                       SizedBox(
                         width: screenWidth * 0.02, // Dynamic spacing
                       ),
