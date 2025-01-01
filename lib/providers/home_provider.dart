@@ -60,6 +60,7 @@ class HomeProvider extends ChangeNotifier {
           HelperClass.saveUserInfo(
               UserProfileModel(
                   firstName: resultData['Model']['FirstName'],
+                  id: resultData['Model']['UserId'],
                   lastName: resultData['Model']['LastName'],
                   email: resultData['Model']['Email'],
                   address1: resultData['Model']['Address1'],
