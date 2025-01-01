@@ -134,24 +134,59 @@ class _StartApplicationStepperState extends State<StartApplicationStepper> {
         title: Text('Submit Documents'),
         backgroundColor: Colors.orangeAccent,
       ),
-      body: ListView(
-        children: documentStatus.keys.map((document) {
-          return GestureDetector(
-            onTap: () => pickImage(document),
-            child: Padding(
-              padding: const EdgeInsets.symmetric(vertical: 8.0),
-              child: buildDocumentItem(document),
+      body: Column(
+        children: [
+          Expanded(
+            child: ListView(
+              children: documentStatus.keys.map((document) {
+                return GestureDetector(
+                  onTap: () => pickImage(document),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 8.0),
+                    child: buildDocumentItem(document),
+                  ),
+                );
+              }).toList(),
             ),
-          );
-        }).toList(),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(bottom: 32.0,left: 16,right: 16),
+            child: Container(
+              width: double.infinity, // Full width of the parent container
+              height: 50, // Adjust the height as needed
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  colors: [Colors.orange, Colors.deepOrange],
+                  begin: Alignment.centerLeft,
+                  end: Alignment.centerRight,
+                ),
+                borderRadius: BorderRadius.circular(25), // Rounded corners
+              ),
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.transparent,
+                  shadowColor: Colors.transparent,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(25),
+                  ),
+                ),
+                onPressed: (){
+
+                },
+                child: Text(
+                  "Upload Documents",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16,
+                  ),
+                ),
+              ),
+            ),
+          )
+        ],
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          // Handle submission logic, e.g., upload documentFiles
-        },
-        backgroundColor: Colors.blue,
-        child: Icon(Icons.upload),
-      ),
+
     );
   }
 }
