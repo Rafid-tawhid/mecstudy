@@ -312,7 +312,7 @@ class _SignUpScreenBottomSheet extends State<SignUpScreenBottomSheet> {
                          if(result){
                            HelperClass.showToast('Successful! please wait...');
                            //Save user info and
-                           Navigator.push(context, CupertinoPageRoute(builder: (context)=>BottomMenuScreen()));
+                           Navigator.push(context, CupertinoPageRoute(builder: (context)=>LoginBottomSheet()));
                          }
                          else {
                            HelperClass.showToast('Something went wrong');

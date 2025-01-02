@@ -73,8 +73,12 @@ class UserProvider extends ChangeNotifier {
     },mainHeader: Headers.defaultheader,);
     setLoading(false);
     if (result != null) {
-
-      return true;
+      if(result['Status']==false||result['Status']=="false"){
+        return false;
+      }
+      else {
+        return true;
+      }
     }
     else {
       return false;
