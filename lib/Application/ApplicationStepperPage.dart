@@ -6,6 +6,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
+import 'package:mecstudygroup/LoginAndSignupModule/login_bottom_sheet.dart';
 import 'package:mecstudygroup/Utilities/Constant.dart';
 
 import '../BottomMenu/BottomMenuScreen.dart';
@@ -215,10 +216,16 @@ class _StartApplicationStepperState extends State<StartApplicationStepper> {
                   ),
                 ),
                 onPressed: (){
-                  validateAndUpload(context);
+                  if(HelperClass.userProfileModel!=null){
+                    validateAndUpload(context);
+                  }
+                  else {
+                    Navigator.push(context, CupertinoPageRoute(builder: (context)=>LoginBottomSheet()));
+                  }
+
                 },
                 child: Text(
-                  "Upload Documents",
+                  HelperClass.userProfileModel==null?"Login": "Upload Documents",
                   style: TextStyle(
                     color: Colors.white,
                     fontWeight: FontWeight.bold,
@@ -317,7 +324,7 @@ class _StartApplicationStepperState extends State<StartApplicationStepper> {
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: Text('Error'),
+            title: Text('Please'),
             content: Text('Failed to upload document: $e'),
             actions: [
               TextButton(
