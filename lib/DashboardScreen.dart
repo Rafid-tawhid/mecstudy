@@ -336,20 +336,20 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                           ],
                         )),
-                        Row(
-                          children: [
-                            Text(
-                              'See all ',
-                              style: customText(
-                                  14, Colors.orange, FontWeight.w500),
-                            ),
-                            Icon(
-                              Icons.arrow_forward_outlined,
-                              color: Colors.orange,
-                              size: 22,
-                            ),
-                          ],
-                        )
+                        // Row(
+                        //   children: [
+                        //     Text(
+                        //       'See all ',
+                        //       style: customText(
+                        //           14, Colors.orange, FontWeight.w500),
+                        //     ),
+                        //     Icon(
+                        //       Icons.arrow_forward_outlined,
+                        //       color: Colors.orange,
+                        //       size: 22,
+                        //     ),
+                        //   ],
+                        // )
                       ],
                     ),
                   ),
@@ -753,6 +753,8 @@ class CourseCard extends StatelessWidget {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Container(
+                      height: 40,
+                        width: 40,
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(50),
                             color: Colors.white),

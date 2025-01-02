@@ -5,6 +5,7 @@ class CourseCard1 extends StatelessWidget {
   final String courseTitle;
   final String universityName;
   final String price;
+  final String flag;
   final VoidCallback onTap;
 
   const CourseCard1({
@@ -13,6 +14,7 @@ class CourseCard1 extends StatelessWidget {
     required this.universityName,
     required this.price,
     required this.onTap,
+    required this.flag,
   });
 
   @override
@@ -54,17 +56,15 @@ class CourseCard1 extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: [
                 Container(
+                  height: 40,
+                  width: 40,
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(50),
+                    // borderRadius: BorderRadius.circular(50),
                     color: Colors.white,
                   ),
-                  child: const Padding(
-                    padding: EdgeInsets.all(4.0),
-                    child: Icon(
-                      Icons.send,
-                      color: Colors.purple,
-                      size: 20,
-                    ),
+                  child:  Padding(
+                    padding: EdgeInsets.all(2.0),
+                    child: Image.network(flag),
                   ),
                 ),
                 const SizedBox(width: 8),

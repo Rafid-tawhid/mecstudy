@@ -63,7 +63,7 @@ class _ResultsTab1State extends State<ResultsTab1> {
                 height: 12,
               ),
               Consumer<HomeProvider>(
-                builder: (context, pro, _) => pro.courseList.isNotEmpty
+                builder: (context, pro, _) => pro.allCoursesInfoList.isNotEmpty
                         ? ListView.builder(
                             scrollDirection: Axis.vertical,
                             shrinkWrap: true,
@@ -72,16 +72,16 @@ class _ResultsTab1State extends State<ResultsTab1> {
                             itemBuilder: (context, index) => Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: CourseCard1(
-                                courseTitle:
-                                pro.courseList[index].coursetitle ??
+                                courseTitle: pro.allCoursesInfoList[index].coursetitle ??
                                         '',
-                                universityName: pro.courseList[index].universityname ??
+                                universityName: pro.allCoursesInfoList[index].universityname ??
                                     '',
-                                price: pro.courseList[index].tuituionfee ??
+                                price: pro.allCoursesInfoList[index].tuituionfee ??
                                         '',
+                                flag:pro.allCoursesInfoList[index].flag??'' ,
                                 onTap: () async {
                                   var cp= context.read<CourseProvider>();
-                                  var course = await cp.getCourseDataWithId(pro.courseList[index].id);
+                                  var course = await cp.getCourseDataWithId(pro.allCoursesInfoList[index].id);
                                   if(course!=null){
                                     showModalBottomSheet(
                                       context: context,

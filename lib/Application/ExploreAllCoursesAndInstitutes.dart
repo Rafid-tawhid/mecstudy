@@ -372,6 +372,7 @@ class AllCourseShowWidget extends StatelessWidget {
                     }
 
                   },
+                  flag:pro.allCoursesInfoList[index].flag??''
                 ),
               ),
             ),

@@ -126,6 +126,7 @@ class AllCourseShowWidgetForSearch extends StatelessWidget {
           child: CourseCard1(
             courseTitle: course.coursetitle ?? '',
             universityName: course.universityname ?? '',
+            flag: course.flag??'',
             price: course.tuituionfee ?? '',
             onTap: () async {
               var cp= context.read<CourseProvider>();
