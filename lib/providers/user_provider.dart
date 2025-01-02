@@ -74,6 +74,7 @@ class UserProvider extends ChangeNotifier {
     setLoading(false);
     if (result != null) {
       if(result['Status']==false||result['Status']=="false"){
+        HelperClass.showToast(result['Message']);
         return false;
       }
       else {

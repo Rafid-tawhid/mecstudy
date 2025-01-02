@@ -167,6 +167,7 @@ class _SignUpScreenBottomSheet extends State<SignUpScreenBottomSheet> {
                             SizedBox(height: 16),
                             buildTextField(phoneNoController, 'Phone',
                                 isPassword: false,
+
                                 prefixText: initialCountry,
                                 prefixFlag: initialCountryFlag,
                                 onPrefixTap: () async {
@@ -315,7 +316,8 @@ class _SignUpScreenBottomSheet extends State<SignUpScreenBottomSheet> {
                            Navigator.pushReplacement(context, CupertinoPageRoute(builder: (context)=>LoginBottomSheet()));
                          }
                          else {
-                           HelperClass.showToast('Something went wrong');
+
+                           // HelperClass.showToast('Something went wrong');
                          }
 
                         } else {
