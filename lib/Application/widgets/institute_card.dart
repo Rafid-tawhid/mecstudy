@@ -6,12 +6,14 @@ class InstituteCard1 extends StatelessWidget {
   final String universityName;
   final String universityLocation;
   final String logoPath;
+  final bool? showLogo;
   final VoidCallback onTap;
 
   const InstituteCard1({
     super.key,
      this.height,
      this.width,
+    this.showLogo,
     required this.universityName,
     required this.universityLocation,
     required this.logoPath,
@@ -40,7 +42,7 @@ class InstituteCard1 extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Image.network(
+             if(showLogo!=false) Image.network(
                 logoPath,
                 height: 40,
                 width: 40,

@@ -303,11 +303,11 @@ class AllInstituteShowWidget extends StatelessWidget {
               itemBuilder: (context, index) => Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: InstituteCard1(
-                  universityName:
-                      pro.allInstitutesInfoList[index].universityname ?? '',
+                  showLogo:false,
+                  universityName: pro.allInstitutesInfoList[index].universityname ?? '',
                   universityLocation:
                       pro.allInstitutesInfoList[index].country ?? '',
-                  logoPath: 'images/UniversityIcon.png',
+                  logoPath: pro.allInstitutesInfoList[index].flagURL??'',
                   onTap: () async {
                     try {
                       var hp = context.read<HomeProvider>();
@@ -352,8 +352,7 @@ class AllCourseShowWidget extends StatelessWidget {
                 padding: const EdgeInsets.all(8.0),
                 child: CourseCard1(
                   courseTitle: pro.allCoursesInfoList[index].coursetitle ?? '',
-                  universityName:
-                      pro.allCoursesInfoList[index].universityname ?? '',
+                  universityName: pro.allCoursesInfoList[index].universityname ?? '',
                   price: pro.allCoursesInfoList[index].tuituionfee ?? '',
                   onTap: () async {
                     var cp= context.read<CourseProvider>();
