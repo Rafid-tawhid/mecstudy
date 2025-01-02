@@ -24,6 +24,7 @@ class LoginBottomSheet extends StatelessWidget {
         appBar: AppBar(
           surfaceTintColor: Colors.white,
           backgroundColor: Colors.white,
+          automaticallyImplyLeading: false,
         ),
         body: SingleChildScrollView(
             child: Center(
@@ -136,7 +137,7 @@ class LoginBottomSheet extends StatelessWidget {
                           style: TextStyle(color: Colors.black, fontSize: 16), // Default style for the text
                           children: [
                             TextSpan(
-                              text: 'Already have an account? ',
+                              text: 'Haven\'t signed up yet?  ',
                               style: TextStyle(fontWeight: FontWeight.normal),
                             ),
                             TextSpan(

@@ -65,55 +65,60 @@ class _ProfileScreenState extends State<ProfileScreen> {
             SizedBox(height: 20,),
             TermsNPrivacy(),
             SizedBox(height: 20,),
-            Row(
+           if(HelperClass.userProfileModel!=null) Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Container(
-                    margin: EdgeInsets.only(left: 22),
-                    child: Column(
-                      children: [
-                        GestureDetector(
-                            child: Text('Log out',
-                                textAlign: TextAlign.left,
-                                style:  TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: AdaptiveTextSize()
-                                      .getadaptiveTextSize(context, 18),
-                                  color: Colors.black,
-                                )),
-                        onTap: () async {
-                          SharedPreferences preferences = await SharedPreferences.getInstance();
-                           preferences.remove("user");
-                           Navigator.push(context, CupertinoPageRoute(builder: (context)=>LoginBottomSheet()));
+                Row(
+                  children: [
+                    Container(
+                        margin: EdgeInsets.only(left: 22),
+                        child: Column(
+                          children: [
+                            GestureDetector(
+                              child: Text('Log out',
+                                  textAlign: TextAlign.left,
+                                  style:  TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: AdaptiveTextSize()
+                                        .getadaptiveTextSize(context, 18),
+                                    color: Colors.black,
+                                  )),
+                              onTap: () async {
+                                SharedPreferences preferences = await SharedPreferences.getInstance();
+                                preferences.remove("user");
+                                Navigator.pushReplacement(context, CupertinoPageRoute(builder: (context)=>LoginBottomSheet()));
 
-                        },),
-                        SizedBox(
-                            width: Responsive.width(18.5, context),
-                            child: Container(
-                              transform:
+                              },),
+                            SizedBox(
+                                width: Responsive.width(18.5, context),
+                                child: Container(
+                                  transform:
                                   Matrix4.translationValues(0.0, -7.0, 0.0),
-                              child: Divider(
-                                thickness: 3,
-                                color: Colors.black,
-                              ),
-                            )),
-                      ],
-                    )),
-                Spacer(),
-              ],
-            ),
-            Row(
-              children: [
-                Container(
-                    margin: EdgeInsets.only(left: 22),
-                    child: Text('VERSION 1.35.0',
-                        style: TextStyle(
-                          fontWeight: FontWeight.normal,
-                          fontSize: AdaptiveTextSize()
-                              .getadaptiveTextSize(context, 14),
-                          color: Colors.black,
+                                  child: Divider(
+                                    thickness: 3,
+                                    color: Colors.black,
+                                  ),
+                                )),
+                          ],
+                        )),
+                    Spacer(),
+                  ],
+                ),
+                Row(
+                  children: [
+                    Container(
+                        margin: EdgeInsets.only(left: 22),
+                        child: Text('VERSION 1.35.0',
+                            style: TextStyle(
+                              fontWeight: FontWeight.normal,
+                              fontSize: AdaptiveTextSize()
+                                  .getadaptiveTextSize(context, 14),
+                              color: Colors.black,
 
-                        ))),
-                Spacer(),
+                            ))),
+                    Spacer(),
+                  ],
+                ),
               ],
             ),
             SizedBox(height: 120,),
@@ -545,7 +550,9 @@ class TermsNPrivacy extends StatelessWidget {
                       ),
                     ),
                     IconButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.push(context, CupertinoPageRoute(builder: (context)=>TermsAndConditionsScreen()));
+                      },
                       icon: Icon(
                         Icons.arrow_forward_ios,
                         color: Colors.black,
@@ -581,7 +588,9 @@ class TermsNPrivacy extends StatelessWidget {
                       ),
                     ),
                     IconButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.push(context, CupertinoPageRoute(builder: (context)=>PrivacyPolicyScreen()));
+                      },
                       icon: Icon(
                         Icons.arrow_forward_ios,
                         color: Colors.black,

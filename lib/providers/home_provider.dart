@@ -51,7 +51,7 @@ class HomeProvider extends ChangeNotifier {
       debugPrint('Login RESPONSE $resultData');
 
       // Check if the API response is not null
-      if (resultData != null && resultData['Model'] != null) {
+      if (resultData != null && resultData['Model'] != null||resultData['Status']!=false) {
         MainHeaders.token = resultData['Model']['Token'] ?? '';
         MainHeaders.refreshToken = resultData['Model']['RefreshToken'] ?? '';
 
@@ -82,8 +82,10 @@ class HomeProvider extends ChangeNotifier {
       }
       else {
         debugPrint('Login failed: Invalid response format or null Model');
+        HelperClass.showToast('Login error: ${resultData['Message']}');
       }
     } catch (e) {
+      HelperClass.showToast('Login error: ${e}');
       debugPrint('Login error: $e');
       returndata = false;
     } finally {
