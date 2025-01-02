@@ -99,24 +99,24 @@ class BottomButtonSection extends StatelessWidget {
         ),
         Row(
           children: [
-            SizedBox(width: 10,),
-            Padding(
-              padding: const EdgeInsets.all(12.0),
-              child: GestureDetector(
-                onTap: (){
-                  Navigator.pushReplacement(context, CupertinoPageRoute(builder: (context)=>ChatScreen()));
-                },
-                child: Container(
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      shape: BoxShape.circle
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Icon(Icons.message,color: Colors.grey,),
-                    )),
-              ),
-            ),
+            SizedBox(width: 20,),
+            // Padding(
+            //   padding: const EdgeInsets.all(12.0),
+            //   child: GestureDetector(
+            //     onTap: (){
+            //       Navigator.pushReplacement(context, CupertinoPageRoute(builder: (context)=>ChatScreen()));
+            //     },
+            //     child: Container(
+            //         decoration: BoxDecoration(
+            //           color: Colors.white,
+            //           shape: BoxShape.circle
+            //         ),
+            //         child: Padding(
+            //           padding: const EdgeInsets.all(8.0),
+            //           child: Icon(Icons.message,color: Colors.grey,),
+            //         )),
+            //   ),
+            // ),
             Expanded(child: Padding(
               padding: const EdgeInsets.symmetric(vertical: 12.0),
               child: GradientButton(text: 'View All Courses', onPressed: (){

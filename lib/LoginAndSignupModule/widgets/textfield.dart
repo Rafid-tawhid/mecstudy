@@ -59,7 +59,7 @@ Widget buildTextField(
                   Text(
                     prefixText,
                     style: TextStyle(
-                      color: Colors.blue,
+                      color: Colors.black,
                       fontWeight: FontWeight.bold,
                     ),
                   ),

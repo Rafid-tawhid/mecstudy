@@ -247,7 +247,8 @@ class _ExploreCoursesAndInstitutionsState
                     ),
                   ],
                 ),
-               if(widget.hideTopTitle!=null) Positioned(
+               // if(widget.hideTopTitle!=null)
+               if(false) Positioned(
                   bottom: 20,
                   child: GestureDetector(
                     onTap: (){
