@@ -40,7 +40,7 @@ class InstituteCard1 extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Image.asset(
+              Image.network(
                 logoPath,
                 height: 40,
                 width: 40,

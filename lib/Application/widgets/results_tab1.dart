@@ -4,6 +4,10 @@ import 'package:mecstudygroup/providers/home_provider.dart';
 import 'package:provider/provider.dart';
 
 import '../../Utilities/Constant.dart';
+import '../../Utilities/helper_class.dart';
+import '../../Widgets/courses_details_bottomsheet.dart';
+import '../../providers/course_provider.dart';
+import '../../university_details/university_dts_bottom_sheet.dart';
 import 'institute_card.dart';
 
 class ResultsTab1 extends StatefulWidget {
@@ -59,7 +63,7 @@ class _ResultsTab1State extends State<ResultsTab1> {
                 height: 12,
               ),
               Consumer<HomeProvider>(
-                builder: (context, pro, _) => pro.allCoursesInfoList.isNotEmpty
+                builder: (context, pro, _) => pro.courseList.isNotEmpty
                         ? ListView.builder(
                             scrollDirection: Axis.vertical,
                             shrinkWrap: true,
@@ -69,23 +73,28 @@ class _ResultsTab1State extends State<ResultsTab1> {
                               padding: const EdgeInsets.all(8.0),
                               child: CourseCard1(
                                 courseTitle:
-                                    pro.allCoursesInfoList[index].coursetitle ??
+                                pro.courseList[index].coursetitle ??
                                         '',
-                                universityName: pro.allCoursesInfoList[index]
-                                        .universityname ??
+                                universityName: pro.courseList[index].universityname ??
                                     '',
-                                price:
-                                    pro.allCoursesInfoList[index].tuituionfee ??
+                                price: pro.courseList[index].tuituionfee ??
                                         '',
-                                onTap: () {
-                                  // showModalBottomSheet(
-                                  //   context: context,
-                                  //   isScrollControlled: true,
-                                  //   backgroundColor: Colors.transparent,
-                                  //   builder: (BuildContext context) {
-                                  //     return CoursesScreenBottomSheet(dummyCoursesList[index]);
-                                  //   },
-                                  // );
+                                onTap: () async {
+                                  var cp= context.read<CourseProvider>();
+                                  var course = await cp.getCourseDataWithId(pro.courseList[index].id);
+                                  if(course!=null){
+                                    showModalBottomSheet(
+                                      context: context,
+                                      isScrollControlled: true,
+                                      backgroundColor: Colors.transparent,
+                                      builder: (BuildContext context) {
+                                        return CoursesScreenBottomSheet(course);
+                                      },
+                                    );
+                                  }
+                                  else {
+                                    HelperClass.showToast('No Data Found');
+                                  }
                                 },
                               ),
                             ),
@@ -134,15 +143,42 @@ class _ResultsTab1State extends State<ResultsTab1> {
                               padding: const EdgeInsets.all(8.0),
                               child: InstituteCard1(
                                   universityName: pro
-                                          .allInstitutesInfoList[index]
+                                          .topUniversityList[index]
                                           .universityname ??
                                       '',
                                   universityLocation: pro
-                                          .allInstitutesInfoList[index]
+                                          .topUniversityList[index]
                                           .country ??
                                       '',
-                                  logoPath: 'images/UniversityIcon.png',
-                                  onTap: () {}),
+                                  logoPath: pro.topUniversityList[index].flagURL??'',
+                                  onTap: () async {
+                                    try {
+                                      var hp=context.read<HomeProvider>();
+                                      await hp.getAllInformationOfUniversityById(pro.topUniversityList[index].id.toString());
+                                      showModalBottomSheet(
+                                        context: context,
+                                        isScrollControlled: true,
+                                        backgroundColor: Colors.transparent,
+                                        builder: (BuildContext context) {
+                                          return UniversityScreenBottomSheet(university:  hp.universities.first,countryName: pro.topUniversityList[index].country,); // Use the new widget here
+                                        },
+                                      );
+                                      // var university= pro.universities.firstWhere((item)=>item.id==pro.allInstitutesInfoList[index].id);
+                                      // debugPrint('UNIVERSITY NAME ${university.universityName}');
+                                      // showModalBottomSheet(
+                                      //   context: context,
+                                      //   isScrollControlled: true,
+                                      //   backgroundColor: Colors.transparent,
+                                      //   builder: (BuildContext context) {
+                                      //     return UniversityScreenBottomSheet(university); // Use the new widget here
+                                      //   },
+                                      // );
+
+                                    }
+                                    catch(e) {
+                                      HelperClass.showToast('No Info Found');
+                                    }
+                                  }),
                             ),
                           )
                         : Center(
