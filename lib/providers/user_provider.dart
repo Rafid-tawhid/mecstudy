@@ -33,7 +33,7 @@ class UserProvider extends ChangeNotifier {
     var result = await apiService.postData(
         '/Datasource/GetDataByDataSourceID', {
       "DataSourceID": 9,
-      "Whereclause": "AND id = '$countryId'"
+      "Whereclause": "AND CountryID = '$countryId'"
     },mainHeader: MainHeaders.updatedHeader,);
 
     if (result != null) {
