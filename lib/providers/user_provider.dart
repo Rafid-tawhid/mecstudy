@@ -61,6 +61,7 @@ class UserProvider extends ChangeNotifier {
     notifyListeners();
   }
 //
+  //
   Future<bool> signUp({required String FName,
     required String LName,
     required String address,
