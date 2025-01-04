@@ -188,21 +188,21 @@ class _SignUpScreenBottomSheet extends State<SignUpScreenBottomSheet> {
                               builder: (context,up,_)=>Padding(
                                 padding: const EdgeInsets.symmetric(horizontal: 12.0),
                                 child: CustomDropdownNew<Country>(
-                                  items: up.countriesModelList,
+                                  items: up.countriesModelList.toSet().toList(),
                                   hintText: 'Select Country',
                                   selectedValue: _country,
                                   onChanged: (value) {
 
                                     if(value!=null){
                                       debugPrint('value.countryID ${value.name}: ${value.countryID.toString()}');
-                                      up.getCtiyNames(value.countryID.toString());
                                       setState(() {
                                         _city=null;
                                         _country=value;
                                         _selectedCountry = value.name ?? '';
-                                        //getCtiyNames();
                                         _selectedCity = '';
                                       });
+                                      up.getCtiyNames(value.countryID.toString());
+
                                     }
                                   },
                                   itemLabel: (model) => model.name,
@@ -311,9 +311,53 @@ class _SignUpScreenBottomSheet extends State<SignUpScreenBottomSheet> {
                               email: emailAddressController.text,
                               password: passwordController.text);
                          if(result){
-                           HelperClass.showToast('Successful! please wait...');
+                           showDialog(
+                             context: context,
+                             builder: (BuildContext context) {
+                               return AlertDialog(
+                                 shape: RoundedRectangleBorder(
+                                   borderRadius: BorderRadius.circular(20),
+                                 ),
+                                 title: Row(
+                                   children: [
+                                     const Icon(Icons.check_circle, color: Colors.green, size: 30),
+                                     const SizedBox(width: 10),
+                                     const Text('Registration Successful',
+                                         style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+                                   ],
+                                 ),
+                                 content: Column(
+                                   mainAxisSize: MainAxisSize.min,
+                                   children: [
+                                     const Text(
+                                       'Congratulations! Your registration was successful.',
+                                       textAlign: TextAlign.center,
+                                       style: TextStyle(fontSize: 16, color: Colors.black54),
+                                     ),
+                                     const SizedBox(height: 20),
+                                     Icon(Icons.check_circle,size: 60,color: Colors.green,)
+                                   ],
+                                 ),
+                                 actions: [
+                                   ElevatedButton(
+                                     style: ElevatedButton.styleFrom(
+                                       backgroundColor: Colors.green,
+                                       shape: RoundedRectangleBorder(
+                                         borderRadius: BorderRadius.circular(10),
+                                       ),
+                                     ),
+                                     onPressed: () {
+                                       Navigator.of(context).pop();
+                                       Navigator.pushReplacement(context, CupertinoPageRoute(builder: (context)=>LoginBottomSheet()));// Close the dialog
+                                     },
+                                     child: const Text('OK', style: TextStyle(fontSize: 16)),
+                                   ),
+                                 ],
+                               );},);
                            //Save user info and
-                           Navigator.pushReplacement(context, CupertinoPageRoute(builder: (context)=>LoginBottomSheet()));
+                           // Future.delayed(Duration(seconds: 5,),(){
+                           //   Navigator.pushReplacement(context, CupertinoPageRoute(builder: (context)=>LoginBottomSheet()));
+                           // });
                          }
                          else {
 

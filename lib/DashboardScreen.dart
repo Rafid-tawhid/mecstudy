@@ -247,7 +247,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     height: 10,
                   ),
                   SizedBox(
-                      height: 124.h,
+                      height: 132.h,
                       child: Consumer<HomeProvider>(
                         builder: (context, provider, _) => CourseCard(provider),
                       )),

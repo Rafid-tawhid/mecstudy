@@ -7,8 +7,24 @@ import '../DashboardScreen.dart';
 import '../Model/CountryModel.dart';
 
 class UserProvider extends ChangeNotifier {
-  List<Country> countriesModelList = [];
-  List<City> citiesModelList = [];
+  List<Country> _countriesModelList = [];
+  List<City> _citiesModelList = [];
+
+  // Getter for countriesModelList
+  List<Country> get countriesModelList => _countriesModelList;
+
+  // Setter for countriesModelList
+  set countriesModelList(List<Country> countries) {
+    _countriesModelList = countries;
+  }
+
+  // Getter for citiesModelList
+  List<City> get citiesModelList => _citiesModelList;
+
+  // Setter for citiesModelList
+  set citiesModelList(List<City> cities) {
+    _citiesModelList = cities;
+  }
   bool signupLoadingButton=false;
 
   Future<void> getAllCountry() async {
@@ -20,11 +36,11 @@ class UserProvider extends ChangeNotifier {
     },mainHeader: MainHeaders.updatedHeader,);
 
     if (result != null) {
-      countriesModelList.clear();
-      countriesModelList = List<Country>.from(
+      _countriesModelList.clear();
+      _countriesModelList = List<Country>.from(
           result['Model']['Table'].map((x) => Country.fromJson(x)));
     }
-    debugPrint('countriesModelList ${countriesModelList.length}');
+    debugPrint('countriesModelList ${_countriesModelList.length}');
     notifyListeners();
   }
 
@@ -37,11 +53,11 @@ class UserProvider extends ChangeNotifier {
     },mainHeader: MainHeaders.updatedHeader,);
 
     if (result != null) {
-      citiesModelList.clear();
-      citiesModelList = List<City>.from(
-          result['Model']['Table'].map((x) => City.fromJson(x)));
+      _citiesModelList.clear();
+      _citiesModelList = List<City>.from(
+          result['Model']['Table'].map((x) => City.fromJson(x))).toSet().toList();
     }
-    debugPrint('citiesModelList ${citiesModelList.length}');
+    debugPrint('citiesModelList ${_citiesModelList.length}');
     notifyListeners();
   }
 
