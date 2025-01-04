@@ -60,7 +60,7 @@ class UserProvider extends ChangeNotifier {
     debugPrint('citiesModelList ${_citiesModelList.length}');
     notifyListeners();
   }
-
+//
   Future<bool> signUp({required String FName,
     required String LName,
     required String address,
