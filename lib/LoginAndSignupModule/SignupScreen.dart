@@ -326,6 +326,7 @@ class _SignUpScreenBottomSheet extends State<SignUpScreenBottomSheet> {
                                          style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold)),
                                    ],
                                  ),
+                                 //
                                  content: Column(
                                    mainAxisSize: MainAxisSize.min,
                                    children: [
