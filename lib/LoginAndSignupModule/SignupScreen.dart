@@ -323,7 +323,7 @@ class _SignUpScreenBottomSheet extends State<SignUpScreenBottomSheet> {
                                      const Icon(Icons.check_circle, color: Colors.green, size: 30),
                                      const SizedBox(width: 10),
                                      const Text('Registration Successful',
-                                         style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+                                         style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold)),
                                    ],
                                  ),
                                  content: Column(
@@ -332,7 +332,7 @@ class _SignUpScreenBottomSheet extends State<SignUpScreenBottomSheet> {
                                      const Text(
                                        'Congratulations! Your registration was successful.',
                                        textAlign: TextAlign.center,
-                                       style: TextStyle(fontSize: 16, color: Colors.black54),
+                                       style: TextStyle(fontSize: 14, color: Colors.black54),
                                      ),
                                      const SizedBox(height: 20),
                                      Icon(Icons.check_circle,size: 60,color: Colors.green,)
