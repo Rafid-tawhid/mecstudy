@@ -322,7 +322,7 @@ class _SignUpScreenBottomSheet extends State<SignUpScreenBottomSheet> {
                                    children: [
                                      const Icon(Icons.check_circle, color: Colors.green, size: 30),
                                      const SizedBox(width: 10),
-                                     const Text('Registration Successful',
+                                     const Text('Registration Successful.',
                                          style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold)),
                                    ],
                                  ),
