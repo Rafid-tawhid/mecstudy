@@ -425,7 +425,7 @@ class UniversityInformation extends StatelessWidget {
         SizedBox(height: 12,),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 12),
-          child: Text('Accept English Test',style: customText(18, Colors.black, FontWeight.bold),),
+          child: Text('Accept English Exam',style: customText(18, Colors.black, FontWeight.bold),),
         ),
         SizedBox(height: 8,),
         Padding(

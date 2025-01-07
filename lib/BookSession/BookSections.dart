@@ -336,8 +336,8 @@ class _SelectSubjectOption extends State<SelectSubjectOption> {
                                   userName: AppConstant.userName,
                                   userEmail: AppConstant.userEmail,
                                   contactNumber: "123456789",
-                                  courseName: "TestCourse",
-                                  universityName: "TestUniversity");
+                                  courseName: "Course",
+                                  universityName: "University");
                               //}
                               // Replace with your Zoom API key and secret
                               String apiKey = '0fAOrQ1Tc6pEwjHH6H7tw';
@@ -786,14 +786,14 @@ class _SelectSubjectOption extends State<SelectSubjectOption> {
 //     //
 //     // final url = 'https://meet.jit.si/$UserName';
 //     //
-//     // String subject = 'Flutter Email Test';
+//     // String subject = 'Flutter Email Exam';
 //     // String body = 'your meeting id is  \n${url}';
 //     // final message = Message()
 //     //   ..from = Address('usama.saleem4629@gmail.com', 'Adeel ')
 //     //   ..recipients.add('recipient@example.com')
 //     //   ..subject = 'your meeting link :: 😀 :: ${DateTime.now()}'
 //     //   ..text = 'This is a meeting URL.\n $body'
-//     //   ..html = "<h1>Test</h1>\n<p>Hey! Here's some HTML content</p>";
+//     //   ..html = "<h1>Exam</h1>\n<p>Hey! Here's some HTML content</p>";
 //     //
 //     // try {
 //     //   final sendReport = await send(message, smtpServer);
@@ -812,7 +812,7 @@ class _SelectSubjectOption extends State<SelectSubjectOption> {
 
     final url = 'https://meet.jit.si/$UserName';
 
-    String subject = 'Flutter Email Test';
+    String subject = 'Flutter Email';
     String body = 'your meeting id is  \n$url';
 
     // Create the mailto URL
