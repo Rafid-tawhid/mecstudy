@@ -288,8 +288,8 @@ class _SignUpScreenBottomSheet extends State<SignUpScreenBottomSheet> {
                         // } catch (e) {
                         //   print('Failed to send email: $e');
                         // }
-
-                        if (validateFields()) {
+//validateFields()
+                        if (true) {
                           print(firstNameController.text);
                           print(lastNameController.text);
                           print(addressController.text);
