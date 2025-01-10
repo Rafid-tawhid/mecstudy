@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
-
+//
 class ExpandableText extends StatefulWidget {
   final String text;
   final bool? isHtml;
@@ -40,6 +40,8 @@ class _ExpandableTextState extends State<ExpandableText> {
       ],
     );
   }
+
+
 
   // Method to handle expandable HTML content
   Widget _buildExpandableHtmlContent() {
