@@ -23,7 +23,7 @@ class _ExpandableTextState extends State<ExpandableText> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        // Check if the content is HTML or regular text
+        // Check if the content is HTML or regular
         widget.isHtml == true
             ? _buildExpandableHtmlContent()
             : _buildExpandablePlainText(),
