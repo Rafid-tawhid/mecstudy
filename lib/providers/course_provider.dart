@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:mecstudygroup/Model/course_details_model.dart';
+import 'package:mecstudygroup/Model/course_filter_model.dart';
 import 'package:mecstudygroup/Model/destination_info_model.dart';
 import 'package:mecstudygroup/Utilities/helper_class.dart';
 import 'package:mecstudygroup/Utilities/interceptor_class.dart';
@@ -68,6 +69,30 @@ class CourseProvider extends ChangeNotifier{
         _courseAllCoursesBySubject.add(CourseDetailsModel.fromJson(i));
       }
       debugPrint('_courseAllCoursesBySubject ${_courseAllCoursesBySubject.length}');
+      return true;
+    }
+    else{
+      // HelperClass.showToast('No Data Found');
+      return false;
+    }
+  }
+
+
+  List<CourseFilterDataModel> _courseFilterDataModel=[];
+  List<CourseFilterDataModel> get courseFilterDataModel =>_courseFilterDataModel;
+
+  Future<bool> getAllCourseInfoForFilter() async {
+    ApiService apiService=ApiService();
+    var data=await apiService.postData('/Datasource/GetDataByDataSourceID',{"DataSourceID": "27","whereclause":"AND 1 = 1"},mainHeader: MainHeaders.updatedHeader);
+    if(data!=null){
+      debugPrint('resultData ${data.toString()}');
+      List<dynamic> table = data['Model']['Table'];
+      _courseFilterDataModel.clear();
+      for(Map<String,dynamic> i in table){
+        _courseFilterDataModel.add(CourseFilterDataModel.fromJson(i));
+      }
+      debugPrint('_courseFilterDataModel ${_courseFilterDataModel.length}');
+      notifyListeners();
       return true;
     }
     else{

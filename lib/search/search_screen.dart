@@ -134,6 +134,7 @@ class _SearchScreenState extends State<SearchScreen> {
 
   void callAllSearchData() async{
     var hp = context.read<HomeProvider>();
+    var cp = context.read<CourseProvider>();
     await Future.microtask(() {
       if (hp.allInstitutesInfoList.isEmpty || hp.allCoursesInfoList.isEmpty) {
         hp.getAllCourseAndUniversityInfo().then((done){
@@ -145,6 +146,16 @@ class _SearchScreenState extends State<SearchScreen> {
         callforFocus();
       }
     });
+    if(cp.courseFilterDataModel.isEmpty)
+      {
+        cp.getAllCourseInfoForFilter().then((v){
+          debugPrint('courseFilterDataModel ${v}');
+        });
+
+
+      }
+    //call data for filter
+
   }
 
   void search(String query) {

@@ -12,24 +12,24 @@ class CourseFilterDataModel {
   final List<String> upcomingIntakes;
   final String modeOfStudy;
   final String overview;
-  final List<String> documentsRequired;
-  final int statusId;
+  final List<dynamic> documentsRequired;
+  final int? statusId;
   final int userId;
-  final int subId;
-  final int universityId1;
-  final String universityName;
-  final int countryId;
+  final int? subId;
+  final int? universityId1;
+  final String? universityName;
+  final int? countryId;
   final List<String> degreeIds;
   final List<String> trendingSubjects;
-  final List<Map<String, String>> ranking;
+ // final List<Map<String, dynamic>> ranking;
   final String scholarships;
-  final List<Map<String, String>> facilities;
+ // final List<Map<String, dynamic>> facilities;
   final String employabilityDetails;
   final String alumni;
-  final List<Map<String, String>> faqs;
+  final List<Map<String, dynamic>> faqs;
   final String bannerImageUrl;
   final String universityInformation;
-  final List<Map<String, String>> moreAboutUniversity;
+  final List<Map<String, dynamic>> moreAboutUniversity;
   final String flagUrl;
 
   CourseFilterDataModel({
@@ -53,9 +53,9 @@ class CourseFilterDataModel {
     required this.countryId,
     required this.degreeIds,
     required this.trendingSubjects,
-    required this.ranking,
+  //  required this.ranking,
     required this.scholarships,
-    required this.facilities,
+   // required this.facilities,
     required this.employabilityDetails,
     required this.alumni,
     required this.faqs,
@@ -88,15 +88,15 @@ class CourseFilterDataModel {
       countryId: json['CountryID'],
       degreeIds: List<String>.from(jsonDecode(json['DegreeID'])),
       trendingSubjects: List<String>.from(jsonDecode(json['TrendingSubjectsID'])),
-      ranking: List<Map<String, String>>.from(jsonDecode(json['Ranking'])),
+     // ranking: List<Map<String, dynamic>>.from(jsonDecode(json['Ranking'])),
       scholarships: json['Scholarships'],
-      facilities: List<Map<String, String>>.from(jsonDecode(json['Facilities'])),
+     // facilities: List<Map<String, dynamic>>.from(jsonDecode(json['Facilities'])),
       employabilityDetails: json['Employability_Details'],
       alumni: json['Alumni'],
-      faqs: List<Map<String, String>>.from(jsonDecode(json['FAQs'])),
+      faqs: List<Map<String, dynamic>>.from(jsonDecode(json['FAQs'])),
       bannerImageUrl: json['Banner_Image_URL'],
       universityInformation: json['University_Information'],
-      moreAboutUniversity: List<Map<String, String>>.from(jsonDecode(json['More_About_University'])),
+      moreAboutUniversity: List<Map<String, dynamic>>.from(jsonDecode(json['More_About_University'])),
       flagUrl: json['Flag_URL'],
     );
   }
@@ -124,9 +124,9 @@ class CourseFilterDataModel {
       'CountryID': countryId,
       'DegreeID': jsonEncode(degreeIds),
       'TrendingSubjectsID': jsonEncode(trendingSubjects),
-      'Ranking': jsonEncode(ranking),
+      //'Ranking': jsonEncode(ranking),
       'Scholarships': scholarships,
-      'Facilities': jsonEncode(facilities),
+     // 'Facilities': jsonEncode(facilities),
       'Employability_Details': employabilityDetails,
       'Alumni': alumni,
       'FAQs': jsonEncode(faqs),
