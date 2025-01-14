@@ -848,6 +848,19 @@ class InstituteCard extends StatelessWidget {
                           child: Image.network(
                             pro.topUniversityList[index].bannerImageURL ?? '',
                             fit: BoxFit.cover,
+                            loadingBuilder: (context, child, loadingProgress) {
+                              if (loadingProgress == null) {
+                                return child; // Image is fully loaded
+                              }
+                              return Center(
+                                child: CircularProgressIndicator(
+                                  value: loadingProgress.expectedTotalBytes != null
+                                      ? loadingProgress.cumulativeBytesLoaded / (loadingProgress.expectedTotalBytes ?? 1)
+                                      : null,
+                                  color: Colors.grey,
+                                ),
+                              );
+                            },
                             errorBuilder: (context, error, stackTrace) {
                               return Image.asset(
                                 'images/TopGridBG.png', // Path to your local placeholder image
@@ -856,7 +869,6 @@ class InstituteCard extends StatelessWidget {
                                 width: 180.h,
                               );
                             },
-
                           ),
                         ),
                       ),

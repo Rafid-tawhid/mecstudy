@@ -9,6 +9,7 @@ import '../Utilities/helper_class.dart';
 import '../Widgets/courses_details_bottomsheet.dart';
 import '../providers/course_provider.dart';
 import '../university_details/university_dts_bottom_sheet.dart';
+import 'filter_search.dart';
 
 class SearchScreen extends StatefulWidget {
   const SearchScreen({super.key});
@@ -60,6 +61,18 @@ class _SearchScreenState extends State<SearchScreen> {
           ),
           centerTitle: true,
           iconTheme: IconThemeData(color: Colors.black),
+          actions: [
+            TextButton(onPressed: (){
+              showModalBottomSheet(
+                context: context,
+                isScrollControlled: true,
+                backgroundColor: Colors.transparent,
+                builder: (BuildContext context) {
+                  return FilterSearchScreen(); // Use the new widget here
+                },
+              );
+            }, child: Text('Filter'))
+          ],
         ),
         body: Padding(
           padding: const EdgeInsets.all(16.0),
@@ -200,3 +213,5 @@ class _SearchScreenState extends State<SearchScreen> {
     });
   }
 }
+
+
