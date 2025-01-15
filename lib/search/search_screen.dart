@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mecstudygroup/Model/university_model.dart';
 import 'package:mecstudygroup/providers/home_provider.dart';
-import 'package:mecstudygroup/search/search_screen_combine.dart';
 import 'package:provider/provider.dart';
-
 import '../Model/course_model.dart';
 import '../Utilities/helper_class.dart';
 import '../Widgets/courses_details_bottomsheet.dart';
@@ -149,13 +147,10 @@ class _SearchScreenState extends State<SearchScreen> {
     if(cp.courseFilterDataModel.isEmpty)
       {
         cp.getAllCourseInfoForFilter().then((v){
-          debugPrint('courseFilterDataModel ${v}');
+          debugPrint('courseFilterDataModel $v');
         });
-
-
       }
     //call data for filter
-
   }
 
   void search(String query) {
