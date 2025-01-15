@@ -1,5 +1,5 @@
 import 'dart:convert';
-
+//
 class CourseFilterDataModel {
   final int? id;
   final String? courseTitle;
