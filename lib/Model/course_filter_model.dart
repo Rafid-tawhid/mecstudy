@@ -1,5 +1,5 @@
 import 'dart:convert';
-//
+
 class CourseFilterDataModel {
   final int? id;
   final String? courseTitle;
@@ -11,7 +11,6 @@ class CourseFilterDataModel {
   final DateTime? applicationDeadline;
   final List<String>? upcomingIntakes;
   final String? modeOfStudy;
-  final String? overview;
   final String? docRequired;
   final int? statusId;
   final int? userId;
@@ -21,16 +20,8 @@ class CourseFilterDataModel {
   final int? countryId;
   final List<String>? degreeId;
   final List<String>? trendingSubjectsId;
-  final List<Map<String, String>>? ranking;
   final String? scholarships;
-  final List<Map<String, String>>? facilities;
-  final String? employabilityDetails;
   final String? alumni;
-  final List<Map<String, String>>? faqs;
-  final String? bannerImageUrl;
-  final String? universityInformation;
-  final List<Map<String, String>>? moreAboutUniversity;
-  final String? flagUrl;
   final int? statusId1;
   final int? userId1;
 
@@ -45,7 +36,6 @@ class CourseFilterDataModel {
     this.applicationDeadline,
     this.upcomingIntakes,
     this.modeOfStudy,
-    this.overview,
     this.docRequired,
     this.statusId,
     this.userId,
@@ -55,16 +45,8 @@ class CourseFilterDataModel {
     this.countryId,
     this.degreeId,
     this.trendingSubjectsId,
-    this.ranking,
     this.scholarships,
-    this.facilities,
-    this.employabilityDetails,
     this.alumni,
-    this.faqs,
-    this.bannerImageUrl,
-    this.universityInformation,
-    this.moreAboutUniversity,
-    this.flagUrl,
     this.statusId1,
     this.userId1,
   });
@@ -81,7 +63,6 @@ class CourseFilterDataModel {
       applicationDeadline: json['Application_deadline'] != null ? DateTime.parse(json['Application_deadline']) : null,
       upcomingIntakes: json['Upcoming_intakes'] != null ? List<String>.from(jsonDecode(json['Upcoming_intakes'])) : null,
       modeOfStudy: json['Mode_of_study'] as String?,
-      overview: json['Overview'] as String?,
       docRequired: json['Doc_required'] as String?,
       statusId: json['StatusID'] as int?,
       userId: json['UserID'] as int?,
@@ -91,16 +72,8 @@ class CourseFilterDataModel {
       countryId: json['CountryID'] as int?,
       degreeId: json['DegreeID'] != null ? List<String>.from(jsonDecode(json['DegreeID'])) : null,
       trendingSubjectsId: json['TrendingSubjectsID'] != null ? List<String>.from(jsonDecode(json['TrendingSubjectsID'])) : null,
-      ranking: json['Ranking'] != null ? List<Map<String, String>>.from(jsonDecode(json['Ranking'])) : null,
       scholarships: json['Scholarships'] as String?,
-      facilities: json['Facilities'] != null ? List<Map<String, String>>.from(jsonDecode(json['Facilities'])) : null,
-      employabilityDetails: json['Employability_Details'] as String?,
       alumni: json['Alumni'] as String?,
-      faqs: json['FAQs'] != null ? List<Map<String, String>>.from(jsonDecode(json['FAQs'])) : null,
-      bannerImageUrl: json['Banner_Image_URL'] as String?,
-      universityInformation: json['University_Information'] as String?,
-      moreAboutUniversity: json['More_About_University'] != null ? List<Map<String, String>>.from(jsonDecode(json['More_About_University'])) : null,
-      flagUrl: json['Flag_URL'] as String?,
       statusId1: json['StatusId1'] as int?,
       userId1: json['UserId1'] as int?,
     );
@@ -118,7 +91,6 @@ class CourseFilterDataModel {
       'Application_deadline': applicationDeadline?.toIso8601String(),
       'Upcoming_intakes': upcomingIntakes != null ? jsonEncode(upcomingIntakes) : null,
       'Mode_of_study': modeOfStudy,
-      'Overview': overview,
       'Doc_required': docRequired,
       'StatusID': statusId,
       'UserID': userId,
@@ -128,16 +100,8 @@ class CourseFilterDataModel {
       'CountryID': countryId,
       'DegreeID': degreeId != null ? jsonEncode(degreeId) : null,
       'TrendingSubjectsID': trendingSubjectsId != null ? jsonEncode(trendingSubjectsId) : null,
-      'Ranking': ranking != null ? jsonEncode(ranking) : null,
       'Scholarships': scholarships,
-      'Facilities': facilities != null ? jsonEncode(facilities) : null,
-      'Employability_Details': employabilityDetails,
       'Alumni': alumni,
-      'FAQs': faqs != null ? jsonEncode(faqs) : null,
-      'Banner_Image_URL': bannerImageUrl,
-      'University_Information': universityInformation,
-      'More_About_University': moreAboutUniversity != null ? jsonEncode(moreAboutUniversity) : null,
-      'Flag_URL': flagUrl,
       'StatusId1': statusId1,
       'UserId1': userId1,
     };
