@@ -3,6 +3,7 @@ import 'package:flutter_html/flutter_html.dart';
 //
 //
 //
+
 class ExpandableText extends StatefulWidget {
   final String text;
   final bool? isHtml;
@@ -21,7 +22,7 @@ class _ExpandableTextState extends State<ExpandableText> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        // Check if the content is HTML or regular text
+        // Check if the content is HTML or regular
         widget.isHtml == true
             ? _buildExpandableHtmlContent()
             : _buildExpandablePlainText(),

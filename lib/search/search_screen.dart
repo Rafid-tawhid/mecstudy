@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:mecstudygroup/Model/university_model.dart';
 import 'package:mecstudygroup/providers/home_provider.dart';
-import 'package:mecstudygroup/search/search_screen_combine.dart';
 import 'package:provider/provider.dart';
-
 import '../Model/course_model.dart';
 import '../Utilities/helper_class.dart';
 import '../Widgets/courses_details_bottomsheet.dart';
 import '../providers/course_provider.dart';
 import '../university_details/university_dts_bottom_sheet.dart';
+import 'filter_search.dart';
 
 class SearchScreen extends StatefulWidget {
   const SearchScreen({super.key});
@@ -60,6 +59,18 @@ class _SearchScreenState extends State<SearchScreen> {
           ),
           centerTitle: true,
           iconTheme: IconThemeData(color: Colors.black),
+          actions: [
+            TextButton(onPressed: (){
+              showModalBottomSheet(
+                context: context,
+                isScrollControlled: true,
+                backgroundColor: Colors.transparent,
+                builder: (BuildContext context) {
+                  return FilterSearchScreen(); // Use the new widget here
+                },
+              );
+            }, child: Text('Filter'))
+          ],
         ),
         body: Padding(
           padding: const EdgeInsets.all(16.0),
@@ -121,6 +132,7 @@ class _SearchScreenState extends State<SearchScreen> {
 
   void callAllSearchData() async{
     var hp = context.read<HomeProvider>();
+    var cp = context.read<CourseProvider>();
     await Future.microtask(() {
       if (hp.allInstitutesInfoList.isEmpty || hp.allCoursesInfoList.isEmpty) {
         hp.getAllCourseAndUniversityInfo().then((done){
@@ -132,6 +144,13 @@ class _SearchScreenState extends State<SearchScreen> {
         callforFocus();
       }
     });
+    if(cp.courseFilterDataModel.isEmpty)
+      {
+        cp.getAllCourseInfoForFilter().then((v){
+          debugPrint('courseFilterDataModel $v');
+        });
+      }
+    //call data for filter
   }
 
   void search(String query) {
@@ -200,3 +219,5 @@ class _SearchScreenState extends State<SearchScreen> {
     });
   }
 }
+
+
