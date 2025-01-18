@@ -78,8 +78,10 @@ class CourseProvider extends ChangeNotifier{
   }
 
 
-  List<CourseFilterDataModel> _courseFilterDataModel=[];
+   List<CourseFilterDataModel> _courseFilterDataModel=[];
+   List<CourseFilterDataModel> _courseFilteredList=[];
   List<CourseFilterDataModel> get courseFilterDataModel =>_courseFilterDataModel;
+  List<CourseFilterDataModel> get courseFilteredList =>_courseFilteredList;
 
   Future<bool> getAllCourseInfoForFilter() async {
     ApiService apiService = ApiService();
@@ -98,6 +100,7 @@ class CourseProvider extends ChangeNotifier{
         for (Map<String, dynamic> i in table) {
           try {
             _courseFilterDataModel.add(CourseFilterDataModel.fromJson(i));
+            _courseFilteredList.add(CourseFilterDataModel.fromJson(i));
           } catch (e) {
             debugPrint('Error converting data to CourseFilterDataModel: $e');
             // Optionally, log the problematic data for debugging:
@@ -118,6 +121,26 @@ class CourseProvider extends ChangeNotifier{
       // Optionally, show a user-facing message here
       return false;
     }
+  }
+
+  String selectedLevel='';
+  String selectedDuration='';
+  void updateCourseListwithFilterData(String level, String duration) {
+    if(level!=''){
+      selectedLevel=level;
+    }
+    if(duration!=''){
+      selectedDuration=duration;
+    }
+    _courseFilteredList = _courseFilterDataModel.where((course) {
+      final matchesDuration = duration.isEmpty || (course.duration?.toLowerCase() == duration.toLowerCase());
+      final matchesLevel = level.isEmpty || (course.courseLevel?.toLowerCase() == level.toLowerCase());
+      return matchesDuration && matchesLevel;
+    }).toList();
+
+    debugPrint('_courseFilteredList ${_courseFilteredList.length}');
+    // Notify listeners to rebuild dependent widgets.
+    notifyListeners();
   }
 
 }
