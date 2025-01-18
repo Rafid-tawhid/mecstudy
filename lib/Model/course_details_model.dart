@@ -39,8 +39,8 @@ class CourseDetailsModel {
 
   CourseDetailsModel.fromJson(dynamic json) {
 
-    var faqsFromJson = jsonDecode(json['FAQs']) as List;
-    List<Faq> faqsList = faqsFromJson.map((i) => Faq.fromJson(i)).toList();
+    // var faqsFromJson = jsonDecode(json['FAQs']) as List;
+    // List<Faq> faqsList = faqsFromJson.map((i) => Faq.fromJson(i)).toList();
 
     id = json['ID'];
     courseTitle = json['Course_Title'];
@@ -67,7 +67,7 @@ class CourseDetailsModel {
     facilities = json['Facilities'];
     employabilityDetails = json['Employability_Details'];
     alumni = json['Alumni'];
-    fAQs = faqsList;
+    //fAQs = faqsList;
     bannerImageURL = json['Banner_Image_URL'];
     universityInformation = json['University_Information'];
     moreAboutUniversity = json['More_About_University'];
