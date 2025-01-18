@@ -103,53 +103,53 @@ class _SettingScreenState extends State<SettingScreen> {
               SizedBox(
                 height: Responsive.height(5, context),
               ),
-              InkWell(
-                child: Container(
-                    width: Responsive.width(100, context),
-                    height: Responsive.height(6.5, context),
-                    padding: EdgeInsets.only(left: 16, right: 16, top: 8),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(16),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.grey.withOpacity(0.4),
-                          // Shadow color
-                          spreadRadius: 2,
-                          // Spread radius
-                          blurRadius: 4,
-                          // Blur radius
-                          offset: Offset(0, 1), // Offset in the y direction
-                        ),
-                      ],
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        Text("Delete Account",
-                            style: TextStyle(
-                              fontWeight: FontWeight.w700,
-                              fontSize: AdaptiveTextSize()
-                                  .getadaptiveTextSize(context, 16),
-                              color: Colors.red,
-                              // color: Color(0xFF151C18),
-                              // fo
-                            )),
-                        InkWell(
-                          child: Icon(
-                            Icons.arrow_forward_ios,
-                            size: 20,
-                          ),
-                          onTap: () {
-                            Navigator.pop(context);
-                          },
-                        )
-                      ],
-                    )),
-                onTap: () {
-                  Navigator.pop(context);
-                },
-              ),
+              // InkWell(
+              //   child: Container(
+              //       width: Responsive.width(100, context),
+              //       height: Responsive.height(6.5, context),
+              //       padding: EdgeInsets.only(left: 16, right: 16, top: 8),
+              //       decoration: BoxDecoration(
+              //         color: Colors.white,
+              //         borderRadius: BorderRadius.circular(16),
+              //         boxShadow: [
+              //           BoxShadow(
+              //             color: Colors.grey.withOpacity(0.4),
+              //             // Shadow color
+              //             spreadRadius: 2,
+              //             // Spread radius
+              //             blurRadius: 4,
+              //             // Blur radius
+              //             offset: Offset(0, 1), // Offset in the y direction
+              //           ),
+              //         ],
+              //       ),
+              //       child: Row(
+              //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              //         children: <Widget>[
+              //           Text("Delete Account",
+              //               style: TextStyle(
+              //                 fontWeight: FontWeight.w700,
+              //                 fontSize: AdaptiveTextSize()
+              //                     .getadaptiveTextSize(context, 16),
+              //                 color: Colors.red,
+              //                 // color: Color(0xFF151C18),
+              //                 // fo
+              //               )),
+              //           InkWell(
+              //             child: Icon(
+              //               Icons.arrow_forward_ios,
+              //               size: 20,
+              //             ),
+              //             onTap: () {
+              //               Navigator.pop(context);
+              //             },
+              //           )
+              //         ],
+              //       )),
+              //   onTap: () {
+              //     Navigator.pop(context);
+              //   },
+              // ),
               SizedBox(
                 height: Responsive.height(10, context),
               ),

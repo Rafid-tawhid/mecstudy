@@ -1,10 +1,14 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mecstudygroup/Destinations/widgets/gridview.dart';
+import 'package:mecstudygroup/Model/CourseModel.dart';
 import 'package:mecstudygroup/Utilities/Constant.dart';
+import 'package:mecstudygroup/providers/course_provider.dart';
 import 'package:provider/provider.dart';
 
 import '../BookSession/widgets/buttons.dart';
 import '../providers/home_provider.dart';
+import 'filltered_search_courses_list.dart';
 
 class FilterSearchScreen extends StatelessWidget {
   const FilterSearchScreen({super.key});
@@ -12,12 +16,10 @@ class FilterSearchScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     List<String> durationList = [
-      'Less than 1 year',
-      '1-2 years',
-      '2-3 years',
-      '3-4 years',
-      '4-5 years',
-      'More than 5 years'
+      '1 Years Duration',
+      '2 Years Duration',
+      '3 Years Duration',
+      '4 Years Duration',
     ];
     return DraggableScrollableSheet(
       expand: true,
@@ -99,31 +101,43 @@ class FilterSearchScreen extends StatelessWidget {
                   ),
                   Row(
                     children: [
-                      SizedBox(width: 10,),
+                      SizedBox(
+                        width: 10,
+                      ),
                       Padding(
                         padding: const EdgeInsets.all(12.0),
                         child: GestureDetector(
-                          onTap: (){
-                          //  Navigator.pushReplacement(context, CupertinoPageRoute(builder: (context)=>ChatScreen()));
+                          onTap: () {
+                            //  Navigator.pushReplacement(context, CupertinoPageRoute(builder: (context)=>ChatScreen()));
                           },
                           child: Container(
                               decoration: BoxDecoration(
                                   color: Colors.grey.shade200,
-                                  borderRadius: BorderRadius.circular(24)
-                              ),
+                                  borderRadius: BorderRadius.circular(24)),
                               child: Padding(
-                                padding: const EdgeInsets.symmetric(vertical: 12.0,horizontal: 28),
+                                padding: const EdgeInsets.symmetric(
+                                    vertical: 12.0, horizontal: 28),
                                 child: Text('Reset'),
                               )),
                         ),
                       ),
-                      Expanded(child: Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 12.0),
-                        child: GradientButton(text: 'Show 5 Result', onPressed: (){
-                         // Navigator.pushReplacement(context, CupertinoPageRoute(builder: (context)=>SeeAllCourseScreen()));
-                        },verticalPadding: 10,),
-                      )),
-                      SizedBox(width: 20,)
+                      Expanded(
+                          child: Consumer<CourseProvider>(
+                           builder: (context,pro,_)=>Padding(
+                             padding: const EdgeInsets.symmetric(vertical: 12.0),
+                             child: GradientButton(
+                               text: 'Show ${pro.courseFilteredList.length} Result',
+                               onPressed: () {
+                                 Navigator.push(context, CupertinoPageRoute(builder: (context)=>CourseListScreen()));
+                                 // Navigator.pushReplacement(context, CupertinoPageRoute(builder: (context)=>SeeAllCourseScreen()));
+                               },
+                               verticalPadding: 10,
+                             ),
+                           ),
+                          )),
+                      SizedBox(
+                        width: 20,
+                      )
                     ],
                   ),
                 ],
@@ -409,7 +423,7 @@ class _SliderWithTextFieldsState extends State<SliderWithTextFields> {
   }
 }
 
-class DerationSection extends StatelessWidget {
+class DerationSection extends StatefulWidget {
   const DerationSection({
     super.key,
     required this.durationList,
@@ -417,6 +431,12 @@ class DerationSection extends StatelessWidget {
 
   final List<String> durationList;
 
+  @override
+  State<DerationSection> createState() => _DerationSectionState();
+}
+
+class _DerationSectionState extends State<DerationSection> {
+  String selectedDuration='';
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -450,23 +470,29 @@ class DerationSection extends StatelessWidget {
               spacing: 12.0, // Horizontal space between items
               runSpacing: 16.0, // Vertical space between lines
               children: List.generate(
-                durationList.length,
+                widget.durationList.length,
                 (index) => InkWell(
                   onTap: () async {
+                    setState(() {
+                      selectedDuration=widget.durationList[index];
+                    });
+                    var cfs=context.read<CourseProvider>();
+                    cfs.updateCourseListwithFilterData('',widget.durationList[index]);
+
                     //  Navigator.push(context, CupertinoPageRoute(builder: (context)=>ExploreCoursesAndInstitutions(hideTopTitle: true,selectedIndex: 1,)));
                   },
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 4.0),
                     child: Container(
                       decoration: BoxDecoration(
-                        color: Colors.grey.shade100,
+                        color:selectedDuration==widget.durationList[index]?Colors.orangeAccent: Colors.grey.shade100,
                         borderRadius: BorderRadius.circular(16.0),
                         boxShadow: [],
                       ),
                       padding: const EdgeInsets.symmetric(
                           vertical: 8.0, horizontal: 16.0),
                       child: Text(
-                        durationList[index] ?? '',
+                        widget.durationList[index] ?? '',
                         style: customText(14, Colors.black, FontWeight.w500),
                       ),
                     ),
@@ -512,10 +538,18 @@ class DerationSection extends StatelessWidget {
   }
 }
 
-class SecondSection extends StatelessWidget {
+class SecondSection extends StatefulWidget {
   const SecondSection({
     super.key,
   });
+
+  @override
+  State<SecondSection> createState() => _SecondSectionState();
+}
+
+class _SecondSectionState extends State<SecondSection> {
+  bool showStudyLevel = false;
+  String selectedStudyLevel = '';
 
   @override
   Widget build(BuildContext context) {
@@ -553,23 +587,79 @@ class SecondSection extends StatelessWidget {
           ),
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 4),
-            child: Row(
+            child: Column(
               children: [
-                Icon(Icons.bookmarks_outlined),
-                SizedBox(
-                  width: 10,
+                Row(
+                  children: [
+                    Icon(Icons.bookmarks_outlined),
+                    SizedBox(
+                      width: 10,
+                    ),
+                    Expanded(
+                      child: GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              showStudyLevel = !showStudyLevel;
+                            });
+
+                          },
+                          child: Text('Study level')),
+                    ),
+                    Container(
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(50),
+                          border: Border.all(color: Colors.grey, width: .5),
+                          color: Colors.white),
+                      child: Padding(
+                        padding: const EdgeInsets.all(4.0),
+                        child: Icon(Icons.search),
+                      ),
+                    )
+                  ],
                 ),
-                Expanded(child: Text('Study level')),
-                Container(
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(50),
-                      border: Border.all(color: Colors.grey, width: .5),
-                      color: Colors.white),
-                  child: Padding(
-                    padding: const EdgeInsets.all(4.0),
-                    child: Icon(Icons.search),
+                if (showStudyLevel)
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Wrap(
+                      children: [
+                        ElevatedButton(
+                            onPressed: () {
+                              setState(() {
+                                selectedStudyLevel = 'Undergraduate';
+                              });
+                              var cfs=context.read<CourseProvider>();
+                              cfs.updateCourseListwithFilterData(selectedStudyLevel,'');
+                            },
+                          style: ElevatedButton.styleFrom(backgroundColor: selectedStudyLevel=='Undergraduate'?Colors.orangeAccent:null),
+                            child: Text('Undergraduate'),
+                        ),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        ElevatedButton(
+                            style: ElevatedButton.styleFrom(backgroundColor: selectedStudyLevel=='Postgraduate'?Colors.orangeAccent:null),
+                            onPressed: () {
+                              setState(() {
+                                selectedStudyLevel = 'Postgraduate';
+                              });
+                              var cfs=context.read<CourseProvider>();
+                              cfs.updateCourseListwithFilterData(selectedStudyLevel,'');
+                            },
+                            child: Text('Postgraduate')),
+                        ElevatedButton(
+
+                            style: ElevatedButton.styleFrom(backgroundColor: selectedStudyLevel=='Doctorate'?Colors.orangeAccent:null),
+                            onPressed: () {
+                              setState(() {
+                                selectedStudyLevel = 'Doctorate';
+                              });
+                              var cfs=context.read<CourseProvider>();
+                              cfs.updateCourseListwithFilterData(selectedStudyLevel,'');
+                            },
+                            child: Text('Doctorate')),
+                      ],
+                    ),
                   ),
-                )
               ],
             ),
           ),

@@ -78,26 +78,69 @@ class CourseProvider extends ChangeNotifier{
   }
 
 
-  List<CourseFilterDataModel> _courseFilterDataModel=[];
+   List<CourseFilterDataModel> _courseFilterDataModel=[];
+   List<CourseFilterDataModel> _courseFilteredList=[];
   List<CourseFilterDataModel> get courseFilterDataModel =>_courseFilterDataModel;
+  List<CourseFilterDataModel> get courseFilteredList =>_courseFilteredList;
 
   Future<bool> getAllCourseInfoForFilter() async {
-    ApiService apiService=ApiService();
-    var data=await apiService.postData('/Datasource/GetDataByDataSourceID',{"DataSourceID": "27","whereclause":"AND 1 = 1"},mainHeader: MainHeaders.updatedHeader);
-    if(data!=null){
-      debugPrint('resultData ${data.toString()}');
-      List<dynamic> table = data['Model']['Table'];
-      _courseFilterDataModel.clear();
-      for(Map<String,dynamic> i in table){
-        _courseFilterDataModel.add(CourseFilterDataModel.fromJson(i));
+    ApiService apiService = ApiService();
+    try {
+      var data = await apiService.postData(
+        '/Datasource/GetDataByDataSourceID',
+        {"DataSourceID": "27", "whereclause": "AND 1 = 1"},
+        mainHeader: MainHeaders.updatedHeader,
+      );
+
+      if (data != null) {
+        debugPrint('resultData ${data.toString()}');
+        List<dynamic> table = data['Model']['Table'];
+
+        _courseFilterDataModel.clear();
+        for (Map<String, dynamic> i in table) {
+          try {
+            _courseFilterDataModel.add(CourseFilterDataModel.fromJson(i));
+            _courseFilteredList.add(CourseFilterDataModel.fromJson(i));
+          } catch (e) {
+            debugPrint('Error converting data to CourseFilterDataModel: $e');
+            // Optionally, log the problematic data for debugging:
+            debugPrint('Problematic data: $i');
+          }
+        }
+
+        debugPrint('_courseFilterDataModel ${_courseFilterDataModel.length}');
+        notifyListeners();
+        return true;
+      } else {
+        debugPrint('No data received from API.');
+        // Optionally, show a user-facing message here
+        return false;
       }
-      debugPrint('_courseFilterDataModel ${_courseFilterDataModel.length}');
-      notifyListeners();
-      return true;
-    }
-    else{
-      // HelperClass.showToast('No Data Found');
+    } catch (e) {
+      debugPrint('Error during API call or data processing: $e');
+      // Optionally, show a user-facing message here
       return false;
     }
   }
+
+  String selectedLevel='';
+  String selectedDuration='';
+  void updateCourseListwithFilterData(String level, String duration) {
+    if(level!=''){
+      selectedLevel=level;
+    }
+    if(duration!=''){
+      selectedDuration=duration;
+    }
+    _courseFilteredList = _courseFilterDataModel.where((course) {
+      final matchesDuration = duration.isEmpty || (course.duration?.toLowerCase() == duration.toLowerCase());
+      final matchesLevel = level.isEmpty || (course.courseLevel?.toLowerCase() == level.toLowerCase());
+      return matchesDuration && matchesLevel;
+    }).toList();
+
+    debugPrint('_courseFilteredList ${_courseFilteredList.length}');
+    // Notify listeners to rebuild dependent widgets.
+    notifyListeners();
+  }
+
 }
