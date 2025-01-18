@@ -8,7 +8,8 @@ Widget buildTextField(
       TextInputType keyboardType = TextInputType.text,
       String? prefixText,
       String? prefixFlag,
-       VoidCallback? onPrefixTap,
+      VoidCallback? onPrefixTap,
+      bool enableValidation = true,
     }) {
   return Padding(
     padding: const EdgeInsets.symmetric(horizontal: 12.0),
@@ -52,30 +53,38 @@ Widget buildTextField(
             horizontal: 10.0,
           ),
           prefix: prefixText != null
-              ? InkWell(onTap: onPrefixTap, child: Row(
-            mainAxisSize: MainAxisSize.min,
-                children: [
-               //   if(prefixFlag!=null)Image.asset(prefixFlag,height: 20,width: 30,),
-                  Text(
-                    prefixText,
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontWeight: FontWeight.bold,
-                    ),
+              ? InkWell(
+            onTap: onPrefixTap,
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                // Uncomment if using prefixFlag as an image asset
+                // if (prefixFlag != null)
+                //   Image.asset(prefixFlag, height: 20, width: 30),
+                Text(
+                  prefixText,
+                  style: const TextStyle(
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
                   ),
-                ],
-              ))
+                ),
+              ],
+            ),
+          )
               : null,
         ),
-        validator: (value) {
+        validator: enableValidation
+            ? (value) {
           if (value == null || value.isEmpty) {
             return 'Please enter $hintText';
           }
-          if (isEmail && !RegExp(r'^[^@]+@[^@]+\.[^@]+').hasMatch(value)) {
+          if (isEmail &&
+              !RegExp(r'^[^@]+@[^@]+\.[^@]+').hasMatch(value)) {
             return 'Please enter a valid email address';
           }
           return null;
-        },
+        }
+            : null,
       ),
     ),
   );

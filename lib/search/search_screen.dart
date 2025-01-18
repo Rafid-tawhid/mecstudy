@@ -60,16 +60,16 @@ class _SearchScreenState extends State<SearchScreen> {
           centerTitle: true,
           iconTheme: IconThemeData(color: Colors.black),
           actions: [
-            TextButton(onPressed: (){
-              showModalBottomSheet(
-                context: context,
-                isScrollControlled: true,
-                backgroundColor: Colors.transparent,
-                builder: (BuildContext context) {
-                  return FilterSearchScreen(); // Use the new widget here
-                },
-              );
-            }, child: Text('Filter'))
+            // TextButton(onPressed: (){
+            //   showModalBottomSheet(
+            //     context: context,
+            //     isScrollControlled: true,
+            //     backgroundColor: Colors.transparent,
+            //     builder: (BuildContext context) {
+            //       return FilterSearchScreen(); // Use the new widget here
+            //     },
+            //   );
+            // }, child: Text('Filter'))
           ],
         ),
         body: Padding(
@@ -144,13 +144,14 @@ class _SearchScreenState extends State<SearchScreen> {
         callforFocus();
       }
     });
-    if(cp.courseFilterDataModel.isEmpty)
-      {
-        cp.getAllCourseInfoForFilter().then((v){
-          debugPrint('courseFilterDataModel $v');
-        });
-      }
     //call data for filter
+    // if(cp.courseFilterDataModel.isEmpty)
+    //   {
+    //     cp.getAllCourseInfoForFilter().then((v){
+    //       debugPrint('courseFilterDataModel $v');
+    //     });
+    //   }
+
   }
 
   void search(String query) {

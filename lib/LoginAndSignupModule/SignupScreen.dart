@@ -116,7 +116,7 @@ class _SignUpScreenBottomSheet extends State<SignUpScreenBottomSheet> {
                         buildTextField(emailAddressController, 'Email Address',
                             isEmail: true),
                         SizedBox(height: 16),
-                        buildTextField(addressController, 'Address'),
+                        buildTextField(addressController, 'Address',enableValidation: false),
                         SizedBox(height: 8),
                         Row(
                           children: [
@@ -170,11 +170,11 @@ class _SignUpScreenBottomSheet extends State<SignUpScreenBottomSheet> {
                         SizedBox(height: 16),
                         buildTextField(phoneNoController, 'Phone',
                             isPassword: false,
+                            enableValidation: false,
                             prefixText: initialCountry,
                             prefixFlag: initialCountryFlag,
                             onPrefixTap: () async {
-                          final picked =
-                              await countryPicker.showPicker(context: context);
+                          final picked = await countryPicker.showPicker(context: context);
                           // Null check
                           if (picked != null) {
                             setState(() {
@@ -292,8 +292,8 @@ class _SignUpScreenBottomSheet extends State<SignUpScreenBottomSheet> {
                             // } catch (e) {
                             //   print('Failed to send email: $e');
                             // }
-                            //validateFields()
-                            if (true) {
+
+                            if (validateFields()) {
                               //validateFields()
                               print(firstNameController.text);
                               print(lastNameController.text);
