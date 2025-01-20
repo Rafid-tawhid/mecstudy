@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mecstudygroup/Model/Universities.dart';
 import 'package:mecstudygroup/Utilities/Colors.dart';
 import 'package:mecstudygroup/Utilities/Constant.dart';
@@ -9,12 +10,12 @@ import 'package:mecstudygroup/university_details/widgets/facilities.dart';
 
 import 'expanded_text.dart';
 
-
 class UniversityScreenBottomSheet extends StatelessWidget {
-
   final University university;
   final String? countryName;
-  const UniversityScreenBottomSheet({required this.university,this.countryName});
+
+  const UniversityScreenBottomSheet(
+      {required this.university, this.countryName});
 
   @override
   Widget build(BuildContext context) {
@@ -49,10 +50,13 @@ class UniversityScreenBottomSheet extends StatelessWidget {
                     ),
                     child: Image.network(
                       university.bannerImageUrl,
-                      width: double.infinity, // Set your width here
-                      height: 200, // Set your height here
+                      width: double.infinity,
+                      // Set your width here
+                      height: 200,
+                      // Set your height here
                       fit: BoxFit.cover,
-                      loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
+                      loadingBuilder: (BuildContext context, Widget child,
+                          ImageChunkEvent? loadingProgress) {
                         if (loadingProgress == null) {
                           return child; // If the image is loaded, show it
                         } else {
@@ -63,9 +67,10 @@ class UniversityScreenBottomSheet extends StatelessWidget {
                           );
                         }
                       },
-                      errorBuilder: (BuildContext context, Object error, StackTrace? stackTrace) {
+                      errorBuilder: (BuildContext context, Object error,
+                          StackTrace? stackTrace) {
                         return Image.network(
-                          'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8dW5pdmVyc2l0eXxlbnwwfHwwfHx8MA%3D%3D', // Placeholder image asset
+                          'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8dW5pdmVyc2l0eXxlbnwwfHwwfHx8MA%3D%3D',
                           width: double.infinity,
                           height: 200,
                           fit: BoxFit.cover,
@@ -81,8 +86,7 @@ class UniversityScreenBottomSheet extends StatelessWidget {
                       width: 32,
                       decoration: BoxDecoration(
                           color: Colors.white,
-                        borderRadius: BorderRadius.circular(12)
-                      ),
+                          borderRadius: BorderRadius.circular(12)),
                     ),
                   )
                 ],
@@ -93,7 +97,7 @@ class UniversityScreenBottomSheet extends StatelessWidget {
               ListTile(
                 textColor: Colors.red,
                 leading: Image.network(
-                  university.flagUrl??'',
+                  university.flagUrl ?? '',
                   height: 30,
                   width: 30,
                 ),
@@ -102,7 +106,7 @@ class UniversityScreenBottomSheet extends StatelessWidget {
                   style: customText(18, Colors.black, FontWeight.bold),
                 ),
                 subtitle: Text(
-                  countryName?? university.countryCode,
+                  countryName ?? university.countryCode,
                   style: customText(14, Colors.orange, FontWeight.w500),
                 ),
               ),
@@ -235,15 +239,12 @@ class _ScrollSyncButtonsState extends State<ScrollSyncButtons> {
       return OverviewWidget(widget.university);
     } else if (index == 1) {
       return CourseWidgete(widget.university);
-    }
-    else if (index == 2) {
-      return  HeilightsWidgets(widget: widget);
-    }
-    else if (index == 3) {
-      return  CampusWidgets(widget:widget);
-    }
-    else if (index == 4) {
-      return  FaqWidget(widget:widget);
+    } else if (index == 2) {
+      return HeilightsWidgets(widget: widget);
+    } else if (index == 3) {
+      return CampusWidgets(widget: widget);
+    } else if (index == 4) {
+      return FaqWidget(widget: widget);
     }
   }
 }
@@ -253,25 +254,37 @@ class FaqWidget extends StatelessWidget {
     super.key,
     required this.widget,
   });
+
   final ScrollSyncButtons widget;
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        SizedBox(height: 10,),
+        SizedBox(
+          height: 10,
+        ),
         Row(
           children: [
-            SizedBox(width: 8,),
+            SizedBox(
+              width: 8,
+            ),
             Icon(Icons.question_mark),
-            SizedBox(width: 4,),
+            SizedBox(
+              width: 4,
+            ),
             Text(
               'FAQ',
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black),
+              style: TextStyle(
+                  fontSize: 16.h,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black),
             ),
           ],
         ),
-        SizedBox(height: 10,),
+        SizedBox(
+          height: 10,
+        ),
         Container(
           padding: EdgeInsets.symmetric(vertical: 12, horizontal: 16),
           decoration: BoxDecoration(
@@ -280,28 +293,37 @@ class FaqWidget extends StatelessWidget {
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: widget.university.faqs.map((e)=>Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Icon(Icons.arrow_forward_sharp,size: 16,),
-                    Expanded(child: Html(data: e.question)),
-                  ],
-                ),
-                Html(data: e.answer)
-              ],
-            )).toList(),
-             
-            
+            children: widget.university.faqs
+                .map((e) => Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          mainAxisSize: MainAxisSize.min,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Icon(
+                              Icons.arrow_forward_sharp,
+                              size: 16,
+                            ),
+                            Expanded(child: Html(data: e.question,style: {
+                              "body": Style(
+                                fontSize: FontSize(12.h),
+                                color: Colors.black,
+                              ),
+                            })),
+                          ],
+                        ),
+                        Html(data: e.answer,style: {
+                          "body": Style(
+                            fontSize: FontSize(10.h),
+                            color: Colors.black54,
+                          ),
+                        })
+                      ],
+                    ))
+                .toList(),
           ),
         ),
-
-
-
-
       ],
     );
   }
@@ -312,56 +334,81 @@ class CampusWidgets extends StatelessWidget {
     super.key,
     required this.widget,
   });
+
   final ScrollSyncButtons widget;
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        SizedBox(height: 10,),
+        SizedBox(
+          height: 10,
+        ),
         Row(
           children: [
-            SizedBox(width: 8,),
+            SizedBox(
+              width: 8,
+            ),
             Icon(Icons.home_outlined),
-            SizedBox(width: 4,),
+            SizedBox(
+              width: 4,
+            ),
             Text(
               'Campus',
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black),
+              style: TextStyle(
+                  fontSize: 16.h,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black),
             ),
           ],
         ),
-        SizedBox(height: 10,),
-        Container(
-            padding: EdgeInsets.symmetric(vertical: 12, horizontal: 16),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(16),
-              color: Colors.white,
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                CampusContentScreen(widget.university.moreAboutUniversity),
-                SizedBox(height: 4,),
-                Text(
-                  'Scholarship',
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black),
-                ),
-                SizedBox(height: 12,),
-                Text(widget.university.scholarships,),
-                SizedBox(height: 10,),
-                Text(
-                  'Alumni',
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600, color: Colors.black),
-                ),
-                SizedBox(height: 4,),
-                PeopleListScreen(widget.university.alumni)
-              ],
-            ),
+        SizedBox(
+          height: 10,
         ),
-        
-       
-      
-        
+        Container(
+          padding: EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(16),
+            color: Colors.white,
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              CampusContentScreen(widget.university.moreAboutUniversity),
+              SizedBox(
+                height: 4,
+              ),
+              Text(
+                'Scholarship',
+                style: TextStyle(
+                    fontSize: 16.h,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black),
+              ),
+              SizedBox(
+                height: 12,
+              ),
+              Text(
+                widget.university.scholarships,
+                style: customText(12, Colors.black54, FontWeight.normal),
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              Text(
+                'Alumni',
+                style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w600,
+                    color: Colors.black),
+              ),
+              SizedBox(
+                height: 4,
+              ),
+              PeopleListScreen(widget.university.alumni)
+            ],
+          ),
+        ),
       ],
     );
   }
@@ -388,12 +435,12 @@ class CampusContentScreen extends StatelessWidget {
           children: [
             Text(
               item['heading'] ?? '',
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+              style: TextStyle(fontSize: 16.h, fontWeight: FontWeight.bold),
             ),
             Html(
               data: item['content'],
               style: {
-                "p": Style(fontSize: FontSize(14)),
+                "p": Style(fontSize: FontSize(12.h)),
               },
             ),
           ],
@@ -406,17 +453,17 @@ class CampusContentScreen extends StatelessWidget {
 class PeopleListScreen extends StatelessWidget {
   final String? jsonString;
 
-
   const PeopleListScreen(this.jsonString, {super.key});
 
   @override
   Widget build(BuildContext context) {
-    return buildPeopleList(jsonString??'');
+    return buildPeopleList(jsonString ?? '');
   }
+
   // Method to parse JSON string and build a ListView of widgets
   Widget buildPeopleList(String jsonString) {
     // Parse the JSON string to a List of Maps
-    try{
+    try {
       List<dynamic> people = json.decode(jsonString);
       // Map each person to a ListTile widget
       return ListView.builder(
@@ -426,27 +473,31 @@ class PeopleListScreen extends StatelessWidget {
         itemBuilder: (context, index) {
           final person = people[index];
           return Padding(
-            padding: const EdgeInsets.symmetric(vertical: 4,horizontal: 4),
+            padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 4),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(person['name']??'',style: customText(14, Colors.black, FontWeight.w500),),
-                SizedBox(height: 2,),
-                Text(person['qualification']??'',style: customText(12, Colors.grey, FontWeight.w400),),
+                Text(
+                  person['name'] ?? '',
+                  style: customText(14, Colors.black, FontWeight.w500),
+                ),
+                SizedBox(
+                  height: 2,
+                ),
+                Text(
+                  person['qualification'] ?? '',
+                  style: customText(12, Colors.grey, FontWeight.w400),
+                ),
               ],
             ),
           );
         },
       );
-    }
-    catch(e){
+    } catch (e) {
       return Text('Nothing Found');
     }
-
-
   }
 }
-
 
 class HeilightsWidgets extends StatelessWidget {
   const HeilightsWidgets({
@@ -460,39 +511,63 @@ class HeilightsWidgets extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        SizedBox(height: 10,),
+        SizedBox(
+          height: 10,
+        ),
         Row(
           children: [
-            SizedBox(width: 8,),
+            SizedBox(
+              width: 8,
+            ),
             Icon(Icons.star_border),
-            SizedBox(width: 4,),
+            SizedBox(
+              width: 4,
+            ),
             Text(
               'HighLights',
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black),
+              style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black),
             ),
           ],
         ),
-        SizedBox(height: 10,),
-        ExpendedText(information: widget.university.employabilityDetails,title: 'Employability Details',),
-        SizedBox(height: 10,),
+        SizedBox(
+          height: 10,
+        ),
+        ExpendedText(
+          information: widget.university.employabilityDetails,
+          title: 'Employability Details',
+        ),
+        SizedBox(
+          height: 10,
+        ),
         Row(
           children: [
-            SizedBox(width: 12,),
+            SizedBox(
+              width: 12,
+            ),
             Text(
               'Facilities',
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black),
+              style: TextStyle(
+                  fontSize: 16.h,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black),
             ),
           ],
         ),
-        SizedBox(height: 10,),
+        SizedBox(
+          height: 10,
+        ),
         Container(
-          padding: EdgeInsets.symmetric(vertical: 12, horizontal: 16),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(16),
-            color: Colors.white,
-          ),
-          child: FacilitiesContents(data: widget.university.facilities,)
-        )
+            padding: EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(16),
+              color: Colors.white,
+            ),
+            child: FacilitiesContents(
+              data: widget.university.facilities,
+            ))
       ],
     );
   }
@@ -510,8 +585,13 @@ class OverviewWidget extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text('Ranking',style: customText(18, Colors.black, FontWeight.bold),),
-          SizedBox(height: 10,),
+          Text(
+            'Ranking',
+            style: customText(18, Colors.black, FontWeight.bold),
+          ),
+          SizedBox(
+            height: 10,
+          ),
           ListView.builder(
             itemCount: json.decode(university.ranking).length,
             shrinkWrap: true,
@@ -521,18 +601,20 @@ class OverviewWidget extends StatelessWidget {
               return Padding(
                 padding: const EdgeInsets.all(2.0),
                 child: Container(
-                  padding: EdgeInsets.symmetric(vertical: 8,horizontal: 12),
+                  padding: EdgeInsets.symmetric(vertical: 8, horizontal: 12),
                   decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(8)
-                  ),
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(8)),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          Icon(Icons.arrow_forward,size: 18,),
+                          Icon(
+                            Icons.arrow_forward,
+                            size: 18,
+                          ),
                           Text(
                             ' By ${item['rank']}',
                             style: TextStyle(
@@ -555,25 +637,23 @@ class OverviewWidget extends StatelessWidget {
               );
             },
           ),
-          SizedBox(height: 20,),
-          ExpendedText(information: university.universityInformation,),
           SizedBox(
             height: 20,
           ),
-
-
+          ExpendedText(
+            information: university.universityInformation,
+          ),
+          SizedBox(
+            height: 20,
+          ),
         ],
       ),
     );
   }
 }
 
-
-
 class CourseWidgete extends StatefulWidget {
-
   final University university;
-
 
   CourseWidgete(this.university, {super.key});
 
@@ -584,6 +664,7 @@ class CourseWidgete extends StatefulWidget {
 class _CourseWidgeteState extends State<CourseWidgete> {
   int _selectedButtonIndex = 0;
   final int _selectedButtonIndex2 = 0;
+
   @override
   Widget build(BuildContext context) {
     List<String> studyLevels = widget.university.degreeId;
@@ -600,7 +681,10 @@ class _CourseWidgeteState extends State<CourseWidgete> {
           ),
           Row(
             children: [
-              Icon(Icons.library_books,size: 20,),
+              Icon(
+                Icons.library_books,
+                size: 20,
+              ),
               SizedBox(
                 width: 8,
               ),
@@ -731,7 +815,7 @@ class _CourseWidgeteState extends State<CourseWidgete> {
           //     prefixIcon: Icon(Icons.search, color: Colors.grey),
           //   ),
           // ),
-         // SizedBox(height: 40,)
+          // SizedBox(height: 40,)
         ],
       ),
     );
