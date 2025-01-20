@@ -748,26 +748,23 @@ class CourseCard extends StatelessWidget {
                 Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Padding(
-                      padding: const EdgeInsets.only(right: 6.0),
-                      child: Container(
-                        height: 40,
-                          width: 40,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(50),
-                              color: Colors.white),
-                          child: Padding(
-                            padding: const EdgeInsets.all(4.0),
-                            child: Icon(
-                              Icons.send,
-                              color: Colors.purple,
-                              size: 20.h,
-                            ),
-                          )),
-                    ),
+                    Container(
+                      height: 40,
+                        width: 40,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(50),
+                            color: Colors.white),
+                        child: Padding(
+                          padding: EdgeInsets.all(4.h),
+                          child: Icon(
+                            Icons.send,
+                            color: Colors.purple,
+                            size: 18.h,
+                          ),
+                        )),
                     Expanded(
                         child: Text(provider.courseList[index].universityname ?? '',
-                      style: customText(16, Colors.grey, FontWeight.w500),
+                      style: customText(isNormalPhone(context)?12:16, Colors.grey, FontWeight.w500),
                     )),
                     Text(
                       provider.courseList[index].tuituionfee ?? '',

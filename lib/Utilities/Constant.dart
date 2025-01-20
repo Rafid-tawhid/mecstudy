@@ -76,6 +76,10 @@ List<UniversityModel> dummyUniversityList = [
 ];
 
 
+bool isNormalPhone(BuildContext context) {
+  double screenWidth = MediaQuery.of(context).size.width;
+  return screenWidth < 600; // Generally, tablets have a width of 600dp or more
+}
 
 
 //
