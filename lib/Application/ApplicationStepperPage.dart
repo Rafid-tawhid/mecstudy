@@ -4,6 +4,7 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:mecstudygroup/LoginAndSignupModule/login_bottom_sheet.dart';
@@ -99,20 +100,12 @@ class _StartApplicationStepperState extends State<StartApplicationStepper> {
                 children: [
                   Text(
                     title,
-                    style: TextStyle(
-                      fontWeight: FontWeight.w400,
-                      fontSize: 13,
-                      color: Color(0xFF484D54),
-                    ),
+                    style: customText(14, Colors.black, FontWeight.w500),
                   ),
                   if (filePath != "")
                     Text(
                       "Submitted",
-                      style: TextStyle(
-                        fontWeight: FontWeight.normal,
-                        fontSize: 11,
-                        color: Colors.green,
-                      ),
+                      style: customText(12, Colors.black, FontWeight.normal),
                     ),
                 ],
               ),
@@ -172,7 +165,7 @@ class _StartApplicationStepperState extends State<StartApplicationStepper> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        title: Text('Submit Documents'),
+        title: Text('Submit Documents',style: customText(18, Colors.black, FontWeight.bold),),
         backgroundColor: Colors.orangeAccent,
       ),
       body: Column(
@@ -194,7 +187,7 @@ class _StartApplicationStepperState extends State<StartApplicationStepper> {
             padding: const EdgeInsets.only(bottom: 32.0, left: 16, right: 16),
             child: Container(
               width: double.infinity,
-              height: 50,
+              height: 50.h,
               decoration: BoxDecoration(
                 gradient: LinearGradient(
                   colors: [Colors.orange, Colors.deepOrange],
@@ -226,11 +219,7 @@ class _StartApplicationStepperState extends State<StartApplicationStepper> {
                 },
                 child: Text(
                   HelperClass.userProfileModel==null?"Login": "Upload Documents",
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 16,
-                  ),
+                  style: customText(16, Colors.white, FontWeight.bold),
                 ),
               ),
             ),

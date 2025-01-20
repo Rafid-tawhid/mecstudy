@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:oauth2_client/google_oauth2_client.dart';
 
 // import "package:googleapis_auth/auth_io.dart";
@@ -46,7 +47,7 @@ class AdaptiveTextSize {
 
 customText(double size,Color color,FontWeight fonts)=> TextStyle(
       fontWeight: fonts,
-      fontSize: size,
+      fontSize: size.h,
       color: color,
 // fontFamily: 'SORA-BOLD'
     );
