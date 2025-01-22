@@ -147,6 +147,10 @@ class HelperClass {
     preferences.setString("user", userProfileModel.toJson().toString());
     getUserInfo();
   }
+  static Future<void> deleteUserInfo()async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    preferences.remove("user");
+  }
 
   //nothing
 
