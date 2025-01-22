@@ -122,7 +122,7 @@ class _SchedulingCardState extends State<SchedulingCard> {
                           );
                         },
                         child: Container(
-                          height: 30.h,
+                          height: 30,
                           alignment: Alignment.center,
                           decoration: BoxDecoration(
                               color: Colors.grey.shade300,
@@ -135,7 +135,7 @@ class _SchedulingCardState extends State<SchedulingCard> {
                       ),
                       SizedBox(width: 6,),
                       SizedBox(
-                        height: 30.h,
+                        height: 30,
                         child: GradientButton(text: ' Join now ',
                             verticalPadding: 4,
                             horizontalPadding: 20,

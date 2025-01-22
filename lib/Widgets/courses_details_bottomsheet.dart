@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mecstudygroup/Utilities/Constant.dart';
 import 'package:mecstudygroup/Utilities/helper_class.dart';
 import 'package:mecstudygroup/Widgets/see_more_text.dart';
@@ -163,7 +164,7 @@ class CoursesScreenBottomSheet extends StatelessWidget {
                           SizedBox(width: 4,),
                           Text(
                             'FAQ',
-                            style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black),
+                            style: TextStyle(fontSize: 18.h, fontWeight: FontWeight.bold, color: Colors.black),
                           ),
                         ],
                       ),
@@ -184,10 +185,20 @@ class CoursesScreenBottomSheet extends StatelessWidget {
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
                                   Icon(Icons.arrow_forward_sharp,size: 16,),
-                                  Expanded(child: Html(data: e.question)),
+                                  Expanded(child: Html(data: e.question,style: {
+                                    "body": Style(
+                                      fontSize: FontSize(14.h),
+                                      color: Colors.black54,
+                                    ),
+                                  },)),
                                 ],
                               ),
-                              Html(data: e.answer)
+                              Html(data: e.answer,style: {
+                                "body": Style(
+                                  fontSize: FontSize(12.h),
+                                  color: Colors.black54,
+                                ),
+                              },)
                             ],
                           )).toList(),
 
@@ -411,7 +422,12 @@ class _SelectableHorozontalListState extends State<SelectableHorozontalList> {
             ),
           ),
         ):
-        Html(data: widget.courseDetailsModel.employabilityDetails??'',),
+        Html(data: widget.courseDetailsModel.employabilityDetails??'',style: {
+          "body": Style(
+            fontSize: FontSize(12.h),
+            color: Colors.black54,
+          ),
+        },),
       ],
     );
   }
@@ -462,7 +478,7 @@ class _DynamicContentWidgetState extends State<DynamicContentWidget> {
                   },
                   child: Container(
                     alignment: Alignment.center,
-                    padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 4.0),
+                    padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 4.0),
                     decoration: BoxDecoration(
                       color: isSelected ? Colors.purple.shade50 : Colors.grey[200], // Change background color
                       borderRadius: BorderRadius.circular(20.0),
@@ -470,6 +486,7 @@ class _DynamicContentWidgetState extends State<DynamicContentWidget> {
                     child: Text(
                       data[index]['button'],
                       style: TextStyle(
+                        fontSize: 12.h,
                         color: isSelected ? Colors.purple : Colors.black, // Change text color
                         fontWeight: isSelected ? FontWeight.bold : FontWeight.normal, // Change text weight
                       ),
@@ -480,7 +497,12 @@ class _DynamicContentWidgetState extends State<DynamicContentWidget> {
             },
           ),
         ),
-        Html(data: selectedContent),
+        Html(data: selectedContent,style: {
+          "body": Style(
+            fontSize: FontSize(12.h),
+            color: Colors.black54,
+          ),
+        },),
       ],
     );
   }

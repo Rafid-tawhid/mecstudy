@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class FacilitiesContents extends StatefulWidget {
   final String data;
@@ -40,6 +41,7 @@ class _FacilitiesContentsState extends State<FacilitiesContents> {
     return Column(
       children: [
         // Horizontal list of buttons
+
         SizedBox(
           height: 36,
           child: ListView.builder(
@@ -65,7 +67,7 @@ class _FacilitiesContentsState extends State<FacilitiesContents> {
                     child: Text(
                       contentData[index]['button'],
                       style: TextStyle(
-                        fontSize: 14,
+                        fontSize: 14.h,
                         color: _selectedButtonIndex == index
                             ? Colors.white
                             : Colors.black,
@@ -83,7 +85,7 @@ class _FacilitiesContentsState extends State<FacilitiesContents> {
         Html(
           data: contentData[_selectedButtonIndex]['content'],
           style: {
-            "p": Style(fontSize: FontSize(16)),
+            "p": Style(fontSize: FontSize(12.h)),
           },
         ),
       ],

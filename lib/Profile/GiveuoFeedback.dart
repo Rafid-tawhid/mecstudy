@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../Utilities/Constant.dart';
 import '../BookSession/BookSections.dart';
 
@@ -81,7 +82,7 @@ class _GiveusFeedbackState extends State<GiveusFeedback> {
               SizedBox(height: 24.0),
               InkWell(
                 child: Container(
-                  height: 65, // Set your desired height
+                  height: 65.h, // Set your desired height
                   width: Responsive.width(80, context),
                   decoration: BoxDecoration(
                     image: DecorationImage(
@@ -122,13 +123,16 @@ class _GiveusFeedbackState extends State<GiveusFeedback> {
 
   List<Widget> _buildTimeSlotChips(List<String>  Subjectoptions) {
     return Subjectoptions.map((timeSlot) {
-      return ChoiceChip(
-        label: Text(timeSlot),
-        selected: selectedTimeSlots.contains(timeSlot),
-        onSelected: (selected) {
-          //print()
-          _handleTimeSlotSelection(timeSlot, selected);
-        },
+      return Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 4.0,vertical: 5),
+        child: ChoiceChip(
+          label: Text(timeSlot,style: customText(14, Colors.black, FontWeight.w500),),
+          selected: selectedTimeSlots.contains(timeSlot),
+          onSelected: (selected) {
+            //print()
+            _handleTimeSlotSelection(timeSlot, selected);
+          },
+        ),
       );
     }).toList();
   }

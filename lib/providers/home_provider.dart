@@ -293,7 +293,7 @@ class HomeProvider extends ChangeNotifier {
       debugPrint('allInstitutesInfoList ${allInstitutesInfoList.length}');
     }
   }
-
+//
 
 
   void setAllInfoLoading(bool bool) {
@@ -304,6 +304,13 @@ class HomeProvider extends ChangeNotifier {
   void setSearchListList() {
     combinedList=[...allInstitutesInfoList,...allCoursesInfoList];
     notifyListeners();
+  }
+
+  Future<void> deleteAccount()async {
+    ApiService apiService=ApiService();
+    await apiService.postData('Token/Delete', {
+      'Email': HelperClass.userProfileModel!.email
+    });
   }
 
 

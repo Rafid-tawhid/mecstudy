@@ -108,7 +108,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   children: [
                     Container(
                         margin: EdgeInsets.only(left: 22),
-                        child: Text('VERSION 1.35.0',
+                        child: Text('VERSION 1.0.0',
                             style: TextStyle(
                               fontWeight: FontWeight.normal,
                               fontSize: AdaptiveTextSize()
@@ -187,47 +187,53 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       SizedBox(
                         width: screenWidth * 0.03, // Dynamic spacing
                       ),
-                      HelperClass.userProfileModel==null? Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            AppConstant.userName.isEmpty
-                                ? "User not login"
-                                : AppConstant.userName,
-                            style: TextStyle(
-                              fontWeight: FontWeight.w600,
-                              fontSize: screenHeight * 0.02, // 2% of screen height
-                              color: Colors.black,
+                      HelperClass.userProfileModel==null? InkWell
+                        (
+                        onTap: (){
+                          Navigator.push(context, CupertinoPageRoute(builder: (context)=>LoginBottomSheet()));
+                        },
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              AppConstant.userName.isEmpty
+                                  ? "User not login"
+                                  : AppConstant.userName,
+                              style: TextStyle(
+                                fontWeight: FontWeight.w600,
+                                fontSize: screenHeight * 0.02, // 2% of screen height
+                                color: Colors.black,
+                              ),
                             ),
-                          ),
-                        if(AppConstant.userEmail.isNotEmpty) Column(
-                           children: [
-                             Text(
-                               AppConstant.userEmail.isEmpty
-                                   ? ""
-                                   : AppConstant.userEmail,
-                               maxLines: 1,
-                               style: TextStyle(
-                                 fontWeight: FontWeight.normal,
-                                 fontSize: screenHeight * 0.015, // 1.5% of screen height
-                                 color: Colors.grey,
+                          if(AppConstant.userEmail.isNotEmpty) Column(
+                             children: [
+                               Text(
+                                 AppConstant.userEmail.isEmpty
+                                     ? ""
+                                     : AppConstant.userEmail,
+                                 maxLines: 1,
+                                 style: TextStyle(
+                                   fontWeight: FontWeight.normal,
+                                   fontSize: screenHeight * 0.015, // 1.5% of screen height
+                                   color: Colors.grey,
+                                 ),
                                ),
-                             ),
-                             Text(
-                               AppConstant.userEmail.isEmpty
-                                   ? ""
-                                   : AppConstant.userCountry,
-                               maxLines: 1,
-                               style: TextStyle(
-                                 fontWeight: FontWeight.normal,
-                                 fontSize: screenHeight * 0.015, // 1.5% of screen height
-                                 color: Colors.grey,
+                               Text(
+                                 AppConstant.userEmail.isEmpty
+                                     ? ""
+                                     : AppConstant.userCountry,
+                                 maxLines: 1,
+                                 style: TextStyle(
+                                   fontWeight: FontWeight.normal,
+                                   fontSize: screenHeight * 0.015, // 1.5% of screen height
+                                   color: Colors.grey,
+                                 ),
                                ),
-                             ),
-                           ],
-                         )
-                        ],
+                             ],
+                           )
+                          ],
+                        ),
                       ):
                       Column(
                         mainAxisAlignment: MainAxisAlignment.center,

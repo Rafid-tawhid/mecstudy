@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:mecstudygroup/Utilities/Constant.dart';
 //
 //
 //
@@ -36,7 +38,7 @@ class _ExpandableTextState extends State<ExpandableText> {
             },
             child: Text(
               _isExpanded ? 'See Less' : 'See More',
-              style: TextStyle(color: Colors.orange),
+              style: customText(14, Colors.orange, FontWeight.normal),
             ),
           ),
         ),
@@ -59,7 +61,7 @@ class _ExpandableTextState extends State<ExpandableText> {
           data: widget.text,
           style: {
             "body": Style(
-              fontSize: FontSize(14),
+              fontSize: FontSize(14.h),
               color: Colors.black54,
             ),
           },

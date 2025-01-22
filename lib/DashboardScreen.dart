@@ -208,13 +208,11 @@ class _HomeScreenState extends State<HomeScreen> {
                           children: [
                             Text(
                               'We\'ll help you find the right courses',
-                              style:
-                                  customText(18, Colors.black, FontWeight.w500),
+                              style: customText(18, Colors.black, FontWeight.w500),
                             ),
                             Text(
                               'Search from over 63950 courses by subject or university',
-                              style:
-                                  customText(12, Colors.grey, FontWeight.w500),
+                              style: customText(12, Colors.grey, FontWeight.w500),
                             ),
                           ],
                         )),
@@ -331,8 +329,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                             Text(
                               'We\'re partner with over 120 world class \neducation providers in 6 countries.',
-                              style:
-                                  customText(12, Colors.grey, FontWeight.w500),
+                              style: customText(12, Colors.grey, FontWeight.w500),
                             ),
                           ],
                         )),
@@ -744,8 +741,7 @@ class CourseCard extends StatelessWidget {
                     provider.courseList[index].coursetitle ?? '',
                     maxLines: 2,
                     overflow: TextOverflow.fade,
-                    style:
-                        customText(16, Colors.grey.shade700, FontWeight.w500),
+                    style: customText(16, Colors.grey.shade700, FontWeight.w500),
                   ),
                 ),
                 Spacer(),
@@ -759,21 +755,20 @@ class CourseCard extends StatelessWidget {
                             borderRadius: BorderRadius.circular(50),
                             color: Colors.white),
                         child: Padding(
-                          padding: const EdgeInsets.all(4.0),
+                          padding: EdgeInsets.all(4.h),
                           child: Icon(
                             Icons.send,
                             color: Colors.purple,
-                            size: 20,
+                            size: 18.h,
                           ),
                         )),
                     Expanded(
-                        child: Text(
-                      provider.courseList[index].universityname ?? '',
-                      style: customText(14, Colors.grey, FontWeight.w500),
+                        child: Text(provider.courseList[index].universityname ?? '',
+                      style: customText(isNormalPhone(context)?12:16, Colors.grey, FontWeight.w500),
                     )),
                     Text(
                       provider.courseList[index].tuituionfee ?? '',
-                      style: customText(14, Colors.purple, FontWeight.w500),
+                      style: customText(16, Colors.purple, FontWeight.w500),
                     )
                   ],
                 )

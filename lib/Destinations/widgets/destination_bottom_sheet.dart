@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mecstudygroup/BookSession/widgets/buttons.dart';
 import 'package:mecstudygroup/Chat/ChatScreen.dart';
 import 'package:mecstudygroup/Utilities/Constant.dart';
@@ -184,8 +185,18 @@ class BasicRequirementSection extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(padding: EdgeInsets.symmetric(horizontal: 12),child: Column(
       children: [
-        Html(data: destinationInfoModel.basicRequirements),
-        Html(data: destinationInfoModel.studentVisa),
+        Html(data: destinationInfoModel.basicRequirements,style: {
+          "body": Style(
+            fontSize: FontSize(12.h),
+            color: Colors.black,
+          ),
+        }),
+        Html(data: destinationInfoModel.studentVisa,style: {
+          "body": Style(
+            fontSize: FontSize(12.h),
+            color: Colors.black,
+          ),
+        }),
       ],
     ),);
     return Column(
@@ -330,7 +341,12 @@ class TrendingSubjectSection extends StatelessWidget {
         
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 12.0),
-          child: Html(data: destinationInfoModel.bestUniversities),
+          child: Html(data: destinationInfoModel.bestUniversities,style: {
+            "body": Style(
+              fontSize: FontSize(12.h),
+              color: Colors.black,
+            ),
+          }),
         )
       ],
     );
@@ -453,7 +469,12 @@ class UniversityInformation extends StatelessWidget {
         ),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 12.0),
-          child: Html(data: destinationInfoModel.bestUniversities),
+          child: Html(data: destinationInfoModel.bestUniversities,style: {
+            "body": Style(
+              fontSize: FontSize(12.h),
+              color: Colors.black,
+            ),
+          }),
         ),
         SizedBox(height: 12,),
       ],

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class ExpendedText extends StatefulWidget {
   final String information;
@@ -29,13 +30,19 @@ class _ExpendedTextState extends State<ExpendedText> {
           SizedBox(height: 6),
           Text(
             widget.title??'University Information',
-            style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Colors.black),
+            style: TextStyle(fontSize: 14.h, fontWeight: FontWeight.bold, color: Colors.black),
           ),
           SizedBox(height: 8),
           Html(
             data: _isExpanded
                 ? widget.information
                 : _getTruncatedText(widget.information),
+              style: {
+                "body": Style(
+                  fontSize: FontSize(12.h),
+                  color: Colors.black54,
+                ),
+              }
           ),
           SizedBox(height: 8),
           GestureDetector(
@@ -46,7 +53,7 @@ class _ExpendedTextState extends State<ExpendedText> {
             },
             child: Text(
               _isExpanded ? 'See less' : 'See more',
-              style: TextStyle(color: Colors.blue, fontWeight: FontWeight.bold),
+              style: TextStyle(color: Colors.blue, fontWeight: FontWeight.bold,fontSize: 12.h),
             ),
           ),
         ],
