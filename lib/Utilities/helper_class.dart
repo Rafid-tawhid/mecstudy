@@ -147,7 +147,6 @@ class HelperClass {
   //
 
 
-
   static Future<void> saveUserInfo(UserProfileModel userProfileModel) async {
     debugPrint('Saved User : ${userProfileModel.toJson()}');
     SharedPreferences preferences = await SharedPreferences.getInstance();
