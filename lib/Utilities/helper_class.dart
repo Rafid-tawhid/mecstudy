@@ -137,8 +137,7 @@ class HelperClass {
         return line.split('=')[1]; // Return the value part of the line
       }
     }
-    //
-    //
+
     return null; // Return null if the key is not found
   }
 
