@@ -152,6 +152,7 @@ class HelperClass {
     preferences.remove("user");
   }
 
+  //
   //nothing
 
   static Future<bool> getUserInfo() async {
