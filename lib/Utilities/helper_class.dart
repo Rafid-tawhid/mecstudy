@@ -137,17 +137,12 @@ class HelperClass {
         return line.split('=')[1]; // Return the value part of the line
       }
     }
-
+    //
     return null; // Return null if the key is not found
   }
 
-
-
-
-
-
   static Future<void> saveUserInfo(UserProfileModel userProfileModel) async {
-    debugPrint('Saved User : ${userProfileModel.toJson()}');
+    debugPrint('Saved User : ${userProfileModel.toJson()}'); 
     SharedPreferences preferences = await SharedPreferences.getInstance();
     preferences.setString("user", userProfileModel.toJson().toString());
     getUserInfo();
