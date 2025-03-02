@@ -186,6 +186,7 @@ class HelperClass {
       return false;
     }
   }
+  //
 
 // /// Save a map as JSON-encoded string
   // static Future<void> saveMap(String key, Map<String, dynamic> value) async {
