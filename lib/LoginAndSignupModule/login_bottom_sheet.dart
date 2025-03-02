@@ -8,6 +8,7 @@ import 'package:provider/provider.dart';
 
 import '../Utilities/Colors.dart';
 import '../Utilities/Constant.dart';
+import 'forget_password_screen.dart';
 
 class LoginBottomSheet extends StatelessWidget {
 
@@ -24,7 +25,7 @@ class LoginBottomSheet extends StatelessWidget {
         appBar: AppBar(
           surfaceTintColor: Colors.white,
           backgroundColor: Colors.white,
-          automaticallyImplyLeading: false,
+          // automaticallyImplyLeading: false,
         ),
         body: SingleChildScrollView(
             child: Center(
@@ -151,6 +152,14 @@ class LoginBottomSheet extends StatelessWidget {
                           ],
                         ),
                       ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 16.0),
+                      child: InkWell(
+                          onTap: (){
+                            Navigator.push(context, CupertinoPageRoute(builder: (context)=>ForgotPasswordScreen()));
+                          },
+                          child: Text('Forgot password?',style: TextStyle(decoration: TextDecoration.underline,),)),
                     )
 
                   ],

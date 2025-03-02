@@ -55,6 +55,7 @@ dependencies:
   fl_country_code_picker: ^0.1.9+1
   image_picker: ^1.1.2
   flutter_launcher_icons: ^0.14.3
+  pinput: ^5.0.1
 
 
 
