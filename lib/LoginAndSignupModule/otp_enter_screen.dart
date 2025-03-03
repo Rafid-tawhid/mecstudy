@@ -62,7 +62,7 @@ class _OtpScreenState extends State<OtpScreen> {
           children: [
             SizedBox(height: 24),
             Text(
-              'Please enter the 6-digit code we sent to $emailSaved. This code will expire in 30 mins.',
+              'Please enter the 6-digit code we sent to $emailSaved. This code will expire in 30 mins. ',
               style: TextStyle(fontSize: 16),
               maxLines: 3,
             ),
