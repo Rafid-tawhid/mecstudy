@@ -66,6 +66,7 @@ class _OtpScreenState extends State<OtpScreen> {
               style: TextStyle(fontSize: 16),
               maxLines: 3,
             ),
+            //
             SizedBox(height: 42),
             Pinput(
               controller: otpController,
