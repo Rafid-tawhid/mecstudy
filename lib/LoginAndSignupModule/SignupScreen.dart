@@ -47,10 +47,9 @@ class _SignUpScreenBottomSheet extends State<SignUpScreenBottomSheet> {
   String initialCountry = '+234';
   String initialCountryFlag = 'images/ng_flag.png';
   String _selectedCountry = '';
+ 
   Country? _country;
-
   City? _city;
-
   String _selectedCity = '';
   List<String> countries = [];
   List<String> countriesID = [];
@@ -419,9 +418,30 @@ class _SignUpScreenBottomSheet extends State<SignUpScreenBottomSheet> {
     );
   }
 
-  void getAllCountry() {
+  void getAllCountry() async {
     var up = context.read<UserProvider>();
-    up.getAllCountry();
+    if(up.citiesModelList.isEmpty){
+     await up.getAllCountry();
+     await up.getCtiyNames('123');
+    }
+
+    up.countriesModelList.forEach((e){
+      if(e.countryID==123){
+        setState(() {
+          _country=e;
+        });
+      }
+    });
+
+    up.citiesModelList.forEach((e){
+      if(e.ID==150635){
+        setState(() {
+          _city=e;
+        });
+      }
+    });
+
+
   }
 
   void setUserInfo() async {
