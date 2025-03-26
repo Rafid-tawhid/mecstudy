@@ -418,6 +418,7 @@ class _SignUpScreenBottomSheet extends State<SignUpScreenBottomSheet> {
     );
   }
 
+  //
   void getAllCountry() async {
     var up = context.read<UserProvider>();
     if(up.citiesModelList.isEmpty){
