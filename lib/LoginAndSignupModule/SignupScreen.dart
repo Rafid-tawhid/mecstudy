@@ -44,7 +44,7 @@ class _SignUpScreenBottomSheet extends State<SignUpScreenBottomSheet> {
   final TextEditingController confirmPasswordController =
       TextEditingController();
   final TextEditingController addressController = TextEditingController();
-  String initialCountry = '+234';
+  String initialCountry = '+965';
   String initialCountryFlag = 'images/ng_flag.png';
   String _selectedCountry = '';
  
@@ -418,14 +418,14 @@ class _SignUpScreenBottomSheet extends State<SignUpScreenBottomSheet> {
     );
   }
 
-  //
+  //flutt
   void getAllCountry() async {
+
     var up = context.read<UserProvider>();
     if(up.citiesModelList.isEmpty){
      await up.getAllCountry();
      await up.getCtiyNames('123');
     }
-
     up.countriesModelList.forEach((e){
       if(e.countryID==123){
         setState(() {
