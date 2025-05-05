@@ -3,20 +3,32 @@ import 'package:flutter/material.dart';
 import 'package:mecstudygroup/BottomMenu/BottomMenuScreen.dart';
 import 'package:mecstudygroup/DashboardScreen.dart';
 import 'package:mecstudygroup/LoginAndSignupModule/SignupScreen.dart';
+import 'package:mecstudygroup/Utilities/helper_class.dart';
 import 'package:mecstudygroup/providers/home_provider.dart';
+import 'package:mecstudygroup/providers/user_provider.dart';
 import 'package:provider/provider.dart';
 
 import '../Utilities/Colors.dart';
 import '../Utilities/Constant.dart';
 import 'forget_password_screen.dart';
 
-class LoginBottomSheet extends StatelessWidget {
+class LoginBottomSheet extends StatefulWidget {
+  final String? from;
 
+  LoginBottomSheet({this.from});
+
+  @override
+  State<LoginBottomSheet> createState() => _LoginBottomSheetState();
+}
+
+class _LoginBottomSheetState extends State<LoginBottomSheet> {
   final TextEditingController emailController = TextEditingController();
-  final TextEditingController passwordController = TextEditingController();
-  final _formKey=GlobalKey<FormState>();
 
-  LoginBottomSheet({super.key});
+  final TextEditingController passwordController = TextEditingController();
+
+  final _formKey = GlobalKey<FormState>();
+
+  bool loading=false;
 
   @override
   Widget build(BuildContext context) {
@@ -29,142 +41,187 @@ class LoginBottomSheet extends StatelessWidget {
         ),
         body: SingleChildScrollView(
             child: Center(
-              child: Form(
-                key: _formKey,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    SizedBox(
-                      height: Responsive.height(4, context),
+          child: Form(
+            key: _formKey,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                SizedBox(
+                  height: Responsive.height(4, context),
+                ),
+                Text(widget.from == null ? 'Login or Sign up' : 'Reset Password',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize:
+                          AdaptiveTextSize().getadaptiveTextSize(context, 19),
+                      color: Colors.black,
+                      // color: Color(0xFF151C18),
+                      // fontFamily: 'SORA-BOLD'
+                    )),
+                SizedBox(
+                  height: Responsive.height(5, context),
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 24.0),
+                  child: TextFormField(
+                    controller: emailController,
+                    validator: (val) {
+                      if (val == null || val.isEmpty) {
+                        return 'Email is required';
+                      } else {
+                        return null;
+                      }
+                    },
+                    decoration: InputDecoration(
+                      hintText: 'Enter Email',
+                      border:
+                          OutlineInputBorder(), // No border// No border when focused
                     ),
-                    Text('Login or Sign up',
+                  ),
+                ),
+                SizedBox(
+                  height: Responsive.height(2, context),
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 24.0),
+                  child: TextFormField(
+                    controller: passwordController,
+                    obscureText: true,
+                    decoration: InputDecoration(
+                      hintText: 'Password',
+                      border: OutlineInputBorder(), // No border
+                      // No border when focused
+                    ),
+                    validator: (val) {
+                      if (val == null || val.isEmpty) {
+                        return 'Password is required';
+                      } else if (val.length < 5) {
+                        return 'Enter a valid password';
+                      } else {
+                        return null;
+                      }
+                    },
+                  ),
+                ),
+                SizedBox(
+                  height: Responsive.height(2, context),
+                ),
+                InkWell(
+                  onTap: () async {
+                    if (!_formKey.currentState!.validate()) return;
+
+                    final homeProvider = context.read<HomeProvider>();
+                    final userProvider = context.read<UserProvider>();
+                    final email = emailController.text.trim();
+                    final password = passwordController.text.trim();
+
+                    try {
+                      setState(() {
+                        loading=true;
+                      });
+                      if (widget.from != null) {
+                        // Password reset flow
+                        final success = await userProvider.resetPassword(
+                          email: email,
+                          password: password,
+                        );
+
+                        if (!success) return;
+
+                        await homeProvider.getLogin(
+                            email: email, password: password);
+                        HelperClass.showToast('Password Change Successful');
+                      } else {
+                        // Normal login flow
+                        await homeProvider.getLogin(
+                            email: email, password: password);
+                      }
+
+                      Navigator.push(
+                        context,
+                        CupertinoPageRoute(builder: (_) => BottomMenuScreen()),
+                      );
+                    } catch (e) {
+                      HelperClass.showToast('Error: ${e.toString()}');
+                    }
+                    finally{
+                      setState(() {
+                        loading=false;
+                      });
+                    }
+                  },
+                  child: Container(
+                    height: 50,
+                    // Set your desired height
+                    width: Responsive.width(88, context),
+                    decoration: BoxDecoration(
+                      gradient: AppColors.themeMaincolorGradient,
+                      borderRadius: BorderRadius.circular(32), // Border radius
+                    ),
+                    alignment: Alignment.center,
+                    child:loading?CircularProgressIndicator(): Text(widget.from==null? 'Continue':'Reset',
                         style: TextStyle(
-                          fontWeight: FontWeight.bold,
+                          fontWeight: FontWeight.w500,
                           fontSize: AdaptiveTextSize()
                               .getadaptiveTextSize(context, 19),
-                          color: Colors.black,
+                          color: Colors.white,
                           // color: Color(0xFF151C18),
                           // fontFamily: 'SORA-BOLD'
                         )),
-                    SizedBox(
-                      height: Responsive.height(5, context),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 24.0),
-                      child: TextFormField(
-                        controller: emailController,
-                        validator: (val){
-                          if(val==null||val.isEmpty){
-                            return 'Email is required';
-                          }
-                          else {
-                            return null;
-                          }
-                        },
-                        decoration: InputDecoration(
-                          hintText: 'Enter Email',
-                          border: OutlineInputBorder(), // No border// No border when focused
-                        ),
-                      ),
-                    ),
-                    SizedBox(
-                      height: Responsive.height(2, context),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 24.0),
-                      child: TextFormField(
-                        controller: passwordController,
-                        obscureText: true,
-                        decoration: InputDecoration(
-                          hintText: 'Password',
-                          border: OutlineInputBorder(), // No border
-                          // No border when focused
-                        ),
-                        validator: (val){
-                          if(val==null||val.isEmpty){
-                            return 'Password is required';
-                          }
-                          else if(val.length<5){
-                            return 'Enter a valid password';
-                          }
-                          else {
-                            return null;
-                          }
-                        },
-                      ),
-                    ),
-                    SizedBox(
-                      height: Responsive.height(2, context),
-                    ),
-                    InkWell(
-                      onTap: () async {
-                        if(_formKey.currentState!.validate()){
-                          var hp=context.read<HomeProvider>();
-                          if(await hp.getLogin(email: emailController.text.trim(),password: passwordController.text.trim())){
-                            Navigator.push(context, CupertinoPageRoute(builder: (context)=>BottomMenuScreen()));
-                          }
-                        }
-                      },
-                      child: Container(
-                        height: 50, // Set your desired height
-                        width: Responsive.width(88, context),
-                        decoration: BoxDecoration(
-                          gradient: AppColors.themeMaincolorGradient,
-                          borderRadius: BorderRadius.circular(
-                              32), // Border radius
-                        ),
-                        alignment: Alignment.center,
-                        child: Text('Continue',
-                            style: TextStyle(
-                              fontWeight: FontWeight.w500,
-                              fontSize: AdaptiveTextSize()
-                                  .getadaptiveTextSize(context, 19),
-                              color: Colors.white,
-                              // color: Color(0xFF151C18),
-                              // fontFamily: 'SORA-BOLD'
-                            )),
-                      ),
-                    ),
-                    SizedBox(
-                      height: Responsive.height(5, context),
-                    ),
-                    GestureDetector(
-                      onTap: (){
-                        Navigator.push(context, CupertinoPageRoute(builder: (context)=>SignUpScreenBottomSheet()));
-                      },
-                      child: RichText(
-                        text: TextSpan(
-                          style: TextStyle(color: Colors.black, fontSize: 16), // Default style for the text
-                          children: [
-                            TextSpan(
-                              text: 'Haven\'t signed up yet?  ',
-                              style: TextStyle(fontWeight: FontWeight.normal),
-                            ),
-                            TextSpan(
-                              text: 'SignUp',
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                color: Colors.orange, // Change color if desired
-                                decoration: TextDecoration.underline, // Underline style
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 16.0),
-                      child: InkWell(
-                          onTap: (){
-                            Navigator.push(context, CupertinoPageRoute(builder: (context)=>ForgotPasswordScreen()));
-                          },
-                          child: Text('Forgot password?',style: TextStyle(decoration: TextDecoration.underline,),)),
-                    )
-
-                  ],
+                  ),
                 ),
-              ),
-            )));
+                SizedBox(
+                  height: Responsive.height(5, context),
+                ),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        CupertinoPageRoute(
+                            builder: (context) => SignUpScreenBottomSheet()));
+                  },
+                  child: RichText(
+                    text: TextSpan(
+                      style: TextStyle(color: Colors.black, fontSize: 16),
+                      // Default style for the text
+                      children: [
+                        TextSpan(
+                          text: 'Haven\'t signed up yet?  ',
+                          style: TextStyle(fontWeight: FontWeight.normal),
+                        ),
+                        TextSpan(
+                          text: 'SignUp',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: Colors.orange, // Change color if desired
+                            decoration:
+                                TextDecoration.underline, // Underline style
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 16.0),
+                  child: InkWell(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            CupertinoPageRoute(
+                                builder: (context) => ForgotPasswordScreen()));
+                      },
+                      child: Text(
+                        'Forgot password?',
+                        style: TextStyle(
+                          decoration: TextDecoration.underline,
+                        ),
+                      )),
+                )
+              ],
+            ),
+          ),
+        )));
   }
 }

@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:mecstudygroup/Model/user_profile_model.dart';
 import 'package:mecstudygroup/Utilities/helper_class.dart';
@@ -106,5 +108,47 @@ class UserProvider extends ChangeNotifier {
   void setLoading(bool val) {
     signupLoadingButton=val;
     notifyListeners();
+  }
+
+
+  Future<bool> callForGetOtp(String mail) async{
+    ApiService apiService=ApiService();
+
+
+   var response=await apiService.postData('/Token/ForgetPassword',{'Email':mail},mainHeader: MainHeaders.updatedHeader);
+
+   if(response!=null){
+     return true;
+   }
+   else {
+     return false;
+   }
+  }
+
+
+  Future<bool> chekOtpValidation(String email,String otp) async{
+    ApiService apiService=ApiService();
+
+    var response=await apiService.postData('/Token/ValidateOTP',{'Email':email,'OTP':otp},mainHeader: MainHeaders.updatedHeader);
+
+    if(response!=null){
+      return true;
+    }
+    else {
+      return false;
+    }
+  }
+
+  Future<bool> resetPassword({required String email, required String password}) async{
+    ApiService apiService=ApiService();
+
+    var response=await apiService.postData('/Token/ResetPassword',{'Email':email,'Password':password},mainHeader: MainHeaders.updatedHeader);
+
+    if(response!=null){
+      return true;
+    }
+    else {
+      return false;
+    }
   }
 }

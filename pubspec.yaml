@@ -60,12 +60,12 @@ dependencies:
 
 
 
-flutter_launcher_icons:
-  android: "launcher_icon"
+flutter_icons:
+  android: true
   ios: true
-  image_path: "Images/Logo.png"
-  min_sdk_android: 21
-  remove_alpha_ios: true
+  image_path: "assets/icon/icon.png"
+  adaptive_icon_background: "#FFFFFF"
+
 
 
 
@@ -110,6 +110,7 @@ flutter:
   assets:
     - images/
     - Images/
+    - assets/icon/
     - images/fonts/Poppins-Regular.ttf
     - images/fonts/Roboto-Regular.ttf
 

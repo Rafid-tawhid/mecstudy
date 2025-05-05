@@ -2,7 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:flutter/material.dart';
+import 'package:mecstudygroup/Application/ExploreAllCoursesAndInstitutes.dart';
+import 'package:mecstudygroup/DashboardScreen.dart';
 import 'package:mecstudygroup/LoginAndSignupModule/otp_enter_screen.dart';
+import 'package:mecstudygroup/Utilities/helper_class.dart';
+import 'package:mecstudygroup/providers/user_provider.dart';
+import 'package:provider/provider.dart';
 
 class ForgotPasswordScreen extends StatefulWidget {
   @override
@@ -102,14 +107,32 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
             ),
             SizedBox(height: 35),
             ElevatedButton(
-              onPressed: () {
+              onPressed: () async {
                 if (_formEmailKey.currentState!.validate()) {
-                  // Handle reset password logic
-                  Navigator.push(context, MaterialPageRoute(builder: (context)=>OtpScreen()));
+                  setState(() {
+                    isButtonLoading=true;
+                  });
+                  var ap=context.read<UserProvider>();
+                  debugPrint('MainHeaders.token ${MainHeaders.token}');
+
+                  if(await ap.callForGetOtp(emailTextFormController.text.trim())){
+
+                    setState(() {
+                      isButtonLoading=false;
+                    });
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=>OtpScreen(email:emailTextFormController.text.trim())));
+                  }
+                  else {
+                    setState(() {
+                      isButtonLoading=false;
+                    });
+                    HelperClass.showToast('Please try again..');
+                  }
+
                 }
               },
               style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.black,
+                backgroundColor: Colors.orange,
                 minimumSize: Size(double.infinity, 50),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(8),

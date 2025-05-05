@@ -2,10 +2,18 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter/material.dart';
+import 'package:mecstudygroup/Application/ExploreAllCoursesAndInstitutes.dart';
+import 'package:mecstudygroup/LoginAndSignupModule/login_bottom_sheet.dart';
 import 'package:mecstudygroup/Utilities/Constant.dart';
+import 'package:mecstudygroup/providers/user_provider.dart';
 import 'package:pinput/pinput.dart';
+import 'package:provider/provider.dart';
 
 class OtpScreen extends StatefulWidget {
+  final String email;
+
+  OtpScreen({super.key, required this.email});
+
   @override
   _OtpScreenState createState() => _OtpScreenState();
 }
@@ -41,14 +49,18 @@ class _OtpScreenState extends State<OtpScreen> {
     setState(() {
       isButtonLoading = true;
     });
-    await Future.delayed(Duration(seconds: 2)); // Simulate OTP verification
-    setState(() {
-      isButtonLoading = false;
-    });
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text("OTP Verified Successfully")),
-    );
+    var up=context.read<UserProvider>();
+   if(await up.chekOtpValidation(widget.email,otpText))
+     {
+       ScaffoldMessenger.of(context).showSnackBar(
+         SnackBar(content: Text("OTP Verified Successfully")),
+       );
+       Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>LoginBottomSheet(from: 'otp',)));
+     }
+
   }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -62,30 +74,35 @@ class _OtpScreenState extends State<OtpScreen> {
           children: [
             SizedBox(height: 24),
             Text(
-              'Please enter the 6-digit code we sent to $emailSaved. This code will expire in 30 mins. ',
+              'Please enter the 6-digit code we sent to ${widget.email}. This code will expire in 30 mins. ',
               style: TextStyle(fontSize: 16),
               maxLines: 3,
             ),
             //
             SizedBox(height: 42),
-            Pinput(
-              controller: otpController,
-              length: 6,
-              onChanged: (value) {
-                setState(() {
-                  otpText = value;
-                });
-              },
-              defaultPinTheme: PinTheme(
-                height: 50,
-                width: 50,
-                textStyle: TextStyle(fontSize: 18),
-                decoration: BoxDecoration(
-                  color: Color(0xFFFFF1F1),
-                  border: Border.all(color: Color(0xffC40606)),
-                  borderRadius: BorderRadius.circular(6),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Pinput(
+                  controller: otpController,
+                  length: 6,
+                  onChanged: (value) {
+                    setState(() {
+                      otpText = value;
+                    });
+                  },
+                  defaultPinTheme: PinTheme(
+                    height: 50,
+                    width: 50,
+                    textStyle: TextStyle(fontSize: 18),
+                    decoration: BoxDecoration(
+                      color: Color(0xFFFFF1F1),
+                      border: Border.all(color: Color(0xffC40606)),
+                      borderRadius: BorderRadius.circular(6),
+                    ),
+                  ),
                 ),
-              ),
+              ],
             ),
             SizedBox(height: 26),
             Row(
@@ -114,7 +131,7 @@ class _OtpScreenState extends State<OtpScreen> {
               width: double.infinity,
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.black
+                  backgroundColor: Colors.orange
                 ),
                 onPressed: isButtonLoading ? null : verifyOtp,
                 child: isButtonLoading
@@ -123,19 +140,21 @@ class _OtpScreenState extends State<OtpScreen> {
               ),
             ),
             SizedBox(height: 30),
-            Center(
-              child: GestureDetector(
-                onTap: () {},
-                child: Text(
-                  "Use password instead",
-                  style: TextStyle(
-                    decoration: TextDecoration.underline,
-                    color: Colors.black,
-                    fontSize: 16,
-                  ),
-                ),
-              ),
-            ),
+            // Center(
+            //   child: GestureDetector(
+            //     onTap: () {
+            //
+            //     },
+            //     child: Text(
+            //       "Use password instead",
+            //       style: TextStyle(
+            //         decoration: TextDecoration.underline,
+            //         color: Colors.black,
+            //         fontSize: 16,
+            //       ),
+            //     ),
+            //   ),
+            // ),
           ],
         ),
       ),
