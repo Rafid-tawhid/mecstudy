@@ -1,4 +1,4 @@
-package com.mecstudygroup.mecstudygroup
+package com.mecstudygroup.mecstudygroup1
 
 import io.flutter.embedding.android.FlutterActivity
 

@@ -60,11 +60,10 @@ dependencies:
 
 
 
-flutter_icons:
+flutter_launcher_icons:
   android: true
   ios: true
   image_path: "assets/icon/icon.png"
-  adaptive_icon_background: "#FFFFFF"
 
 
 

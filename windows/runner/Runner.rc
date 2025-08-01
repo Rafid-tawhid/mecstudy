@@ -89,11 +89,11 @@ BEGIN
     BEGIN
         BLOCK "040904e4"
         BEGIN
-            VALUE "CompanyName", "com.mecstudygroup.mecstudygroup" "\0"
+            VALUE "CompanyName", "com.mecstudygroup.mecstudygroup1" "\0"
             VALUE "FileDescription", "mecstudygroup" "\0"
             VALUE "FileVersion", VERSION_AS_STRING "\0"
             VALUE "InternalName", "mecstudygroup" "\0"
-            VALUE "LegalCopyright", "Copyright (C) 2024 com.mecstudygroup.mecstudygroup. All rights reserved." "\0"
+            VALUE "LegalCopyright", "Copyright (C) 2024 com.mecstudygroup.mecstudygroup1. All rights reserved." "\0"
             VALUE "OriginalFilename", "mecstudygroup.exe" "\0"
             VALUE "ProductName", "mecstudygroup" "\0"
             VALUE "ProductVersion", VERSION_AS_STRING "\0"
