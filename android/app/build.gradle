@@ -22,7 +22,7 @@ apply plugin: 'kotlin-android'
 apply plugin: 'dev.flutter.flutter-gradle-plugin'
 
 android {
-    namespace "com.mecstudygroup.mecstudygroup1"
+    namespace "com.mecstudygroup.mecstudygroup"
     compileSdkVersion flutter.compileSdkVersion
     ndkVersion flutter.ndkVersion
 
@@ -40,7 +40,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.mecstudygroup.mecstudygroup1"
+        applicationId "com.mecstudygroup.mecstudygroup"
         minSdkVersion 23
         targetSdkVersion flutter.targetSdkVersion
         versionCode flutterVersionCode.toInteger()

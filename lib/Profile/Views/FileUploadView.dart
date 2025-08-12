@@ -474,7 +474,7 @@ class _FileUploadViewWidgetState extends State<FileUploadView> {
         print(_filePath);
         print(result.files.single.bytes);
         var aaa = result.files.single.bytes;
-        //final String _filePatha = '/data/user/0/com.mecstudygroup.mecstudygroup1/cache/file_picker/Screenshot_20240529_130503_com.android.settings.jpg';
+        //final String _filePatha = '/data/user/0/com.mecstudygroup.mecstudygroup/cache/file_picker/Screenshot_20240529_130503_com.android.settings.jpg';
 
 
 

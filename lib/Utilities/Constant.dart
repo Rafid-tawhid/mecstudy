@@ -225,8 +225,8 @@ bool isNormalPhone(BuildContext context) {
 /// Instantiate an OAuth2Client...
 ///
 GoogleOAuth2Client client = GoogleOAuth2Client(
-  customUriScheme: 'com.mecstudygroup.mecstudygroup1',                     /// Application id from build.gradle
-  redirectUri: 'com.mecstudygroup.mecstudygroup1:/oauth2redirect',
+  customUriScheme: 'com.mecstudygroup.mecstudygroup',                     /// Application id from build.gradle
+  redirectUri: 'com.mecstudygroup.mecstudygroup:/oauth2redirect',
 );
 
 /// Then, instantiate the helper passing the previously instantiated client
